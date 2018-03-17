@@ -1,2 +1,2 @@
-# HashMap-220-2018
-Comp220 - HashMap collaboration project 2018
+# Map ADT Comp 220 2018
+Comp220 @ Capilanou U - Map ADT class collaboration project 2018
