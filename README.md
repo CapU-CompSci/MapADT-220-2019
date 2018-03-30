@@ -65,5 +65,9 @@ frequency table to the console (stdout).  Something like:
 | you         | 5 |
 | ...         | ... |
 
-Notice that the frequency table is printed in descending order, by frequency.
-The Sort Tree we built in the Lab would be a perfect way to sort the frequency count data.
+Notice as words are read from the file, we will need to find them efficiently so we can add to their frequency count.  If we imagine an "entry" in a search tree having a char* key and an int count, then we can Store the words in a search tree.  This gives us a fast, simple way to find a word, and  update its counter.   (Note: we may want to add a specialized function to abstract the operation of searching for word and adding one to its counter -- note though that this is part of the application code, not really part of the Map ADT.) 
+
+In addition, notice that the frequency table shown above is printed in descending order, by frequency.  This makes sense for creating a word cloud, where we are most interested in high-frequency words.  Two soltuions that come to mind for achieving this:
+  - define an array and use the "insertion sort" algorithm to sort the data entries from the tree in frequency order;
+  OR
+  - create another search tree that has integer keys, insert all the entries to this new search tree, and use an in-order traversal to read off the entries in frequency order.
