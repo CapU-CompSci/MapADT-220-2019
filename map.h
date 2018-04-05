@@ -2,7 +2,7 @@
  *  Comp220 - Map.h
  *    Public API for a Map ADT
  *
- *  Author: J. Fall, Tim Wriglesworth
+ *  Author: J. Fall, Tim Wriglesworth Robert Bell
  *  Date: Mar. 2017 // edited in April
  */
  
@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+
 
 
 /*********************
@@ -29,14 +30,14 @@ map_t mapCreate();
 * POST: Get(key) == value
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
-void mapInsert(char* key, int value);
+void mapInsert(keytype key, int value);
  
     
 /*
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  * POST: HasKey(key) == false
  */
-void mapDelete(char* key);
+void mapDelete(keytype key);
 
 
 
@@ -80,7 +81,7 @@ void mapClear(map_t * map);
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* keySet(map);
+keytype keySet(map);
 
 
 
