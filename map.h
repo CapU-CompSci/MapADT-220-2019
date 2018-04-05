@@ -19,7 +19,7 @@
  * PRIVATE TYPE DECLARATION
  ********************/
 
-typedef int keytype;
+typedef char* keytype;
 typedef struct key_s key_t;
 
 
@@ -50,14 +50,14 @@ map_t mapCreate();
 * POST: Get(key) == value
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
-void mapInsert(char* key, int value);
+void mapInsert(keytype key, int value);
  
     
 /*
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  * POST: HasKey(key) == false
  */
-void mapDelete(char* key);
+void mapDelete(keytype key);
 
 
 
@@ -75,14 +75,14 @@ void mapDelete(char* key);
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-void mapGet(map_t map, char* key);  
+void mapGet(map_t map, keytype key);  
 
 
 
 /*
 * returns true iff the Map contains the given key
 */
-bool mapHasKey(map_t map, char* key);
+bool mapHasKey(map_t map, keytype key);
 
 
 /*
@@ -101,7 +101,7 @@ void mapClear(map_t * map);
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-char* keySet(map);
+keytype keySet(map);
 
 
 
