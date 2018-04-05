@@ -13,27 +13,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
-//DATA TYPES IN THE MAP
-
-/*******************
- * PRIVATE TYPE DECLARATION
- ********************/
-
-typedef int keytype;
-typedef struct key_s key_t;
-
-
-struct node_s{
-	char* key;
-	node_t* left; //needs to be named
-	node_t* right; // needs to be named
-};
-
-typedef struct map_s map_t;
-struct map_s{
-	node_t* start;
-}
-
 
 
 /*********************
