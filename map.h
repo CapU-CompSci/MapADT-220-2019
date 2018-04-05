@@ -75,14 +75,14 @@ void mapDelete(char* key);
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-void mapGet(map_t map, keytype key);  
+void mapGet(map_t map, char* key);  
 
 
 
 /*
 * returns true iff the Map contains the given key
 */
-bool mapHasKey(map_t map, keytype key);
+bool mapHasKey(map_t map, char* key);
 
 
 /*
@@ -101,7 +101,7 @@ void mapClear(map_t * map);
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* keySet(map);
+char* keySet(map);
 
 
 
