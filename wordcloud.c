@@ -17,6 +17,7 @@
 #include "map.h"
 
 
+//PSUEDO CODE
 
    //create new treemap
    
@@ -29,15 +30,10 @@
    // print indorder of treee
    
 
-
-
 //function prototypes
 FILE* open (char*);
- void nodePrint (bstNode_t Node);
- void inorderPrint(map_t treemap);
-
-
-
+void nodePrint (bstNode_t Node);
+void inorderPrint(map_t treemap);
 
 
 int main (int argc, char* argv[])  
@@ -61,77 +57,50 @@ filename = argv[1];
    fscanf(f, " %127s", &word); // reads all chars until white space?
   
   //have word now  call removepunc
-  
-  
-  void removepunc(char* word)
-  
- {
+   }
+    fclose(f);
+	
+}
+
+void removepunc(char* word){
  	int i;
  	char c = word[0]; //character 1
 
- 	
-     for(i=0; i<strlen(word); i++)
- 	{
+     for(i=0; i<strlen(word); i++){
  		if (c == ispunc(word[i]))
  		shiftLeft(word, i);
- 		}
- }
-  
-   
-   
-   void shiftLeft (char* word, int index)
-   {
+     }
+}
+
+void shiftLeft (char* word, int index)
+{
+	int i;
+	for (i=index; i<strlen(word); i++){
+		word[i]= word[i+1]
+	}
+}
+
+
+void inorderPrint(map_t treemap){
    	
-   	int i;
-   	for (i=index; i<strlen(word); i++)
-   	{
-   		word[i]= word[i+1];
-   		
-   	}
- }
-   
-   
-   
-   
-   
-   
-   fclose(f);
-   }
-   
-   
-   
-void inorderPrint(map_t treemap)
-   {
-   	
-   	if(mapIsEmpty(treemap))
-   	{
+   	if(mapIsEmpty(treemap)){
    		inorderPrint(tree->left)
    		nodePrint(*treemap);
    		inorderPrint(tree->right);
-   		}
-   	
-   }
-   
-   
-  void nodePrint (bstNode_t Node)
-   {
-   	
-   	printf("---%s" node.entry.key);
-   	printf("---%d",node.entry.value);
-   	
-   
-   }
-   
-   
- 
-   
-   
-  
-   FILE* open(char* filename)     //open the file and check existence
-	{
-	   FILE* file = fopen(filename, "r");
-	   if (file == NULL) {
-		  printf("Error: file does not exist: %s \n", filename);
-		  exit(-1);
-	   }
-	   return file;
+   	}
+}
+
+void nodePrint (bstNode_t Node){
+	
+	printf("---%s" node.entry.key);
+	printf("---%d",node.entry.value);
+}
+FILE* open(char* filename)     //open the file and check existence
+{
+	FILE* file = fopen(filename, "r");
+	if (file == NULL) {
+		printf("Error: file does not exist: %s \n", filename);
+		exit(-1);
+	}
+	return file;
+}
