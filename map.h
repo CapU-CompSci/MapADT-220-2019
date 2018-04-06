@@ -36,7 +36,7 @@ void mapInsert( map_t* map, entry_t map);
 * POST: HasKey(key) == false
 */
 
-void mapDelete(bstNode_t* map, keytype key); //differnt type names between keytype and char* key....
+void mapDelete(map_t map, keytype key); //differnt type names between keytype and char* key....
 
 
 /*
