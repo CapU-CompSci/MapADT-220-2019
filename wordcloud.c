@@ -50,15 +50,13 @@ filename = argv[1];
    FILE* f = open(filename);     //call my function
    
    
-   
-   while(f!=EOF)
-   {
-   	
-   fscanf(f, " %127s", &word); // reads all chars until white space?
-  
-  //have word now  call removepunc
-   }
-    fclose(f);
+   wordtree = mapCreate();
+  // while(f!=EOF)
+  // {
+  // fscanf(f, " %127s", &word); // reads all chars until white space?
+  // //have word now  call removepunc
+  // }
+  //  fclose(f);
 	
 }
 
