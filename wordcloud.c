@@ -12,6 +12,9 @@
 #include <stdbool.h>
 #include <assert.h>
 
+#include "treemap.h"
+#include "hashmap.h"
+#include "map.h"
 
 //function prototypes
 FILE* open (char*);
@@ -52,11 +55,6 @@ filename = argv[1];
    
    
    
-   
-   
-   
-  
-  
   
    FILE* open(char* filename)     //open the file and check existence
 	{
