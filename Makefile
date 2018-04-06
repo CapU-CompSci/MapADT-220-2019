@@ -1,10 +1,10 @@
 all: tmtest hmtest tmwc hmwc
 
-tmtest: map.h treemap.h treemap.c map-tests.c
-	gcc treemap.c map-tests.c -o tmtest
+tmtest: map.h treemap.h treemap.c map-test.c
+	gcc treemap.c map-test.c -o tmtest
 
-hmtest: map.h hashmap.h hasmap.c map-tests.c
-	gcc hasmap.c map-tests.c -o hmtest
+hmtest: map.h hashmap.h hasmap.c map-test.c
+	gcc hasmap.c map-test.c -o hmtest
 
 tmwc: map.h treemap.h treemap.c wordcloud.c
 	gcc treemap.c wordcloud.c -o tmwc

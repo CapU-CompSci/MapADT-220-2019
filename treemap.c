@@ -101,7 +101,7 @@ bstNode_t* findLargestNode(map_t map){
  * POST: HasKey(key) == false
  */
  //CHARMAINE IS WORKING ON THIS!
-void mapDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
+void entryDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
 {
 	map_t cur;
 	if(mapHasKey(&map, key)){
