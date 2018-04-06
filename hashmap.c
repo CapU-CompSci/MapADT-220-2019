@@ -5,13 +5,16 @@
 *
 */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <assert.h>
+
 #include "hashmap.h"
 #include "map.h"
 
-
-
- #define COL_SIZE 20
- #define ARRAY_SIZE 100
+#define COL_SIZE 20
+#define ARRAY_SIZE 100
 
 long Hmapfunction( keytype Key);
 int mapindex(keytype Key);
@@ -23,9 +26,9 @@ int mapindex(keytype Key);
 
 
 
- /* 
-  * Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
-  */
+  //Authors: Braeden Norman, Artur Shadnik
+  // Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
+  
  long Hmapfunction( keytype Key){
      unsigned long hash = 5381;
      int c;
@@ -131,12 +134,28 @@ void mapInsert( map_t* mapref, entry_t entry)
 
 
 
+// Author: Artur Shadnik
 
+void entryDelete(map_t* map, keytype key){
+    if (!mapHasKey(map, key)){
+        return;
+    }
+    else{
+        int c =0;
+        int i = mapindex(key);
+   
+        while(map->hashtable[i][c].key!=NULL){
+            if(map->hashtable[index][counter].key == key){
+                free(map->key);
+                free(map->value);
+                map_t = {NULL, NULL}
+            }
+            c++;
+        }
+    }
+}
 
-
-
-
-
+//Please review and test
 
 //author: Greagorey Markerian
 
@@ -161,3 +180,17 @@ bool mapHasKey(map_t map, keytype key)
 
     //Please review and test
 
+//Author: Artur Shadnik
+
+void mapClear(map_t * map){
+    int i, c;
+    for(i = 0; i < ARRAY_SIZE; i++){
+        for(c = 0; c < COL_SIZE; c++){
+            free(map->key);
+            free(map->value);
+            map_t = {NULL, NULL}
+        }
+    }
+}
+
+  //Please review and test
