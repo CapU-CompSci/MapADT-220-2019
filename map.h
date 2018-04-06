@@ -36,7 +36,7 @@ void mapInsert( map_t* map, entry_t entry); //CHECK
 * POST: HasKey(key) == false
 */
 
-void entryDelete(map_t map, keytype key); //differnt type names between keytype and char* key....
+void entryDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
 
 
 /*
@@ -68,7 +68,7 @@ void mapClear(map_t * map);
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype*  keySet(map_t * map); //fix this
+keytype keySet(map_t * map); //keytype is a char* already
 
 
 
