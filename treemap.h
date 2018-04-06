@@ -11,9 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+typedef char* keytype;
 struct entry{
-	char* key;
+	keytype key;
 	int value;
 };
 typedef struct entry entry_t;
