@@ -7,8 +7,6 @@
  */
  
  
- 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -34,21 +32,11 @@ void mapInsert(keytype key, int value);
  
     
 /*
- * removes the (key, value) pair from the Map, no effect if !HasKey(key)
- * POST: HasKey(key) == false
- */
-void mapDelete(keytype key);
-
-
-
-
-/*
 * removes the (key, value) pair from the Map, no effect if !HasKey(key)
 * POST: HasKey(key) == false
 */
 
-//void mapDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
-
+void mapDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
 
 
 /*
@@ -56,7 +44,6 @@ void mapDelete(keytype key);
 * returns the value associated with the given key
 */
 void mapGet(map_t map, keytype key);  
-
 
 
 /*
