@@ -2,11 +2,13 @@
  *  Comp220 - Test Driver which will work for EITHER treemap and hashmap
  *  
  *
- *  Author: Robert Bell, Ben Hynes
+ *  Author: Robert Bell, Ben Hynes, Keaton Armstrong
  *  Date:  April
  */
- 
- 
+ /*Notes: Try making the file, the entry types and map type are undefined, 
+ should this file include the other .h files? but then we have two places where entry and map
+ are defiend.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -42,11 +44,11 @@ int main ()
     assert(mapHasKey(map,"b"));
     assert(mapHasKey(map,"c"));
     assert(mapHasKey(map,"d"));
+    
+    entryDelete(&map,"a");
+    assert(!mapHasKey(map,"a"));
+    assert(mapSize(map) == 3);
 
-
-
-
- 
     //DELETE MAP
     mapClear(*map);
     assert(mapIsEmpty(map));
