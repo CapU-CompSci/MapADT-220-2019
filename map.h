@@ -28,7 +28,7 @@ map_t mapCreate();
 * POST: Get(key) == value
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
-void mapInsert( map_t* map, entry_t map);
+void mapInsert( map_t* map, entry_t entry);
  
     
 /*
