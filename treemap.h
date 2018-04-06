@@ -27,3 +27,5 @@ struct bstNode{
 typedef struct bstNode bstNode_t;
 
 typedef bstNode_t* BinaryTree;
+
+typedef BinaryTree map_t;
