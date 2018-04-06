@@ -8,11 +8,12 @@
  *
  */
  
+ #include <stdio.h>
+ #include <stdlib.h>
  
  #define COL_SIZE 20
  #define ARRAY_SIZE 100
 
- 
  typedef char* keytype;
  
  typedef struct{
@@ -23,7 +24,5 @@
  typedef struct{
      entry_t hashtable[ARRAY_SIZE][COL_SIZE];
  }Hmap;
- 
 
  typedef Hmap* map_t;
- 
