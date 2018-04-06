@@ -51,6 +51,10 @@ keytype mapGet(map_t map, keytype key);
 */
 bool mapHasKey(map_t map, keytype key);
 
+/*
+* returns true if it's empty 
+*/
+bool mapIsEmpty(map_t map);
 
 /*
  *returns the number of (key, value) pairs in the Map
