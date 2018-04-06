@@ -28,7 +28,7 @@ map_t mapCreate();
 * POST: Get(key) == value
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
-void mapInsert(keytype key, int value);
+void mapInsert( map_t* map, keytype key, int value);
  
     
 /*
@@ -43,7 +43,7 @@ void mapDelete(map_t* map, keytype key); //differnt type names between keytype a
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-void mapGet(map_t map, keytype key);  
+keytype mapGet(map_t map, keytype key);  
 
 
 /*
@@ -68,7 +68,7 @@ void mapClear(map_t * map);
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype keySet(map);
+keytype*  keySet(map_t * map); //fix this
 
 
 
