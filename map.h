@@ -22,13 +22,13 @@
  * Constructor - return a new, empty map
  * POST:  mapSize(map) == 0
  */
-map_t mapCreate();
+map_t mapCreate(); //CHECK
 
 /*
 * POST: Get(key) == value
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
-void mapInsert( map_t* map, entry_t entry);
+void mapInsert( map_t* map, entry_t entry); //CHECK
  
     
 /*
@@ -43,13 +43,13 @@ void entryDelete(map_t map, keytype key); //differnt type names between keytype 
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-keytype mapGet(map_t map, keytype key);  
+int mapGet(map_t map, keytype key);  //CHECK
 
 
 /*
 * returns true iff the Map contains the given key
 */
-bool mapHasKey(map_t map, keytype key);
+bool mapHasKey(map_t map, keytype key); //CHECK
 
 
 /*
