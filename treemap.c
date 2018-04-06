@@ -146,7 +146,7 @@ keytype mapGet(map_t map, keytype key){
 * returns true iff the Map contains the given key
 */
 bool mapHasKey(map_t map, keytype key){
-	if( mapGet(map, key) != -1){
+	if(mapGet(map, key) != -1){
 		return true;
 	}
 	return false;
