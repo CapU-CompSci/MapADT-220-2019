@@ -3,7 +3,7 @@
  *    
  *
  *  Author: Tim Wriglesworth, Karan Nedungadi
- *  Date: Mar. 2017 // edited in April
+ *  Date: Mar. 2017 // edited in April 06
  */
  
 
@@ -16,8 +16,25 @@
 #include "hashmap.h"
 #include "map.h"
 
+
+
+   //create new treemap
+   
+   //insert word in tree and update value
+   
+   //inert word in tree -> insert will either update val or insert new word
+   
+   //ispunc() iff yes shift left (use A1 algorithm)  
+   
+   // print indorder of treee
+   
+
+
+
 //function prototypes
 FILE* open (char*);
+ void nodePrint (bstNode_t Node);
+ void inorderPrint(map_t treemap);
 
 
 
@@ -38,6 +55,41 @@ filename = argv[1];
    
    
    
+   while(f!=EOF)
+   {
+   	
+   fscanf(f, " %127s", &word); // reads all chars until white space?
+  
+  //have word now  call removepunc
+  
+  
+  void removepunc(char* word)
+  
+ {
+ 	int i;
+ 	char c = word[0]; //character 1
+
+ 	
+     for(i=0; i<strlen(word); i++)
+ 	{
+ 		if (c == ispunc(word[i]))
+ 		shiftLeft(word, i);
+ 		}
+ }
+  
+   
+   
+   void shiftLeft (char* word, int index)
+   {
+   	
+   	int i;
+   	for (i=index; i<strlen(word); i++)
+   	{
+   		word[i]= word[i+1];
+   		
+   	}
+ }
+   
    
    
    
@@ -48,11 +100,30 @@ filename = argv[1];
    
    
    
+void inorderPrint(map_t treemap)
+   {
+   	
+   	if(mapIsEmpty(treemap))
+   	{
+   		inorderPrint(tree->left)
+   		nodePrint(*treemap);
+   		inorderPrint(tree->right);
+   		}
+   	
+   }
    
    
+  void nodePrint (bstNode_t Node)
+   {
+   	
+   	printf("---%s" node.entry.key);
+   	printf("---%d",node.entry.value);
+   	
+   
+   }
    
    
-   
+ 
    
    
   
