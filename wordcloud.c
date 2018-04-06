@@ -51,13 +51,23 @@ filename = argv[1];
    
    
    wordtree = mapCreate();
-  // while(f!=EOF)
-  // {
-  // fscanf(f, " %127s", &word); // reads all chars until white space?
-  // //have word now  call removepunc
-  // }
-  //  fclose(f);
-	
+  char* word;
+  int count = 1;
+  
+   while(f!=EOF)
+   {
+   fscanf(f, " %127s", &word); // reads all chars until white space?
+  //have word now  call removepunc
+  
+  removepunc(word);
+  mapInsert(wordtree, word, count);  //assuming insert updates value(which is count))
+  }
+   	
+    printf("WordCloud Frequency \n");
+    //print tabular form needs formatting..
+   	inorderPrint(wordtree);
+   	fclose(f);
+	printf("\nIn order Finished...")
 }
 
 void removepunc(char* word){
