@@ -51,10 +51,6 @@ keytype mapGet(map_t map, keytype key);
 */
 bool mapHasKey(map_t map, keytype key);
 
-/*
-* returns true if it's empty 
-*/
-bool mapIsEmpty(map_t map);
 
 /*
  *returns the number of (key, value) pairs in the Map
@@ -72,7 +68,7 @@ void mapClear(map_t * map);
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype*  keySet(map_t * map); //fix this
+keytype keySet(map_t * map); //keytype is a char* already
 
 
 
