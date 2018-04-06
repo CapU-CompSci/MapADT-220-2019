@@ -19,10 +19,10 @@
  *********************/
 
 // HELPER FUNCTION PROTOTYPES
-bool bstIsEmpty(BinaryTree tree);
+bool bstIsEmpty(map_t tree);
 Node_t* findLargestNode(map_t map);
 bstNode_t* findInsertionPoint(map_t map, keytype value);
-void traverseInOrder(BinaryTree map, keytype* array);
+void traverseInOrder(map_t map, keytype* array);
 bstNode_t* findParent(map_t map, char* key);
 
 /*
@@ -30,10 +30,10 @@ bstNode_t* findParent(map_t map, char* key);
  * POST:  mapSize(map) == 0
  */
  bstNode_t nodeCreate(int value, keytype key){
-	bstNode_t map;
-	map.entry.value = 0;
-	map.entry->key = NULL;
-	map.start->left = NULL;
+	bstNode_t root;
+	root.entry.value = 0;
+	root.entry->key = NULL;
+	root.start->left = NULL;
 	map.start->right = NULL;
 	return map;
 }
@@ -43,8 +43,8 @@ bstNode_t* findParent(map_t map, char* key);
  * Constructor - return a new, empty map
  * POST:  mapSize(map) == 0
  */
-BinaryTree mapCreate(){
-	BinaryTree map = NULL;
+map_t mapCreate(){
+	map_t map = NULL;
 	return map;
 }
 
@@ -54,7 +54,7 @@ BinaryTree mapCreate(){
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
 void mapInsert(map_t* map, char* key, int value){
-	BinaryTree curr = findInsertionPoint(map,key);
+	map_t curr = findInsertionPoint(map,key);
 	if(mapHasKey(value)){
 		curr->entry->value = value;
 	}
@@ -65,7 +65,7 @@ void mapInsert(map_t* map, char* key, int value){
 
 bstNode_t* findParent(map_t map, char* key)
 {
-	BinaryTree parent;
+	map_t parent;
 		if(mapIsEmpty(map)){
 		return NULL;
 	}
@@ -82,8 +82,9 @@ bstNode_t* findParent(map_t map, char* key)
 }
 
 
-
-
+/*
+* Finds the largest node in the tree.
+*/
 bstNode_t* findLargestNode(map_t map){
 	if mapIsEmpty(map){
 		return NULL;
@@ -99,10 +100,10 @@ bstNode_t* findLargestNode(map_t map){
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  * POST: HasKey(key) == false
  */
- //CHARMAINE IS !WORKING ON THIS
+ //CHARMAINE IS WORKING ON THIS!
 void mapDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
 {
-	BinaryTree cur;
+	map_t cur;
 	if(mapHasKey(&map, key)){
 		if( key < map->key)
 			mapDelete(map->left, key);
@@ -115,8 +116,6 @@ void mapDelete(map_t* map, keytype key); //differnt type names between keytype a
 			
 		}
 		
-		
-		
 
 }
 
@@ -125,7 +124,7 @@ void mapDelete(map_t* map, keytype key); //differnt type names between keytype a
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-keytype mapGet(map_t map, keytype key) {
+keytype mapGet(map_t map, keytype key){
 	if(mapIsEmpty(map)){
 		return NULL;
 	}
@@ -170,7 +169,7 @@ int mapSize(map_t map){
 * removes all items from the Map (without creating memory leaks!)
 */
 void mapClear(map_t * map){
-	BinaryTree curr = *map;
+	map_t curr = *map;
 	if(curr != NULL){
 		mapClear(&curr->left);
 		mamClear(&curr->right);
@@ -184,7 +183,7 @@ void mapClear(map_t * map){
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* keySet(map_t* map){//map.h has issue with this function
+keytype* keySet(map_t* map){
 	keytype* array;
 	int i =0;
 	array = malloc(sizeof(keytype)*mapSize(map)+1);
@@ -198,7 +197,7 @@ keytype* keySet(map_t* map){//map.h has issue with this function
  * Helper Functions
  *********************/
  
- bool bstIsEmpty(BinaryTree tree){
+ bool bstIsEmpty(map_t tree){
  	return tree == NULL;
  }
  
@@ -219,7 +218,7 @@ bstNode_t* findInsertionPoint(map_t* map, keytype key){
 	return NULL;
 }
  
- void traverseInOrder(BinaryTree map, keytype* array){
+ void traverseInOrder(map_t map, keytype* array){
 	if(map != NULL){
 		traverseInOrder(map->left);
 		array[i] = map->entry->key[i];
