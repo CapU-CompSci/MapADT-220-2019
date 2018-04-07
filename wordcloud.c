@@ -47,10 +47,9 @@ filename = argv[1];
 	char* word;
 	int count = 1;
 	
-	while(f!=EOF){
-		fscanf(f, " %127s", &word); // reads all chars until white space
+	while(fscanf(f, " %127s", &word) == 1){
 		removePunc(word);
-		mapInsert(wordtree, word, count);  //assuming insert updates value(which is count))
+		mapInsert(wordtree, word, count);  //still needs work
 		}
 		
 		printf("WordCloud Frequency \n");
