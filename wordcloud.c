@@ -18,10 +18,10 @@
 
 //PSUEDO CODE
    //create new treemap
-   //insert word in tree and update value
+   //parse each word in file
+   //remove any punction found in parsed word
    //inert word in tree -> insert will either update val or insert new word
-   //ispunc() iff yes shift left (use A1 algorithm)  
-   // print indorder of treee
+   // print inorder of tree
 
 //function prototypes
 FILE* open (char*);
@@ -65,11 +65,11 @@ filename = argv[1];
 void removePunc(char* word){
  	int i;
  	char c = word[0]; //first character
-
-     for(i=0; i<strlen(word); i++){
+ 	
+ 	for(i=0; i<strlen(word); i++){
  		if (c == ispunc(word[i]))
  		shiftLeft(word, i);
-     }
+ 	}
 }
 
 
@@ -82,10 +82,11 @@ void shiftLeft(char* word, int index){
 	}
 }
 
+
 //prints the binary search tree from lowest to largest key value
 void inorderPrint(map_t treemap){
    	
-   	if(mapIsEmpty(treemap)){
+   	if(!mapIsEmpty(treemap)){
    		inorderPrint(tree->left)
    		nodePrint(*treemap);
    		inorderPrint(tree->right);
@@ -97,6 +98,7 @@ void nodePrint (bstNode_t Node){
 	printf("---%s" node.entry.key);
 	printf("---%d",node.entry.value);
 }
+
 
 //open the file and check existence
 FILE* open(char* filename){
