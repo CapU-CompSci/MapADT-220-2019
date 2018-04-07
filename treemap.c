@@ -124,7 +124,7 @@ void entryDelete(map_t* map, keytype key); //differnt type names between keytype
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-keytype mapGet(map_t map, keytype key){
+int mapGet(map_t map, keytype key){
 	if(mapIsEmpty(map)){
 		return NULL;
 	}
