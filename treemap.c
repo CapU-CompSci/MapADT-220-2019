@@ -100,23 +100,39 @@ bstNode_t* findLargestNode(map_t map){
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  * POST: HasKey(key) == false
  */
- //CHARMAINE IS WORKING ON THIS!
 void entryDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
 {
-	map_t cur;
-	if(mapHasKey(&map, key)){
-		if( key < map->key)
-			mapDelete(map->left, key);
-		else if(key> map->key)
-			mapDelete( map->right, key);
-		else if(map->left && map->right){
-			cur = find
-			findLargestNode(map);
-			cur
-			
+	if(!mapHasKey(&map, key)){
+		return;
+	}
+	map_t cur = mapFind(map, key);
+	map_t parent = getParent(map, key);
+	if(cur->left == NULL && cur->right == NULL){ // ----- CASE 1: Node to be deleted is a leaf node ----
+		if(parent->left = cur){
+			parent->left = NULL;
 		}
-		
-
+		else{
+			parent->right = NULL;
+		}
+		free(cur);
+		return;
+	}
+	else if(cur->left == NULL || cur->right == NULL){ // ----- CASE 2: Node to be deleted has one child ----
+		if(cur->left != NULL){
+			parent->left = cur->left;
+		}
+		else{
+			parent->right = cur->right;
+		}
+		free(cur);
+		return;
+	}	
+	else if (cur->left != NULL && cur->right != NULL){ // ----- CASE 3: Node to be deleted has two children
+		map_t smallest = findSmallestNode(map->right);
+		cur.entry = smallest.entry;
+		entryDelete(map, smallest.entry.key);
+		return;
+	}
 }
 
 
