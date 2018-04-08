@@ -1,9 +1,9 @@
 /* This will be the .c file corresponding with the hashmap.h file 
-*
-*   Authors: Reece Whitehead, Artur Shadnik, Greagorey Markerian, Joseph Fall 
-*   Date: April 5, 2018
-*
-*/
+ *
+ *   Authors: Reece Whitehead, Artur Shadnik, Greagorey Markerian, Joseph Fall 
+ *   Date: April 5, 2018
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,10 +20,10 @@ long Hmapfunction( keytype Key);
 int mapindex(keytype Key);
 
 /*
-* Authors: Braeden Norman, Artur Shadnik
-* Credit: Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
-* Last Changed: 2018/04/06
-*/
+ * Authors: Braeden Norman, Artur Shadnik
+ * Credit: Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
+ * Last Changed: 2018/04/06
+ */
 long Hmapfunction( keytype Key)
 {
     unsigned long hash = 5381;
@@ -64,7 +64,8 @@ void mapInsert(map_t* mapref, keytype key, valuetype value)
         assert(counter < COL_SIZE); // TODO: better error handling required for column overflow.
     }
     // TODO: CRITICAL - an Entry constructor to allocate dynamic memory for deep-copy of key!
-    map->hashtable[index][counter] = {key, value};
+    entry_t entry = {key, value};
+    map->hashtable[index][counter] = entry;
 }
 
 /*
