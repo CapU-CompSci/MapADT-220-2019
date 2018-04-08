@@ -3,7 +3,7 @@
  *    Public API for a Map ADT
  *
  *  Author: J. Fall, Tim Wriglesworth Robert Bell
- *  Date: Mar. 2017 // edited in April
+ *  Date: Apr. 2017
  */
  
  
@@ -22,43 +22,46 @@
  * Constructor - return a new, empty map
  * POST:  mapSize(map) == 0
  */
-map_t mapCreate(); //CHECK
+map_t mapCreate();
 
 /*
-* POST: Get(key) == value
-* sets the value for key if HasKey(key), otherwise inserts a new value in Map
+* POST: mapGet(key) == value
+* sets the value for key if mapHasKey(key), otherwise inserts a new value in Map
 */
+<<<<<<< HEAD
 void mapInsert( map_t* map, keytype key, valuetype value); //CHECK
+=======
+void mapInsert( map_t* map, keytype key, valuetype value);
+>>>>>>> 1feeea1f0ba8ebd4f7b5a33c092bf588da614ee7
  
     
 /*
-* removes the (key, value) pair from the Map, no effect if !HasKey(key)
-* POST: HasKey(key) == false
+* removes the (key, value) pair from the Map, no effect if !mapHasKey(key)
+* POST: mapHasKey(key) == false
 */
-
-void entryDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
+void mapRemove(map_t* map, keytype key);
 
 
 /*
-* PRE: HasKey(key)
+* PRE: mapHasKey(key)
 * returns the value associated with the given key
 */
-int mapGet(map_t map, keytype key);  //CHECK
+int mapGet(map_t map, keytype key);
 
 
 /*
 * returns true iff the Map contains the given key
 */
-bool mapHasKey(map_t map, keytype key); //CHECK
+bool mapHasKey(map_t map, keytype key);
 
 
 /*
- *returns the number of (key, value) pairs in the Map
+ * Returns the number of (key, value) pairs in the Map
  */
 int mapSize(map_t map);
 
 /*
-* POST: Size() == 0
+* POST: mapSize() == 0
 * removes all items from the Map (without creating memory leaks!)
 */
 void mapClear(map_t * map);
@@ -68,9 +71,4 @@ void mapClear(map_t * map);
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype keySet(map_t * map); //keytype is a char* already
-
-
-
-
-
+keytype mapKeySet(map_t * map);

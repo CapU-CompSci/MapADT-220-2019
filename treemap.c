@@ -25,20 +25,22 @@ map_t findInsertionPoint(map_t map, keytype value);
 void traverseInOrder(map_t map, keytype* array);
 bstNode_t* findParent(map_t map, char* key);
 map_t findSmallestNode(map_t);
+bstNode_t* nodeCreate(valuetype value, keytype key);
 
 /*
- * Constructor - return a new, empty map
+ * Constructor (of node) - return a new, node with given vakue and key
  * POST:  mapSize(map) == 0
  */
-bstNode_t nodeCreate(int value, keytype key){
-	bstNode_t root;
-	root.entry.value = 0;
-	root.entry.key = NULL;
-	root.left = NULL;
-	root.right = NULL;
-	return root;
-}
 
+bstNode_t* nodeCreate(valuetype value, keytype key){
+	bstNode_t* node = malloc(sizeof(bstNode_t));
+	node->entry.value = 0;
+	node->entry.key = key;
+	node->left = NULL;
+	node->right = NULL;
+	return node;
+
+}
 
 /*
  * Constructor - return a new, empty map
@@ -101,7 +103,7 @@ bstNode_t* findLargestNode(map_t map){
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  * POST: HasKey(key) == false
  */
-void entryDelete(map_t* map, keytype key); //differnt type names between keytype and char* key....
+void mapRemovecd(map_t* map, keytype key); //differnt type names between keytype and char* key....
 {
 	if(!mapHasKey(&map, key)){
 		return;
@@ -141,7 +143,7 @@ void entryDelete(map_t* map, keytype key); //differnt type names between keytype
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-keytype mapGet(map_t map, keytype key){
+int mapGet(map_t map, keytype key){
 	if(mapIsEmpty(map)){
 		return NULL;
 	}
@@ -199,7 +201,7 @@ void mapClear(map_t * map){
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* keySet(map_t* map){
+keytype* mapKeySet(map_t* map){
 	keytype* array;
 	int i =0;
 	array = malloc(sizeof(keytype)*mapSize(map)+1);
@@ -237,7 +239,7 @@ map_t findInsertionPoint(map_t map, keytype key){
  void traverseInOrder(map_t map, keytype* array){
 	if(map != NULL){
 		traverseInOrder(map->left);
-		array[i] = map->entry->key[i];
+		array[i] = map.entry->key[i];
 		traverseInOrder(map->right);
 	}
 }

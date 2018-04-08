@@ -15,10 +15,11 @@
  #define ARRAY_SIZE 100
 
  typedef char* keytype;
+ typedef int valuetype;
  
  typedef struct{
      keytype key;
-     int value;
+     valuetype value;
  }entry_t;
 
  typedef struct{

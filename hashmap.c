@@ -57,16 +57,18 @@ int mapindex(keytype Key);
  * Author: Greagorey Markerian
  * Needs to be reviewed and tested
  */
-void mapInsert( map_t* mapref, entry_t entry)
+void mapInsert(map_t* map, keytype key, valuetype value){
 {
     map_t map = *mapref;
-    int index = mapindex(entry.key);
+    int index = mapindex(key);
     int counter = 0;
     
     while(map->hashtable[index][counter].key!=NULL)
     {
         counter++;
+        assert(counter < COL_SIZE); // TODO: better error handling required for column overflow.
     }
+    entry_t entry = {key, value}; // TODO: an Entry constructor would help here.
     map->hashtable[index][counter]=entry;
 }
 
@@ -113,7 +115,7 @@ void mapInsert( map_t* mapref, entry_t entry)
  * Needs to be reviewed and tested
  */
  
-void entryDelete(map_t* map, keytype key){
+void mapRemove(map_t* map, keytype key){
     if (!mapHasKey(map, key)){
         return;
     }
