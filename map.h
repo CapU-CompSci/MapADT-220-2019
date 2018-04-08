@@ -28,11 +28,10 @@ map_t mapCreate();
 * POST: mapGet(key) == value
 * sets the value for key if mapHasKey(key), otherwise inserts a new value in Map
 */
-<<<<<<< HEAD
+
 void mapInsert( map_t* map, keytype key, valuetype value); //CHECK
-=======
-void mapInsert( map_t* map, keytype key, valuetype value);
->>>>>>> 1feeea1f0ba8ebd4f7b5a33c092bf588da614ee7
+
+
  
     
 /*
