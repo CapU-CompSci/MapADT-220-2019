@@ -20,7 +20,16 @@ int main ()
     assert(mapIsEmpty(map));
     
     //INSERT
+    //mapInsert(&map,entry); //what is entry_type and where is it created?
     
+    //GET
+    //mapGet(map, keytype key); //need to find out how the entry and keys work
+    
+    //HASKEY?
+    //assert(mapHasKey(map, key)); //again finding out how keys work
+    
+    //SIZE
+    printf("The map contains %d keypairs", mapSize(map));
  
     //DELETE MAP
     mapClear(*map);
