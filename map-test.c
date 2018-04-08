@@ -5,6 +5,7 @@
  *  Author: Robert Bell, Ben Hynes, Keaton Armstrong
  *  Date:  April
  */
+ 
  /*Notes: Try making the file, the entry types and map type are undefined, 
  should this file include the other .h files? but then we have two places where entry and map
  are defiend.
@@ -14,9 +15,9 @@
 #include <stdbool.h>
 #include <assert.h>
 #ifdef HASHMAP
-  #include "hashmap.h"
+#include "hashmap.h"
 #else
-  #include "treemap.h"
+#include "treemap.h"
 #endif
 #include "map.h"
 
