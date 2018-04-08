@@ -24,18 +24,19 @@ Node_t* findLargestNode(map_t map);
 bstNode_t* findInsertionPoint(map_t map, keytype value);
 void traverseInOrder(map_t map, keytype* array);
 bstNode_t* findParent(map_t map, char* key);
+ bstNode_t* nodeCreate(valuetype value, keytype key);
 
 /*
  * Constructor - return a new, empty map
  * POST:  mapSize(map) == 0
  */
- bstNode_t nodeCreate(int value, keytype key){
-	bstNode_t root;
-	root.entry.value = 0;
-	root.entry->key = NULL;
-	root.start->left = NULL;
-	map.start->right = NULL;
-	return map;
+ bstNode_t* nodeCreate(valuetype value, keytype key){
+	bstNode_t* node = malloc(sizeof(bstNode_t));
+	node->entry.value = 0;
+	node->entry->key = key;
+	node->left = NULL;
+	node->right = NULL;
+	return node;
 }
 
 
