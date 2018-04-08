@@ -242,7 +242,7 @@ map_t findInsertionPoint(map_t map, keytype key){
 		traverseInOrder(map->left);
 		return key;
 		traverseInOrder(map->right);	
-	}										
+	}									
 }										
 											
 map_t findSmallestNode(map_t node){			//check
