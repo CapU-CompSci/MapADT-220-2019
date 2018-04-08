@@ -20,17 +20,17 @@
 
 // HELPER FUNCTION PROTOTYPES
 bool bstIsEmpty(map_t tree);
-map_t findLargestNode(map_t map);
-map_t findInsertionPoint(map_t map, keytype key);
-void traverseInOrder(map_t map, keytype* array);
-map_t findParent(map_t map, char* key);
-map_t findSmallestNode(map_t);
+bstNode_t* findLargestNode(map_t map);
+bstNode_t* findInsertionPoint(map_t map, keytype key);
+void traverseInOrder(map_t map);
+bstNode_t* findParent(map_t map, keytype key);
+bstNode_t* findSmallestNode(map_t);
 bstNode_t* nodeCreate(valuetype value, keytype key);
+
 
 /*
  * Constructor (of node) - return a new, node with given vakue and key
  */
-
 bstNode_t* nodeCreate(valuetype value, keytype key){
 	bstNode_t* node = malloc(sizeof(bstNode_t));
 	node->entry.value = 0;
@@ -39,6 +39,7 @@ bstNode_t* nodeCreate(valuetype value, keytype key){
 	node->right = NULL;
 	return node;
 }
+
 
 /*
  * Constructor - return a new, empty map
@@ -55,7 +56,7 @@ map_t mapCreate(){
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
 void mapInsert(map_t* map, keytype key, valuetype value){
-	map_t curr = findInsertionPoint(*map,key);
+	bstNode_t* curr = findInsertionPoint(*map,key);
 	if(mapHasKey(*map, key)){
 		curr->entry.value = value;
 	}
@@ -64,9 +65,14 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 	}
 }
 
-map_t findParent(map_t map, char* key)
+
+/*
+* Helper function. 
+* Finds the parent node of the given key.
+*/
+bstNode_t* findParent(map_t map, keytype key)
 {
-	map_t parent;
+	bstNode_t* parent;
 		if(mapIsEmpty(map)){
 		return NULL;
 	}
@@ -84,9 +90,10 @@ map_t findParent(map_t map, char* key)
 
 
 /*
+* helper function.
 * Finds the largest node in the tree.
 */
-map_t findLargestNode(map_t map){
+bstNode_t* findLargestNode(map_t map){
 	if(mapIsEmpty(map)){
 		return NULL;
 	}
@@ -106,7 +113,7 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 		return;
 	}
 	map_t cur = findInsertionPoint(*map,key); //used to be mapFind(map, key);
-	map_t parent = findParent(*map, key);
+	bstNode_t* parent = findParent(*map, key);
 	if(cur->left == NULL && cur->right == NULL){ // ----- CASE 1: Node to be deleted is a leaf node ----
 		if(parent->left = cur){
 			parent->left = NULL;
@@ -128,12 +135,12 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 		return;
 	}	
 	else if (cur->left != NULL && cur->right != NULL){ // ----- CASE 3: Node to be deleted has two children
-		map_t smallest = findSmallestNode(*map);
+		bstNode_t* smallest = findSmallestNode(*map);
 		cur->entry = smallest->entry;
 		entryDelete(&map, smallest->entry.key);
 		return;
 	}
-}
+}//might what to make 3 different functions for the 3 cases, looks convaluted
 
 
 /*
@@ -141,19 +148,18 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 * returns the value associated with the given key
 */
 int mapGet(map_t map, keytype key){
-	assert(HasKey(key));
+	//assert(HasKey(key));
 	if(map->entry.key == key){
 		return(map->entry.value);
 	}
-	else if(map->entry.key > k){
-		bstFind(map->left, k);   // BUGS - see #59
+	else if(map->entry.key > key){
+		bstFind(map->left, key);   // BUGS - see #59
 	}
-	else if(map->entry.key < k){
-		bstFind(map->right, k);
+	else if(map->entry.key < key){
+		bstFind(map->right, key);
 	}
-	return NULL;
+	return -1;
 }
-
 
 
 /*
@@ -177,6 +183,7 @@ int mapSize(map_t map){
 	return 1 + bstSize(map->left) + bstSize(map->right);
 }
 
+
 /*
 * POST: Size() == 0
 * removes all items from the Map (without creating memory leaks!)
@@ -196,30 +203,34 @@ void mapClear(map_t * map){
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype mapKeySet(map_t* map){
-	keytype array;
+keytype* mapKeySet(map_t* map){
+	keytype* array = malloc(sizeof(keytype)*mapSize(*map)+1);
 	int i;
-	array = malloc(sizeof(keytype)*mapSize(map)+1);
-	int size = sizeof(mapSize);
+	int size = sizeof(mapSize); //WHAT??
 	for(i=0; i<size-1; i++){
-		array[i] = traverseInOrder(map);
+		array[i] = traverseInOrder(*map);
 	}
 
-	array[mapSize(map)+1] = NULL;
+	array[mapSize(*map)+1] = NULL;
 	return array;
 }
 
 
-/*********************
- * Helper Functions
- *********************/
+/*
+* helper function.
+* returns tree if the tree is empty.
+*/
+bool bstIsEmpty(map_t tree)
+{
+	return tree == NULL;
+}
  
- bool bstIsEmpty(map_t tree){
- 	return tree == NULL;
- }
  
-
-map_t findInsertionPoint(map_t map, keytype key){
+ /*
+* helper function.
+* Finds the appropirate node to insert the given key in the tree.
+*/
+bstNode_t* findInsertionPoint(map_t map, keytype key){ //needs work
 	if(mapIsEmpty(map)){
 		return NULL;
 	}
@@ -234,16 +245,26 @@ map_t findInsertionPoint(map_t map, keytype key){
 	}
 	return NULL;
 }
- 
- keytype* traverseInOrder(map_t map){
+
+
+/*
+* helper function.
+* traverse the tree from smallest to largest node.
+*/
+keytype* traverseInOrder(map_t map){
 	if(map != NULL){
 		traverseInOrder(map->left);
-		return key;
+		return key; //??? will never go to right side
 		traverseInOrder(map->right);	
 	}									
-}										
-											
-map_t findSmallestNode(map_t node){			//check
+}
+
+
+/*
+* helper function.
+* finds the smallest node in the tree.
+*/
+bstNode_t* findSmallestNode(map_t node){ //check
 	if(mapIsEmpty(node)){
 		return NULL;
 	}
