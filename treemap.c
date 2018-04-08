@@ -182,7 +182,7 @@ void mapClear(map_t * map){
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* keySet(map_t* map){
+keytype* mapKeySet(map_t* map){
 	keytype* array;
 	int i =0;
 	array = malloc(sizeof(keytype)*mapSize(map)+1);
