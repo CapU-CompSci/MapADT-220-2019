@@ -124,7 +124,7 @@ void entryDelete(map_t* map, keytype key); //differnt type names between keytype
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-keytype mapGet(map_t map, keytype key){
+int mapGet(map_t map, keytype key){
 	if(mapIsEmpty(map)){
 		return NULL;
 	}
@@ -146,7 +146,7 @@ keytype mapGet(map_t map, keytype key){
 * returns true iff the Map contains the given key
 */
 bool mapHasKey(map_t map, keytype key){
-	if( mapGet(map, key) != -1){
+	if(mapGet(map, key) != -1){
 		return true;
 	}
 	return false;
@@ -182,7 +182,7 @@ void mapClear(map_t * map){
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* keySet(map_t* map){
+keytype* mapKeySet(map_t* map){
 	keytype* array;
 	int i =0;
 	array = malloc(sizeof(keytype)*mapSize(map)+1);

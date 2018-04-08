@@ -19,16 +19,11 @@
 long Hmapfunction( keytype Key);
 int mapindex(keytype Key);
 
-
-
-
-
-
-
-
-  //Authors: Braeden Norman, Artur Shadnik
-  // Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
-  
+  /*
+   * Authors: Braeden Norman, Artur Shadnik
+   * Credit: Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
+   * Last Changed: 2018/04/06
+   */
  long Hmapfunction( keytype Key){
      unsigned long hash = 5381;
      int c;
@@ -58,34 +53,30 @@ int mapindex(keytype Key);
 
 
 
-
-
-//Author: Greagorey Markerian
-void mapInsert( map_t* mapref, entry_t entry)
+/*
+ * Author: Greagorey Markerian
+ * Needs to be reviewed and tested
+ */
+void mapInsert(map_t* map, keytype key, valuetype value){
 {
     map_t map = *mapref;
-    int index = mapindex(entry.key);
+    int index = mapindex(key);
     int counter = 0;
     
     while(map->hashtable[index][counter].key!=NULL)
     {
         counter++;
+        assert(counter < COL_SIZE); // TODO: better error handling required for column overflow.
     }
+    entry_t entry = {key, value}; // TODO: an Entry constructor would help here.
     map->hashtable[index][counter]=entry;
 }
 
-
-
-
-
-
-
-
     /*
-    * Author:Reece Whitehead
-    * Edit:
-    * last changed: 4/5/2017
-    */
+     * Author:Reece Whitehead
+     * Edit:
+     * last changed: 4/5/2018
+     */
     
     map_t mapCreate(){
         map_t map;
@@ -93,20 +84,11 @@ void mapInsert( map_t* mapref, entry_t entry)
         return map;
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-     /*
-    * Author:Reece Whitehead
-    * Edit:
-    * last changed: 4/5/2017
-    */
+    /*
+     * Author:Reece Whitehead
+     * Edit:
+     * last changed: 4/5/2018
+     */
     
     int mapGet(map_t map, keytype key){
         
@@ -127,16 +109,13 @@ void mapInsert( map_t* mapref, entry_t entry)
         
 }
 
-
-//Please review and test
-
-
-
-
-
-// Author: Artur Shadnik
-
-void entryDelete(map_t* map, keytype key){
+/*
+ * Author: Artur Shadnik
+ * Last Changed: 2018/04/05
+ * Needs to be reviewed and tested
+ */
+ 
+void mapRemove(map_t* map, keytype key){
     if (!mapHasKey(map, key)){
         return;
     }
@@ -155,9 +134,11 @@ void entryDelete(map_t* map, keytype key){
     }
 }
 
-//Please review and test
-
-//author: Greagorey Markerian
+/*
+ * Author: Greagorey Markerian
+ * Last Changed: 2018/04/05
+ * Needs to be reviewed and tested
+ */
 
 bool mapHasKey(map_t map, keytype key)
 {
@@ -178,9 +159,11 @@ bool mapHasKey(map_t map, keytype key)
     
 }
 
-    //Please review and test
-
-//Author: Artur Shadnik
+ /*
+  * Author: Artur Shadnik
+  * Last Changed: 2018/04/05
+  * Needs to be reviewed and tested
+  */
 
 void mapClear(map_t * map){
     int i, c;
@@ -193,4 +176,18 @@ void mapClear(map_t * map){
     }
 }
 
-  //Please review and test
+  /*
+   * Author: Braeden Norman
+   * Last Changed: 2018/04/06
+   * Needs to be reviewed and tested
+   */
+  
+  
+  int mapSize(map_t map){
+      int i, c, size = 0;
+      for(i=0; i<ARRAY_SIZE; i++){
+          for(c=0;map[i][c]!=NULL;c++){
+              size++;
+          }
+      }
+  }
