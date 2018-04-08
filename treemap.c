@@ -203,15 +203,20 @@ void mapClear(map_t * map){
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* mapKeySet(map_t* map){
-	keytype* array = malloc(sizeof(keytype)*mapSize(*map)+1);
+keytype* mapKeySet(map_t* mapref)
+{
+	map_t map = *mapref;
+	int size = mapSize(map);
+	keytype* array = malloc(sizeof(keytype)*size+1);
 	int i;
-	int size = sizeof(mapSize); //WHAT??
 	for(i=0; i<size-1; i++){
+		// BUG: traverse in order is a good idea, but a traversal does whole tree, not one node!
+		//   Options: (1) Use iterator; (2) pass array to traversal algorithm and have it fill values
+		//   I recommend (2) unless you really want to learn to write an iterator.
 		array[i] = traverseInOrder(*map);
 	}
 
-	array[mapSize(*map)+1] = NULL;
+	array[size+1] = NULL; // OK - not in spec - client should call mapSize to get size of key-set
 	return array;
 }
 
@@ -251,8 +256,10 @@ bstNode_t* findInsertionPoint(map_t map, keytype key){ //needs work
 * helper function.
 * traverse the tree from smallest to largest node.
 */
-keytype* traverseInOrder(map_t map){
-	if(map != NULL){
+// BUG: mixing recusive and iterative thinking -- this can't be made to work.
+//   Notice: traversal is a void function, but you are trying to return a value - mixed-thinking.
+void traverseInOrder(map_t map){
+	if(map != NULL){  
 		traverseInOrder(map->left);
 		return key; //??? will never go to right side
 		traverseInOrder(map->right);	
