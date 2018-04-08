@@ -1,6 +1,6 @@
 /* This will be the .c file corresponding with the hashmap.h file 
 *
-*   Authors: Reece Whitehead, Artur Shadnik, Greagorey Markerian    
+*   Authors: Reece Whitehead, Artur Shadnik, Greagorey Markerian, Joseph Fall 
 *   Date: April 5, 2018
 *
 */
@@ -96,7 +96,7 @@ int mapGet(map_t map, keytype key)
         return map->hashtable[index][counter].value;
     }
 
-    // TODO: simply assert PRE-condition at top of function.
+    // TODO: simply assert PRE-condition at top of function instead.
     printf("ERROR: key does not exist within map");
     return 0;
 }
@@ -117,7 +117,7 @@ void mapRemove(map_t* mapref, keytype key)
         int c =0;
         int i = mapindex(key);
    
-        while(map->hashtable[i][c].key!=NULL) {
+        while(map->hashtable[i][c].key!=NULL) {  // BUG: just loop over all bins
             if(map->hashtable[i][c].key == key) {
                 ; /*  This code is just plain wrong! The map struct has one member: a hashtable.
                 free(map->key);
@@ -140,7 +140,7 @@ bool mapHasKey(map_t map, keytype key)
     int counter =0;
     int index = mapindex(key);
    
-    while(map->hashtable[index][counter].key!=NULL) {
+    while(map->hashtable[index][counter].key!=NULL) { // BUG: just loop over all bins.
         if(map->hashtable[index][counter].key == key) {
             return true;
         }
@@ -161,7 +161,7 @@ void mapClear(map_t* mapref)
     int i, c;
     for(i = 0; i < ARRAY_SIZE; i++) {
         for(c = 0; c < COL_SIZE; c++) {
-            ; /*  This code is just plain wrong! The map struct has one member: a hashtable.
+            ; /*  BUG: This code is just plain wrong! The map struct has one member: a hashtable.
             free(map->key);
             free(map->value);
             map_t = {NULL, NULL}
@@ -184,4 +184,5 @@ int mapSize(map_t map)
             size++;
         }
     }
+    // BUG:  no return statement!
 }
