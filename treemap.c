@@ -20,22 +20,23 @@
 
 // HELPER FUNCTION PROTOTYPES
 bool bstIsEmpty(map_t tree);
-Node_t* findLargestNode(map_t map);
-bstNode_t* findInsertionPoint(map_t map, keytype value);
+bstNode_t* findLargestNode(map_t map);
+map_t findInsertionPoint(map_t map, keytype value);
 void traverseInOrder(map_t map, keytype* array);
 bstNode_t* findParent(map_t map, char* key);
+map_t findSmallestNode(map_t);
 
 /*
  * Constructor - return a new, empty map
  * POST:  mapSize(map) == 0
  */
- bstNode_t nodeCreate(int value, keytype key){
+bstNode_t nodeCreate(int value, keytype key){
 	bstNode_t root;
 	root.entry.value = 0;
-	root.entry->key = NULL;
-	root.start->left = NULL;
-	map.start->right = NULL;
-	return map;
+	root.entry.key = NULL;
+	root.left = NULL;
+	root.right = NULL;
+	return root;
 }
 
 
@@ -53,7 +54,7 @@ map_t mapCreate(){
 * POST: Get(key) == value
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
-void mapInsert(map_t* map, char* key, int value){
+void mapInsert(map_t map, keytype key, valuetype value){
 	map_t curr = findInsertionPoint(map,key);
 	if(mapHasKey(value)){
 		curr->entry->value = value;
@@ -130,7 +131,7 @@ void entryDelete(map_t* map, keytype key); //differnt type names between keytype
 	else if (cur->left != NULL && cur->right != NULL){ // ----- CASE 3: Node to be deleted has two children
 		map_t smallest = findSmallestNode(map->right);
 		cur.entry = smallest.entry;
-		entryDelete(map, smallest.entry.key);
+		entryDelete(&map, smallest.entry.key);
 		return;
 	}
 }
@@ -187,7 +188,7 @@ void mapClear(map_t * map){
 	map_t curr = *map;
 	if(curr != NULL){
 		mapClear(&curr->left);
-		mamClear(&curr->right);
+		mapClear(&curr->right);
 		free(curr);
 	}
 	*map = NULL;
@@ -217,18 +218,18 @@ keytype* keySet(map_t* map){
  }
  
 
-bstNode_t* findInsertionPoint(map_t* map, keytype key){
+map_t findInsertionPoint(map_t map, keytype key){
 	if(mapIsEmpty(map)){
 		return NULL;
 	}
-	else if(map->entry.key == k){
-		return *map;
+	else if(map->entry.key == key){
+		return map;
 	}
-	else if(map->entry.key > k){
-		bstFind(map->left, k);
+	else if(map->entry.key > key){
+		findInsertionPoint(map->left, key);
 	}
-	else if(map->entry.key < k){
-		bstFind(map->right, k);
+	else if(map->entry.key < key){
+		findInsertionPoint(map->right, key);
 	}
 	return NULL;
 }
@@ -241,4 +242,12 @@ bstNode_t* findInsertionPoint(map_t* map, keytype key){
 	}
 }
 
- 
+map_t findSmallestNode(map_t node){			//check
+	if(mapIsEmpty(node)){
+		return NULL;
+	}
+	if(mapIsEmpty(node->left)){
+		return node;
+	}
+	findSmallestNode(node->left);
+} 
