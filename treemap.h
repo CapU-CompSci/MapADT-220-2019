@@ -12,9 +12,11 @@
 #include <stdlib.h>
 
 typedef char* keytype;
+typedef int valuetype;
+
 struct entry{
 	keytype key;
-	int value;
+	valuetype value;
 };
 typedef struct entry entry_t;
 
