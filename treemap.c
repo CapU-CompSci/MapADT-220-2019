@@ -20,7 +20,7 @@
 
 // HELPER FUNCTION PROTOTYPES
 bool bstIsEmpty(map_t tree);
-Node_t* findLargestNode(map_t map);
+bstNode_t* findLargestNode(map_t map);
 bstNode_t* findInsertionPoint(map_t map, keytype value);
 void traverseInOrder(map_t map, keytype* array);
 bstNode_t* findParent(map_t map, char* key);
@@ -33,7 +33,7 @@ bstNode_t* nodeCreate(valuetype value, keytype key);
  bstNode_t* nodeCreate(valuetype value, keytype key){
 	bstNode_t* node = malloc(sizeof(bstNode_t));
 	node->entry.value = 0;
-	node->entry->key = key;
+	node->entry.key = key;
 	node->left = NULL;
 	node->right = NULL;
 	return node;
