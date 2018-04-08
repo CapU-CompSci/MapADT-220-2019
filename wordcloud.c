@@ -11,8 +11,11 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#include "treemap.h"
-#include "hashmap.h"
+#ifdef HASHMAP
+  #include "hashmap.h"
+#else
+  #include "treemap.h"
+#endif
 #include "map.h"
 
 
