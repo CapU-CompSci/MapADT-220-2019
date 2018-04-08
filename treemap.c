@@ -74,7 +74,7 @@ map_t findParent(map_t map, char* key)
 		return(map);
 	}
 	else if(map->entry.key > key){
-		bstFind(map->left, key);
+		bstFind(map->left, key);  // BUGS!  see  #59
 	}
 	else if(map->entry.key < key){
 		bstFind(map->right, key);
@@ -93,7 +93,7 @@ map_t findLargestNode(map_t map){
 	if(mapIsEmpty(map->right)){
 		return(map);
 	}
-	findLargestNode(map->right);
+	findLargestNode(map->right);  // BUG -- forgot return!!
 }
  
     
@@ -146,7 +146,7 @@ int mapGet(map_t map, keytype key){
 		return(map->entry.value);
 	}
 	else if(map->entry.key > k){
-		bstFind(map->left, k);
+		bstFind(map->left, k);   // BUGS - see #59
 	}
 	else if(map->entry.key < k){
 		bstFind(map->right, k);
