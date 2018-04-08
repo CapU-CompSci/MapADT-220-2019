@@ -22,16 +22,11 @@ int main ()
     map_t map = mapCreate();
     assert(mapIsEmpty(map));
     
-    entry_t entryA = {"a",1};
-    entry_t entryB = {"b",2};
-    entry_t entryC = {"c",3};
-    entry_t entryD = {"d",4};
-
     //INSERT
-    mapInsert(map,entryA);
-    mapInsert(map,entryB);
-    mapInsert(map,entryC);
-    mapInsert(map,entryD);
+    mapInsert(map,"a", 1);
+    mapInsert(map,"b",2);
+    mapInsert(map,"c",3);
+    mapInsert(map,"d",4);
     
     assert(mapSize(map) == 4);
     
@@ -45,7 +40,7 @@ int main ()
     assert(mapHasKey(map,"c"));
     assert(mapHasKey(map,"d"));
     
-    entryDelete(&map,"a");
+    mapRemove(&map,"a");
     assert(!mapHasKey(map,"a"));
     assert(mapSize(map) == 3);
 
