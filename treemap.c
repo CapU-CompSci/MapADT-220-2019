@@ -56,7 +56,7 @@ map_t mapCreate(){
 */
 void mapInsert(map_t* map, keytype key, valuetype value){
 	map_t curr = findInsertionPoint(*map,key);
-	if(mapHasKey(*map,key)){
+	if(mapHasKey(*map, key)){
 		curr->entry.value = value;
 	}
 	else{
@@ -141,10 +141,8 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 * returns the value associated with the given key
 */
 int mapGet(map_t map, keytype key){
-	if(mapIsEmpty(map)){
-		return NULL;
-	}
-	else if(map->entry.key == k){
+	assert(HasKey(key));
+	if(map->entry.key == key){
 		return(map->entry.value);
 	}
 	else if(map->entry.key > k){
@@ -237,7 +235,7 @@ map_t findInsertionPoint(map_t map, keytype key){
 	return NULL;
 }
  
- void traverseInOrder(map_t map){
+ keytype* traverseInOrder(map_t map){
 	if(map != NULL){
 		traverseInOrder(map->left);
 		return key;
