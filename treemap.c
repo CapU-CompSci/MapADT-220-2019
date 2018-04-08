@@ -54,10 +54,10 @@ map_t mapCreate(){
 * POST: Get(key) == value
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
-void mapInsert(map_t* map, char* key, int value){
-	map_t curr = findInsertionPoint(map,key);
-	if(mapHasKey(value)){
-		curr->entry->value = value;
+void mapInsert(map_t* map, keytype key, valuetype value){
+	bstNode_t* curr = findInsertionPoint(*map,key);
+	if(mapHasKey(*map, key)){
+		curr->entry.value = value;
 	}
 	else{
 		curr = nodeCreate(value,key);	
