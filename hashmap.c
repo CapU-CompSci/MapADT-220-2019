@@ -115,7 +115,7 @@ void mapInsert(map_t* map, keytype key, valuetype value){
  * Needs to be reviewed and tested
  */
  
-void entryDelete(map_t* map, keytype key){
+void mapRemove(map_t* map, keytype key){
     if (!mapHasKey(map, key)){
         return;
     }

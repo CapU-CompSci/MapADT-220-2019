@@ -35,7 +35,7 @@ void mapInsert( map_t* map, keytype key, valuetype value);
 * removes the (key, value) pair from the Map, no effect if !mapHasKey(key)
 * POST: mapHasKey(key) == false
 */
-void entryDelete(map_t* map, keytype key);
+void mapRemove(map_t* map, keytype key);
 
 
 /*
