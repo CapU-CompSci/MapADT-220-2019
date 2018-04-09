@@ -19,7 +19,8 @@
  *********************/
 
 // HELPER FUNCTION PROTOTYPES
-bool bstIsEmpty(map_t tree);
+bstNode_t* bstFind(BinaryTree t, keytype key);
+bool mapIsEmpty(map_t tree);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
 void getEntries(map_t map, entry_t* entries[]);
@@ -143,12 +144,19 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	}
 }//might what to make 3 different functions for the 3 cases, looks convaluted
 
-
+bstNode_t* bstFind(BinaryTree t, keytype key){
+	return t;
+}
 /*
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
 int mapGet(map_t map, keytype key){
+	
+	assert(mapHasKey(map,key));
+	
+	return bstFind(map,key)->entry.value;
+	/*
 	//assert(HasKey(key));
 	if(map->entry.key == key){
 		return(map->entry.value);
@@ -159,7 +167,7 @@ int mapGet(map_t map, keytype key){
 	else if(map->entry.key < key){
 		bstFind(map->right, key);
 	}
-	return -1;
+	return -1;*/
 }
 
 
@@ -230,7 +238,7 @@ keytype* mapKeySet(map_t* mapref)
 * helper function.
 * returns tree if the tree is empty.
 */
-bool bstIsEmpty(map_t tree)
+bool mapIsEmpty(map_t tree)
 {
 	return tree == NULL;
 }
