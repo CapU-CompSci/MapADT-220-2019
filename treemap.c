@@ -144,30 +144,26 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	}
 }//might what to make 3 different functions for the 3 cases, looks convaluted
 
+/*
+ * Helper function for finding a key in tree
+ */
 bstNode_t* bstFind(BinaryTree t, keytype key){
-	return t;
+	if(t->entry.key == key)
+		return (t);
+	if(t->entry.key > key)
+		return bstFind(t->left,key);
+	if(t->entry.key < key)
+		return bstFind(t->right,key);
+		
 }
 /*
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
 int mapGet(map_t map, keytype key){
-	
 	assert(mapHasKey(map,key));
 	
 	return bstFind(map,key)->entry.value;
-	/*
-	//assert(HasKey(key));
-	if(map->entry.key == key){
-		return(map->entry.value);
-	}
-	else if(map->entry.key > key){
-		bstFind(map->left, key);   // BUGS - see #59
-	}
-	else if(map->entry.key < key){
-		bstFind(map->right, key);
-	}
-	return -1;*/
 }
 
 
@@ -186,7 +182,7 @@ bool mapHasKey(map_t map, keytype key){
  *returns the number of (key, value) pairs in the Map
  */
 int mapSize(map_t map){
-	if(maptIsEmpty(map)){
+	if(mapIsEmpty(map)){
 		return 0;
 	}
 	return 1 + bstSize(map->left) + bstSize(map->right);
