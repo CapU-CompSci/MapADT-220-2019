@@ -24,8 +24,14 @@ int main ()
     //MAP CREATION
     map_t map = mapCreate();
     assert(mapSize(map)==0);
-/*
-   //INSERT
+    
+    printf("test");
+
+    //FIND INSERTION POINT
+    
+    
+
+    //INSERT
     mapInsert(&map,"a", 1);
     mapInsert(&map,"b",2);
     mapInsert(&map,"c",3);
@@ -34,6 +40,7 @@ int main ()
     //SIZE
     printf("The map contains %d keypairs", mapSize(map));
     assert(mapSize(map) == 4);
+    /*
     //GET
     assert(mapGet(map,"a") == 1);
     assert(mapGet(map,"b") == 2);

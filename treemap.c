@@ -58,12 +58,20 @@ map_t mapCreate(){
 * sets the value for key if HasKey(key), otherwise inserts a new value in Map
 */
 void mapInsert(map_t* map, keytype key, valuetype value){
-	bstNode_t* curr = findInsertionPoint(*map,key);
-	if(mapHasKey(*map, key)){      // BUG: just check if the insertion point is NULL?
-		curr->entry.value = value;
+	bstNode_t* curr = *map;
+	if(curr == NULL)
+	{
+		curr = nodeCreate(value,key);
+		*map = curr;
+		return;
 	}
-	else{
-		curr = nodeCreate(value,key);	
+	if(key < curr->entry.key)
+	{
+		mapInsert(&curr->left, key, value);
+	}
+	else if (key > curr->entry.key)
+	{
+		mapInsert(&curr->right, key, value);
 	}
 }
 
@@ -248,7 +256,7 @@ bstNode_t* findInsertionPoint(map_t map, keytype key){
 	// needs work -- this algorithm needs to return a pointer to an insertion point, not just NULL!
 	//    have a look at the code we wrote for the BST in lab9.
 	if(mapIsEmpty(map)){
-		return NULL;
+		return map;
 	}
 	else if(map->entry.key == key){
 		return map;
