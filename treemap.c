@@ -59,7 +59,7 @@ map_t mapCreate(){
 */
 void mapInsert(map_t* map, keytype key, valuetype value){
 	bstNode_t* curr = findInsertionPoint(*map,key);
-	if(mapHasKey(*map, key)){
+	if(mapHasKey(*map, key)){      // BUG: just check if the insertion point is NULL?
 		curr->entry.value = value;
 	}
 	else{
@@ -75,14 +75,14 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 bstNode_t* findParent(map_t map, keytype key)
 {
 	bstNode_t* parent;
-		if(mapIsEmpty(map)){
+	if(mapIsEmpty(map)){
 		return NULL;
 	}
-	else if(map->left->entry.key == key || map->right->entry.key == key){
+	else if(map->left->entry.key == key || map->right->entry.key == key){  // BUG: potential NULL pointer de-ref
 		return(map);
 	}
 	else if(map->entry.key > key){
-		bstFind(map->left, key);  // BUGS!  see  #59
+		bstFind(map->left, key);  // BUGS!  is this intended to be a recursive call? missing returns?
 	}
 	else if(map->entry.key < key){
 		bstFind(map->right, key);
@@ -115,7 +115,7 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 		return;
 	}
 	map_t cur = findInsertionPoint(*map,key); //used to be mapFind(map, key);
-	bstNode_t* parent = findParent(*map, key);
+	bstNode_t* parent = findParent(*map, key); // IMPROVE: just findParent, then cur is one of its children!
 	if(cur->left == NULL && cur->right == NULL){ // ----- CASE 1: Node to be deleted is a leaf node ----
 		if(parent->left = cur){
 			parent->left = NULL;
@@ -137,9 +137,9 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 		return;
 	}	
 	else if (cur->left != NULL && cur->right != NULL){ // ----- CASE 3: Node to be deleted has two children
-		bstNode_t* smallest = findSmallestNode(*map);
-		cur->entry = smallest->entry;
-		entryDelete(&map, smallest->entry.key);
+		bstNode_t* smallest = findSmallestNode(*map);  // BUG: should find smallest in right-sub-tree?
+		cur->entry = smallest->entry;				   // BUG: swap entries cur <-> smallest
+		entryDelete(&map, smallest->entry.key);		   // BUG: entryDelete does not exist - should be recursive call?
 		return;
 	}
 }//might what to make 3 different functions for the 3 cases, looks convaluted
