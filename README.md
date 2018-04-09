@@ -13,7 +13,7 @@ A Map ADT provides the following operations:
  - **`Insert(key, value)`**
    - **POST: Get(key) == value**
    - sets the value for key if `HasKey(key)`, otherwise inserts a new value in Map
- - **`Delete(key)`**
+ - **`Remove(key)`**
    - **POST: HasKey(key) == false**
    - removes the (key, value) pair from the Map, no effect if !HasKey(key)
  - **`Get(key)`**
