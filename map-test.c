@@ -6,10 +6,7 @@
  *  Date:  April
  */
  
- /*Notes: Try making the file, the entry types and map type are undefined, 
- should this file include the other .h files? but then we have two places where entry and map
- are defiend.
- */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -29,10 +26,10 @@ int main ()
     assert(mapIsEmpty(map));
 
    //INSERT
-    mapInsert(map,"a", 1);
-    mapInsert(map,"b",2);
-    mapInsert(map,"c",3);
-    mapInsert(map,"d",4);
+    mapInsert(&map,"a", 1);
+    mapInsert(&map,"b",2);
+    mapInsert(&map,"c",3);
+    mapInsert(&map,"d",4);
     
     //SIZE
     printf("The map contains %d keypairs", mapSize(map));
@@ -51,8 +48,8 @@ int main ()
     
     mapRemove(&map,"a");
     assert(!mapHasKey(map,"a"));
-   assert(mapSize(map) == 3);
+    assert(mapSize(map) == 3);
     //DELETE MAP
-    mapClear(*map);
+    mapClear(&map);
     assert(mapIsEmpty(map));
 } 
