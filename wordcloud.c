@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
+#include <ctype.h>
 
 #ifdef HASHMAP
   #include "hashmap.h"
