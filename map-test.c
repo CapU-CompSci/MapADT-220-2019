@@ -40,7 +40,7 @@ int main ()
     //SIZE
     printf("The map contains %d keypairs", mapSize(map));
     assert(mapSize(map) == 4);
-    /*
+/*    
     //GET
     assert(mapGet(map,"a") == 1);
     assert(mapGet(map,"b") == 2);

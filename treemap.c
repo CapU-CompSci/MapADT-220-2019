@@ -255,19 +255,22 @@ bool mapIsEmpty(map_t tree)
 bstNode_t* findInsertionPoint(map_t map, keytype key){ 
 	// needs work -- this algorithm needs to return a pointer to an insertion point, not just NULL!
 	//    have a look at the code we wrote for the BST in lab9.
-	if(mapIsEmpty(map)){
-		return map;
+	bstNode_t* curr = map;
+	
+	if(curr == NULL)
+	{
+		return curr;
 	}
-	else if(map->entry.key == key){
-		return map;
+	if(key < curr->entry.key)
+	{
+		findInsertionPoint(map->left, key);
+		return curr;
 	}
-	else if(map->entry.key > key){
-		findInsertionPoint(map->left, key);  // BUG: missing return
-	}
-	else if(map->entry.key < key){
+	else if (key > curr->entry.key)
+	{
 		findInsertionPoint(map->right, key);
+		return curr;
 	}
-	return NULL;
 }
 
 
