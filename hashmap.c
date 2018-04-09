@@ -186,4 +186,5 @@ int mapSize(map_t map)
         }
     }
     // BUG:  no return statement!
+    return size;
 }
