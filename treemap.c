@@ -2,7 +2,7 @@
  * Comp220 - treemap.c
  * Implementation of treemap ADT
  *
- * Authors: Andre Wakkary, Karan Nedungadi, Levi Holmes, Joshua Yeh, Charmaine Neufeld
+ * Authors: Andre Wakkary, Karan Nedungadi, Levi Holmes, Joshua Yeh, Charmaine Neufeld, Keaton Armstrong
  * Date: April 5, 2018
  */
 
@@ -185,7 +185,7 @@ int mapSize(map_t map){
 	if(mapIsEmpty(map)){
 		return 0;
 	}
-	return 1 + bstSize(map->left) + bstSize(map->right);
+	return 1 + mapSize(map->left) + mapSize(map->right);
 }
 
 
