@@ -23,7 +23,7 @@ int main ()
 {
     //MAP CREATION
     map_t map = mapCreate();
-    assert(mapIsEmpty(map));
+    assert(mapSize(map)==0);
 
    //INSERT
     mapInsert(&map,"a", 1);
@@ -51,5 +51,5 @@ int main ()
     assert(mapSize(map) == 3);
     //DELETE MAP
     mapClear(&map);
-    assert(mapIsEmpty(map));
+    assert(mapSize(map)==0);
 } 
