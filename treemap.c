@@ -139,7 +139,7 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	else if (cur->left != NULL && cur->right != NULL){ // ----- CASE 3: Node to be deleted has two children
 		bstNode_t* smallest = findSmallestNode(*map);  // BUG: should find smallest in right-sub-tree?
 		cur->entry = smallest->entry;				   // BUG: swap entries cur <-> smallest
-		entryDelete(&map, smallest->entry.key);		   // BUG: entryDelete does not exist - should be recursive call?
+		mapRemove(map, smallest->entry.key);
 		return;
 	}
 }//might what to make 3 different functions for the 3 cases, looks convaluted
