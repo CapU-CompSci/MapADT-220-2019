@@ -247,3 +247,23 @@ bool keysEqual(keytype key1,keytype key2){
     
     return (strcmp(key1, key2)==0);
 }
+
+
+/*
+ * Author: Ricky Cheung
+ * Last edited: 4/10/2018
+ *
+ * Prints a text representation of the hash table for debugging purposes
+ */
+void mapPrint(map_t map){
+    int i, c;
+    printf("===MAP: HASH TABLE===\n");
+    for( i = 0; i < ARRAY_SIZE; i++ ){
+        for( c = 0; c < COL_SIZE; c++ ){
+            if( map->hashtable[i][c].key != NULL ){
+                printf("[bucket:%d; key:%s; value:%d]\n", i, map->hashtable[i][c].key, map->hashtable[i][c].value);
+            }
+        }
+    }
+    printf("=====================\n");
+}
