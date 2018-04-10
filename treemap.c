@@ -125,8 +125,15 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	if(!mapHasKey(*map, key)){
 		return;
 	}
-	map_t cur = findInsertionPoint(*map,key); //used to be mapFind(map, key);
+	map_t cur;
 	bstNode_t* parent = findParent(*map, key); // IMPROVE: just findParent, then cur is one of its children!
+	if(parent->left->entry.key == key){
+		cur = parent->left;
+	}
+	else{
+		cur = parent->right;
+	}
+	
 	if(cur->left == NULL && cur->right == NULL){
 		leafDelete(cur, parent);
 		return;
@@ -177,7 +184,7 @@ void twoChildDelete(map_t cur, map_t parent)
 	bstNode_t* smallest = findSmallestNode(cur->right);
 	cur->entry = smallest->entry;
 	smallest->entry = cur->entry;
-	mapRemove(map, smallest->entry.key);
+	mapRemove(&cur, smallest->entry.key);
 }
 
 /*
