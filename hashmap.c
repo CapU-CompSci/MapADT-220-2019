@@ -83,27 +83,26 @@ map_t mapCreate()
 /*
  * Author:Reece Whitehead
  * Edit:
- * last changed: 4/5/2018
+ * last changed: 4/9/2018
  */
 int mapGet(map_t map, keytype key)
 {
-    if(mapHasKey(map, key)) {  // PRE-condition -- just assert it.
-        int index = mapindex(key);
-        int counter = 0;
+    assert(mapHasKey(map, key));  
+    int index = mapindex(key);
+    int counter = 0;
 
-        while(map->hashtable[index][counter].key != key) {
-            counter++;
-        }
-        return map->hashtable[index][counter].value;
+    while(map->hashtable[index][counter].key != key) {
+        counter++;
     }
-
-    // TODO: simply assert PRE-condition at top of function instead.
-    printf("ERROR: key does not exist within map");
-    return 0;
+    return map->hashtable[index][counter].value;
 }
+
+ 
+
 
 /*
  * Author: Artur Shadnik
+ * Edited by: Reece Whitehead
  * Last Changed: 2018/04/05
  * Needs to be reviewed and tested
  */
@@ -115,21 +114,23 @@ void mapRemove(map_t* mapref, keytype key)
         return;
     }
     else {
-        int c =0;
+        int c;
         int i = mapindex(key);
-   
-        while(map->hashtable[i][c].key!=NULL) {  // BUG: just loop over all bins
+        
+        for(c = 0; c< COL_SIZE-1;c++){
+       // while(map->hashtable[i][c].key!=NULL) {  // BUG: just loop over all bins
             if(map->hashtable[i][c].key == key) {
-                ; /*  This code is just plain wrong! The map struct has one member: a hashtable.
-                free(map->key);
-                free(map->value);
-                map_t = {NULL, NULL}
-                */
+                
+                map->hashtable[i][c].key = '\0';
+                map->hashtable[i][c].value = 0;
+                
             }
-            c++;
         }
     }
 }
+
+
+
 
 /*
  * Author: Greagorey Markerian
@@ -153,6 +154,7 @@ bool mapHasKey(map_t map, keytype key)
 
 /*
  * Author: Artur Shadnik
+ * Edited by: Reece Whitehead
  * Last Changed: 2018/04/05
  * Needs to be reviewed and tested
  */
@@ -160,8 +162,15 @@ void mapClear(map_t* mapref)
 {
     map_t map = *mapref;
     int i, c;
-    for(i = 0; i < ARRAY_SIZE; i++) {
-        for(c = 0; c < COL_SIZE; c++) {
+    for(i = 0; i < ARRAY_SIZE-1; i++) {
+        for(c = 0; c < COL_SIZE-1; c++) {
+            
+            map->hashtable[i][c].key = '\0';
+            map->hashtable[i][c].value =0;
+            
+            
+            
+            
             ; /*  BUG: This code is just plain wrong! The map struct has one member: a hashtable.
             free(map->key);
             free(map->value);
@@ -188,3 +197,18 @@ int mapSize(map_t map)
     // BUG:  no return statement!
     return size;
 }
+
+
+
+/*
+ * Author: Reece Whitehead
+ * Last Changed: 4/9/018
+ * Needs to be reviewed and tested
+ */
+ /*
+* returns a dynamic array containing all the Map Keys (in any sequence)
+* it is the caller's responsibility to free the returned array.
+*/
+//keytype* mapKeySet(map_t * map){
+    
+    
