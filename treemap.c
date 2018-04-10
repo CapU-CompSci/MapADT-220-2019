@@ -90,10 +90,10 @@ bstNode_t* findParent(map_t map, keytype key)
 		return(map);
 	}
 	else if(map->entry.key > key){
-		bstFind(map->left, key);  // BUGS!  is this intended to be a recursive call? missing returns?
+		 return bstFind(map->left, key);
 	}
 	else if(map->entry.key < key){
-		bstFind(map->right, key);
+		return bstFind(map->right, key);
 	}
 	return NULL;
 }
@@ -110,7 +110,7 @@ bstNode_t* findLargestNode(map_t map){
 	if(mapIsEmpty(map->right)){
 		return(map);
 	}
-	findLargestNode(map->right);  // BUG -- forgot return!!
+	return findLargestNode(map->right);
 }
  
     
@@ -146,7 +146,8 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	}	
 	else if (cur->left != NULL && cur->right != NULL){ // ----- CASE 3: Node to be deleted has two children
 		bstNode_t* smallest = findSmallestNode(*map);  // BUG: should find smallest in right-sub-tree?
-		cur->entry = smallest->entry;				   // BUG: swap entries cur <-> smallest
+		cur->entry = smallest->entry;
+		smallest->entry = cur->entry;
 		mapRemove(map, smallest->entry.key);
 		return;
 	}
@@ -168,7 +169,7 @@ bstNode_t* bstFind(BinaryTree t, keytype key){
 * PRE: HasKey(key)
 * returns the value associated with the given key
 */
-int mapGet(map_t map, keytype key){
+valuetype mapGet(map_t map, keytype key){
 	assert(mapHasKey(map,key));
 	
 	return bstFind(map,key)->entry.value;

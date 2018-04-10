@@ -45,7 +45,7 @@ void mapRemove(map_t* map, keytype key);
 * PRE: mapHasKey(key)
 * returns the value associated with the given key
 */
-int mapGet(map_t map, keytype key);
+valuetype mapGet(map_t map, keytype key);
 
 
 /*
