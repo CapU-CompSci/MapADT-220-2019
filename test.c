@@ -10,6 +10,7 @@
 #include "map.h"
 
 
+
 int main(){
 
     map_t map = mapCreate();
@@ -19,7 +20,12 @@ int main(){
 
 
     mapInsert( &map, "hi", 7);
+<<<<<<< HEAD
 	mapInsert(&map, "by", 14);
+=======
+	mapInsert(&map, "by", 12);
+
+>>>>>>> 5f98e35cf70e4bf8b95c9008a1614d27d7c8c563
 	mapInsert(&map, "as", 23);
 	mapInsert(&map, "qw", 34);
 	mapInsert(&map, "zx", 45);
