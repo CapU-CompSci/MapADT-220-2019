@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <string.h>
 
 #include "hashmap.h"
 #include "map.h"
@@ -18,6 +19,8 @@
 
 long Hmapfunction( keytype Key);
 int mapindex(keytype Key);
+keytype deepCopy(keytype key);
+bool keysEqual(keytype key1,keytype key2);
 
 /*
  * Authors: Braeden Norman, Artur Shadnik
@@ -51,6 +54,7 @@ int mapindex(keytype Key)
 
 /*
  * Author: Greagorey Markerian
+ * Edited by: Reece Whitehead
  * Needs to be reviewed and tested
  */
 void mapInsert(map_t* mapref, keytype key, valuetype value)
@@ -59,13 +63,25 @@ void mapInsert(map_t* mapref, keytype key, valuetype value)
     int index = mapindex(key);
     int counter = 0;
     
-    while(map->hashtable[index][counter].key!=NULL) {
-        counter++;
-        assert(counter < COL_SIZE); // TODO: better error handling required for column overflow.
-    }
-    // TODO: CRITICAL - an Entry constructor to allocate dynamic memory for deep-copy of key!
-    entry_t entry = {key, value};
+    keytype KEY = deepCopy(key);
+    
+    while(map->hashtable[index][counter].key!=NULL && !keysEqual(map->hashtable[index][counter].key, KEY)) {
+    
+        if(counter >= COL_SIZE)
+        {
+            printf("Overflow");
+            assert(counter < COL_SIZE);
+        }
+        else
+        {
+            counter++;
+        }
+     
+        
+    }   
+    entry_t entry = {KEY, value};
     map->hashtable[index][counter] = entry;
+ 
 }
 
 /*
@@ -91,7 +107,7 @@ int mapGet(map_t map, keytype key)
     int index = mapindex(key);
     int counter = 0;
 
-    while(map->hashtable[index][counter].key != key) {
+    while(keysEqual(map->hashtable[index][counter].key, key)==0) {
         counter++;
     }
     return map->hashtable[index][counter].value;
@@ -119,7 +135,7 @@ void mapRemove(map_t* mapref, keytype key)
         
         for(c = 0; c< COL_SIZE-1;c++){
        // while(map->hashtable[i][c].key!=NULL) {  // BUG: just loop over all bins
-            if(map->hashtable[i][c].key == key) {
+            if(map->hashtable[i][c].key == key) {   
                 
                 map->hashtable[i][c].key = '\0';
                 map->hashtable[i][c].value = 0;
@@ -141,10 +157,11 @@ bool mapHasKey(map_t map, keytype key)
 {
     int counter =0;
     int index = mapindex(key);
+    keytype KEY = deepCopy(key);
    
     while(map->hashtable[index][counter].key!=NULL) { // BUG: just loop over all bins.
-        if(map->hashtable[index][counter].key == key) {
-            return true;
+        if(keysEqual(map->hashtable[index][counter].key, KEY)) { //UPDATE: arent these correct since we search only where the index is -Greg
+            return true;                                    //If there are more than one key, it will still give the same index.
         }
         counter++;
     }
@@ -167,15 +184,7 @@ void mapClear(map_t* mapref)
             
             map->hashtable[i][c].key = '\0';
             map->hashtable[i][c].value =0;
-            
-            
-            
-            
-            ; /*  BUG: This code is just plain wrong! The map struct has one member: a hashtable.
-            free(map->key);
-            free(map->value);
-            map_t = {NULL, NULL}
-            */
+
         }
     }
 }
@@ -189,7 +198,7 @@ void mapClear(map_t* mapref)
 int mapSize(map_t map)
 {
     int i, c, size = 0;
-    for(i=0; i<ARRAY_SIZE; i++) {
+    for(i=0; i<ARRAY_SIZE-1; i++) {
         for(c=0; map->hashtable[i][c].key!=NULL; c++) {
             size++;
         }
@@ -212,3 +221,29 @@ int mapSize(map_t map)
 //keytype* mapKeySet(map_t * map){
     
     
+    
+  /*
+  *Author: Reece Whitehead + Greagorey+ Joseph Fall
+  *
+  *Last edited: 4/10/2018
+  */
+keytype deepCopy(keytype key){
+    
+    keytype newKey = calloc(strlen(key), sizeof(char));
+    strcpy(newKey, key);
+    return newKey;
+    
+    
+}
+
+  /*
+  *Author: Reece Whitehead + Greagorey+ Joseph Fall
+  *
+  *Last edited: 4/10/2018
+  */
+
+bool keysEqual(keytype key1,keytype key2){
+    
+    
+    return (strcmp(key1, key2)==0);
+}
