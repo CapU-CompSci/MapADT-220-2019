@@ -122,7 +122,7 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 valuetype mapGet(map_t map, keytype key){
 	assert(mapHasKey(map,key));
 	
-	return bstFind(map,key)->entry.value;
+	return entryFind(map,key)->entry.value;
 }
 
 
@@ -202,9 +202,9 @@ bstNode_t* entryFind(BinaryTree t, keytype key){
 	if(t->entry.key == key)
 		return (t);
 	if(t->entry.key > key)
-		return bstFind(t->left,key);
+		return entryFind(t->left,key);
 	if(t->entry.key < key)
-		return bstFind(t->right,key);
+		return entryFind(t->right,key);
 }
  
 /*
@@ -270,10 +270,10 @@ bstNode_t* findParent(map_t map, keytype key){
 		return(map);
 	}
 	else if(map->entry.key > key){
-		 return bstFind(map->left, key);
+		 return entryFind(map->left, key);
 	}
 	else if(map->entry.key < key){
-		return bstFind(map->right, key);
+		return entryFind(map->right, key);
 	}
 	return NULL;
 }
