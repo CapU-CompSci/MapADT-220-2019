@@ -28,6 +28,9 @@ void traverseInOrder(map_t map, entry_t* entries[], int* index);
 bstNode_t* findParent(map_t map, keytype key);
 bstNode_t* findSmallestNode(map_t);
 bstNode_t* nodeCreate(valuetype value, keytype key);
+void leafDelete(map_t cur, map_t parent);
+void oneChildDelete(map_t cur, map_t parent);
+void twoChildDelete(map_t cur, map_t parent);
 
 
 /*
@@ -124,34 +127,58 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	}
 	map_t cur = findInsertionPoint(*map,key); //used to be mapFind(map, key);
 	bstNode_t* parent = findParent(*map, key); // IMPROVE: just findParent, then cur is one of its children!
-	if(cur->left == NULL && cur->right == NULL){ // ----- CASE 1: Node to be deleted is a leaf node ----
-		if(parent->left = cur){
-			parent->left = NULL;
-		}
-		else{
-			parent->right = NULL;
-		}
-		free(cur);
+	if(cur->left == NULL && cur->right == NULL){
+		leafDelete(cur, parent);
 		return;
 	}
-	else if(cur->left == NULL || cur->right == NULL){ // ----- CASE 2: Node to be deleted has one child ----
-		if(cur->left != NULL){
-			parent->left = cur->left;
-		}
-		else{
-			parent->right = cur->right;
-		}
-		free(cur);
+	else if(cur->left == NULL || cur->right == NULL){
+		oneChildDelete(cur, parent);
 		return;
 	}	
-	else if (cur->left != NULL && cur->right != NULL){ // ----- CASE 3: Node to be deleted has two children
-		bstNode_t* smallest = findSmallestNode(*map);  // BUG: should find smallest in right-sub-tree?
-		cur->entry = smallest->entry;
-		smallest->entry = cur->entry;
-		mapRemove(map, smallest->entry.key);
+	else if (cur->left != NULL && cur->right != NULL){
+		twoChildDelete(cur, parent);
 		return;
 	}
-}//might what to make 3 different functions for the 3 cases, looks convaluted
+}
+
+/*
+ *Helper function to delete leaf node
+ */
+void leafDelete(map_t cur, map_t parent)
+{
+	if(parent->left = cur){
+	parent->left = NULL;
+	}
+	else{
+		parent->right = NULL;
+	}
+	free(cur);
+}
+
+/*
+ *Helper function to delete one child node
+ */
+void oneChildDelete(map_t cur, map_t parent)
+{
+	if(cur->left != NULL){
+		parent->left = cur->left;
+	}
+	else{
+		parent->right = cur->right;
+	}
+	free(cur);
+}
+
+/*
+ *Helper function to delete two child node
+ */
+void twoChildDelete(map_t cur, map_t parent)
+{
+	bstNode_t* smallest = findSmallestNode(cur->right);
+	cur->entry = smallest->entry;
+	smallest->entry = cur->entry;
+	mapRemove(map, smallest->entry.key);
+}
 
 /*
  * Helper function for finding a key in tree
