@@ -50,7 +50,7 @@ int main ()
     assert(mapHasKey(map,"c"));
     assert(mapHasKey(map,"d"));
     printf("mapHasKey works\n");
-    
+    /*
     //keytype* testMap = mapKeySet(&map);
     //assert(*testMap[1] == 2);
     keytype* set = mapKeySet(&map);
@@ -66,14 +66,14 @@ int main ()
     assert(mapHasKey(map2,"c"));
     assert(mapHasKey(map2,"d"));
     printf("mapKeySet works\n");
-    
+    */
     //REMOVE
-    /*
+    
     mapRemove(&map,"b");
     assert(!mapHasKey(map,"b"));
     assert(mapSize(map) == 3);
     printf("mapRemove works\n");
-    */
+    
     //DELETE MAP
     mapClear(&map);
     assert(mapSize(map)==0);

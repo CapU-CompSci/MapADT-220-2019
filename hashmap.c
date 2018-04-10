@@ -96,6 +96,11 @@ map_t mapCreate()
     return map;
 }
     
+    
+    
+    
+    
+    
 /*
  * Author:Reece Whitehead
  * Edit:
@@ -116,6 +121,11 @@ int mapGet(map_t map, keytype key)
  
 
 
+
+
+
+
+
 /*
  * Author: Artur Shadnik
  * Edited by: Reece Whitehead
@@ -132,18 +142,25 @@ void mapRemove(map_t* mapref, keytype key)
     else {
         int c;
         int i = mapindex(key);
+        int t;
+       
         
-        for(c = 0; c< COL_SIZE-1;c++){
-       // while(map->hashtable[i][c].key!=NULL) {  // BUG: just loop over all bins
-            if(map->hashtable[i][c].key == key) {   
+       
+        while(map->hashtable[i][c].key!=NULL) {  
+            if(keysEqual(map->hashtable[i][c].key, key)) {   
                 
-                map->hashtable[i][c].key = '\0';
-                map->hashtable[i][c].value = 0;
-                
+                //map->hashtable[i][c].key = '\0';
+                //map->hashtable[i][c].value = 0;
+                for(t=c;t<COL_SIZE-1;t++){
+                    
+                    map->hashtable[i][t] = map->hashtable[i][t+1]; //I think this should work for deleting an entry at a found index by overwriting the data with whatever is left of it
+                    //I do this to keep the overflow bin compressed to the left side of the array
+                }
             }
         }
     }
 }
+
 
 
 
@@ -228,7 +245,6 @@ int mapSize(map_t map)
   *Last edited: 4/10/2018
   */
 keytype deepCopy(keytype key){
-    
     keytype newKey = calloc(strlen(key), sizeof(char));
     strcpy(newKey, key);
     return newKey;
@@ -243,8 +259,6 @@ keytype deepCopy(keytype key){
   */
 
 bool keysEqual(keytype key1,keytype key2){
-    
-    
     return (strcmp(key1, key2)==0);
 }
 
