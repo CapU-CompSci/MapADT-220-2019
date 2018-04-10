@@ -19,19 +19,22 @@
  *********************/
 
 // HELPER FUNCTION PROTOTYPES
+
 bstNode_t* entryFind(BinaryTree t, keytype key);
-bool mapIsEmpty(map_t tree);
-bstNode_t* findLargestNode(map_t map);
+bstNode_t* findSmallestNode(map_t node);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
-void getEntries(map_t map, entry_t* entries[]);
-void traverseInOrder(map_t map, entry_t* entries[], int* index);
+bstNode_t* findLargestNode(map_t map);
 bstNode_t* findParent(map_t map, keytype key);
-bstNode_t* findSmallestNode(map_t);
-bstNode_t* nodeCreate(valuetype value, keytype key);
 void leafDelete(map_t cur, map_t parent);
 void oneChildDelete(map_t cur, map_t parent);
 void twoChildDelete(map_t cur, map_t parent);
+bool mapIsEmpty(map_t tree);
+void getEntries(map_t map, entry_t* entries[]);
+void traverseInOrder(map_t map, entry_t* entries[], int* index);
 
+/***************************
+ * ----- MAP FUNCTIONS -----
+ ***************************
 
 /*
  * Constructor (of node) - return a new, node with given vakue and key
@@ -78,43 +81,6 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 	}
 }
 
-
-/*
-* Helper function. 
-* Finds the parent node of the given key.
-*/
-bstNode_t* findParent(map_t map, keytype key)
-{
-	bstNode_t* parent;
-	if(mapIsEmpty(map)){
-		return NULL;
-	}
-	else if(map->left->entry.key == key || map->right->entry.key == key){  // BUG: potential NULL pointer de-ref
-		return(map);
-	}
-	else if(map->entry.key > key){
-		 return bstFind(map->left, key);
-	}
-	else if(map->entry.key < key){
-		return bstFind(map->right, key);
-	}
-	return NULL;
-}
-
-
-/*
-* helper function.
-* Finds the largest node in the tree.
-*/
-bstNode_t* findLargestNode(map_t map){
-	if(mapIsEmpty(map)){
-		return NULL;
-	}
-	if(mapIsEmpty(map->right)){
-		return(map);
-	}
-	return findLargestNode(map->right);
-}
  
     
 /*
@@ -148,57 +114,7 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	}
 }
 
-/*
- *Helper function to delete leaf node
- */
-void leafDelete(map_t cur, map_t parent)
-{
-	if(parent->left = cur){
-	parent->left = NULL;
-	}
-	else{
-		parent->right = NULL;
-	}
-	free(cur);
-}
 
-/*
- *Helper function to delete one child node
- */
-void oneChildDelete(map_t cur, map_t parent)
-{
-	if(cur->left != NULL){
-		parent->left = cur->left;
-	}
-	else{
-		parent->right = cur->right;
-	}
-	free(cur);
-}
-
-/*
- *Helper function to delete two child node
- */
-void twoChildDelete(map_t cur, map_t parent)
-{
-	bstNode_t* smallest = findSmallestNode(cur->right);
-	cur->entry = smallest->entry;
-	smallest->entry = cur->entry;
-	mapRemove(&cur, smallest->entry.key);
-}
-
-/*
- * Helper function for finding a key in tree
- */
-bstNode_t* entryFind(BinaryTree t, keytype key){
-	if(t->entry.key == key)
-		return (t);
-	if(t->entry.key > key)
-		return bstFind(t->left,key);
-	if(t->entry.key < key)
-		return bstFind(t->right,key);
-		
-}
 /*
 * PRE: HasKey(key)
 * returns the value associated with the given key
@@ -273,20 +189,40 @@ keytype* mapKeySet(map_t* mapref)
 }
 
 
+/*******************************
+ *  ----- HELPER FUNCTIONS -----
+ *******************************/
+ 
+ // ----- FINDERS -----
+ 
 /*
-* helper function.
-* returns tree if the tree is empty.
-*/
-bool mapIsEmpty(map_t tree)
-{
-	return tree == NULL;
+ * Helper function for finding a key in tree
+ */
+bstNode_t* entryFind(BinaryTree t, keytype key){
+	if(t->entry.key == key)
+		return (t);
+	if(t->entry.key > key)
+		return bstFind(t->left,key);
+	if(t->entry.key < key)
+		return bstFind(t->right,key);
 }
  
+/*
+ * finds the smallest node in the tree.
+ */
+bstNode_t* findSmallestNode(map_t node){ //check
+	if(mapIsEmpty(node)){
+		return NULL;
+	}
+	if(mapIsEmpty(node->left)){
+		return node;
+	}
+	findSmallestNode(node->left);
+} 
  
- /*
-* helper function.
-* Finds the appropirate node to insert the given key in the tree.
-*/
+/*
+ * Finds the appropirate node to insert the given key in the tree.
+ */
 bstNode_t* findInsertionPoint(map_t map, keytype key){ 
 	// needs work -- this algorithm needs to return a pointer to an insertion point, not just NULL!
 	//    have a look at the code we wrote for the BST in lab9.
@@ -308,6 +244,87 @@ bstNode_t* findInsertionPoint(map_t map, keytype key){
 	}
 }
 
+/*
+ * Finds the largest node in the tree.
+ */
+bstNode_t* findLargestNode(map_t map){
+	if(mapIsEmpty(map)){
+		return NULL;
+	}
+	if(mapIsEmpty(map->right)){
+		return(map);
+	}
+	return findLargestNode(map->right);
+}
+
+
+/*
+ * Finds the parent node of the given key.
+ */
+bstNode_t* findParent(map_t map, keytype key){
+	bstNode_t* parent;
+	if(mapIsEmpty(map)){
+		return NULL;
+	}
+	else if(map->left->entry.key == key || map->right->entry.key == key){  // BUG: potential NULL pointer de-ref
+		return(map);
+	}
+	else if(map->entry.key > key){
+		 return bstFind(map->left, key);
+	}
+	else if(map->entry.key < key){
+		return bstFind(map->right, key);
+	}
+	return NULL;
+}
+
+// ----- DELETERS -----
+
+/*
+ *Helper function to delete leaf node
+ */
+void leafDelete(map_t cur, map_t parent){
+	if(parent->left = cur){
+	parent->left = NULL;
+	}
+	else{
+		parent->right = NULL;
+	}
+	free(cur);
+}
+
+/*
+ *Helper function to delete one child node
+ */
+void oneChildDelete(map_t cur, map_t parent){
+	if(cur->left != NULL){
+		parent->left = cur->left;
+	}
+	else{
+		parent->right = cur->right;
+	}
+	free(cur);
+}
+
+/*
+ *Helper function to delete two child node
+ */
+void twoChildDelete(map_t cur, map_t parent){
+	bstNode_t* smallest = findSmallestNode(cur->right);
+	cur->entry = smallest->entry;
+	smallest->entry = cur->entry;
+	mapRemove(&cur, smallest->entry.key);
+}
+
+// ----- MISC. HELPERS -----
+
+/*
+* returns tree if the tree is empty.
+*/
+bool mapIsEmpty(map_t tree){
+	return tree == NULL;
+}
+ 
 
 /*
 * helper function:  generate a list of all entries in the map.
@@ -330,18 +347,3 @@ void traverseInOrder(map_t map, entry_t* entries[], int* index){
 		traverseInOrder(map->right, entries, index);
 	}									
 }
-
-
-/*
-* helper function.
-* finds the smallest node in the tree.
-*/
-bstNode_t* findSmallestNode(map_t node){ //check
-	if(mapIsEmpty(node)){
-		return NULL;
-	}
-	if(mapIsEmpty(node->left)){
-		return node;
-	}
-	findSmallestNode(node->left);
-} 
