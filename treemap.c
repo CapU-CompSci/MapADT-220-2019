@@ -34,6 +34,8 @@ void twoChildDelete(map_t cur, map_t parent);
 bool mapIsEmpty(map_t tree);
 void getEntries(map_t map, entry_t* entries[]);
 void traverseInOrder(map_t map, entry_t* entries[], int* index);
+void mapPrint(map_t map);
+void printTraverse(map_t map);
 
 /*****************************
  * ----- MAP FUNCTIONS ----- *
@@ -339,3 +341,19 @@ void traverseInOrder(map_t map, entry_t* entries[], int* index){
 		traverseInOrder(map->right, entries, index);
 	}									
 }
+
+void mapPrint(map_t map)
+{
+	printTraverse(map);
+}
+
+void printTraverse(map_t map)
+{
+	if(map != NULL){
+		printTraverse(map->left);
+		printf("|%s|\t|%d|\n", map->entry.key, map->entry.value);
+		printTraverse(map->right);
+	}
+}
+
+
