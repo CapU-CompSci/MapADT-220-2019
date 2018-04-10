@@ -341,7 +341,7 @@ void traverseInOrder(map_t map, entry_t* entries[], int* index){
 
 /*
  * helper function:  Prints the map in order
- * Function not tested yet
+ * 
  */
 void mapPrint(map_t map)
 {
