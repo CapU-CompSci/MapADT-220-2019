@@ -14,27 +14,30 @@
 #include "treemap.h"
 #include "map.h"
 
-/*********************
- *  PRIVATE IMPLEMENTATION
- *********************/
+/******************************************
+ * ----- HELPER FUNCTION PROTOTYPES ----- *
+ ******************************************/
 
-// HELPER FUNCTION PROTOTYPES
-
+// ----- FINDERS -----
 bstNode_t* entryFind(BinaryTree t, keytype key);
 bstNode_t* findSmallestNode(map_t node);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findParent(map_t map, keytype key);
+
+// ----- DELETERS -----
 void leafDelete(map_t cur, map_t parent);
 void oneChildDelete(map_t cur, map_t parent);
 void twoChildDelete(map_t cur, map_t parent);
+
+// ----- MISC. HELPERS -----
 bool mapIsEmpty(map_t tree);
 void getEntries(map_t map, entry_t* entries[]);
 void traverseInOrder(map_t map, entry_t* entries[], int* index);
 
-/***************************
- * ----- MAP FUNCTIONS -----
- ***************************
+/*****************************
+ * ----- MAP FUNCTIONS ----- *
+ *****************************/
 
 /*
  * Constructor (of node) - return a new, node with given vakue and key
@@ -48,7 +51,6 @@ bstNode_t* nodeCreate(valuetype value, keytype key){
 	return node;
 }
 
-
 /*
  * Constructor - return a new, empty map
  * POST:  mapSize(map) == 0
@@ -57,7 +59,6 @@ map_t mapCreate(){
 	map_t map = NULL;
 	return map;
 }
-
 
 /*
 * POST: Get(key) == value
@@ -81,8 +82,6 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 	}
 }
 
- 
-    
 /*
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  * POST: HasKey(key) == false
@@ -114,7 +113,6 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	}
 }
 
-
 /*
 * PRE: HasKey(key)
 * returns the value associated with the given key
@@ -124,7 +122,6 @@ valuetype mapGet(map_t map, keytype key){
 	
 	return entryFind(map,key)->entry.value;
 }
-
 
 /*
 * returns true iff the Map contains the given key
@@ -136,7 +133,6 @@ bool mapHasKey(map_t map, keytype key){
 	return false;
 }
 
-
 /*
  *returns the number of (key, value) pairs in the Map
  */
@@ -146,7 +142,6 @@ int mapSize(map_t map){
 	}
 	return 1 + mapSize(map->left) + mapSize(map->right);
 }
-
 
 /*
 * POST: Size() == 0
@@ -161,7 +156,6 @@ void mapClear(map_t * map){
 	}
 	*map = NULL;
 }
-
 
 /*
 * returns a dynamic array containing all the Map Keys (in any sequence)
@@ -188,12 +182,11 @@ keytype* mapKeySet(map_t* mapref)
 	return keys;
 }
 
-
-/*******************************
- *  ----- HELPER FUNCTIONS -----
- *******************************/
+/*********************************
+ *  ----- HELPER FUNCTIONS ----- *
+ *********************************/
  
- // ----- FINDERS -----
+// ----- FINDERS -----
  
 /*
  * Helper function for finding a key in tree
@@ -256,7 +249,6 @@ bstNode_t* findLargestNode(map_t map){
 	}
 	return findLargestNode(map->right);
 }
-
 
 /*
  * Finds the parent node of the given key.
@@ -324,7 +316,6 @@ void twoChildDelete(map_t cur, map_t parent){
 bool mapIsEmpty(map_t tree){
 	return tree == NULL;
 }
- 
 
 /*
 * helper function:  generate a list of all entries in the map.
@@ -334,6 +325,7 @@ bool mapIsEmpty(map_t tree){
 void getEntries(map_t map, entry_t* entries[]){
 	traverseInOrder(map, entries, 0);
 }
+
 /*
 * helper function:  traverse the tree to generate the list of entries.
 * PRE: entries array is sized >= mapSize(map);  0 <= index < mapSize(map)
