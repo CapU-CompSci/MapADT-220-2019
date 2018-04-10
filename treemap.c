@@ -19,7 +19,7 @@
  *********************/
 
 // HELPER FUNCTION PROTOTYPES
-bstNode_t* bstFind(BinaryTree t, keytype key);
+bstNode_t* entryFind(BinaryTree t, keytype key);
 bool mapIsEmpty(map_t tree);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
@@ -190,7 +190,7 @@ void twoChildDelete(map_t cur, map_t parent)
 /*
  * Helper function for finding a key in tree
  */
-bstNode_t* bstFind(BinaryTree t, keytype key){
+bstNode_t* entryFind(BinaryTree t, keytype key){
 	if(t->entry.key == key)
 		return (t);
 	if(t->entry.key > key)
