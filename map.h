@@ -71,3 +71,8 @@ void mapClear(map_t * map);
 * it is the caller's responsibility to free the returned array.
 */
 keytype* mapKeySet(map_t * map);
+
+/*
+ * Prints to screen a text representation of the all the keys and values in map
+ */
+void mapPrint(map_t map);
