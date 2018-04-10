@@ -45,7 +45,7 @@ void mapPrint(map_t map);
  */
 bstNode_t* nodeCreate(valuetype value, keytype key){
 	bstNode_t* node = malloc(sizeof(bstNode_t));
-	node->entry.value = 0;
+	node->entry.value = value;
 	node->entry.key = key;
 	node->left = NULL;
 	node->right = NULL;
@@ -128,10 +128,8 @@ valuetype mapGet(map_t map, keytype key){
 * returns true iff the Map contains the given key
 */
 bool mapHasKey(map_t map, keytype key){
-	if(mapGet(map, key) != -1){
-		return true;
-	}
-	return false;
+
+	return(entryFind(map,key)->entry.key == key);
 }
 
 /*
