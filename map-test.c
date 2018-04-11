@@ -50,25 +50,23 @@ int main ()
     assert(mapHasKey(map,"c"));
     assert(mapHasKey(map,"d"));
     printf("mapHasKey works\n");
-    /*
-    //keytype* testMap = mapKeySet(&map);
-    //assert(*testMap[1] == 2);
+    
+    //MAPKEYSET
     keytype* set = mapKeySet(&map);
     map_t map2 = mapCreate();
-    
     
     mapInsert(&map2,set[0], 1);
     mapInsert(&map2,set[1], 2);
     mapInsert(&map2,set[2], 3);
     mapInsert(&map2,set[3], 4);
+    
     assert(mapHasKey(map2,"a"));
     assert(mapHasKey(map2,"b"));
     assert(mapHasKey(map2,"c"));
     assert(mapHasKey(map2,"d"));
     printf("mapKeySet works\n");
-    */
-    //REMOVE
     
+    //REMOVE
     mapRemove(&map,"b");
     assert(!mapHasKey(map,"b"));
     assert(mapSize(map) == 3);
