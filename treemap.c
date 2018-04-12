@@ -206,13 +206,13 @@ bstNode_t* entryFind(map_t t, keytype key){
 	if(t == NULL){
 		return NULL;	
 	}
-	if(t->entry.key == key){
+	if(keyCompare(key, t->entry.key)==0){
 		return (t);
 	}
-	if(t->entry.key > key){
+	if(keyCompare(key,t->entry.key)<0){
 		return entryFind(t->left,key);
 	}
-	if(t->entry.key < key){
+	if(keyCompare(key,t->entry.key)>0){
 		return entryFind(t->right,key);
 	}
 	
@@ -274,19 +274,16 @@ bstNode_t* findParent(map_t* map, keytype key){
 	if(mapIsEmpty(curr)){
 		return NULL;
 	}
-	if(curr->entry.key == key){
-		return NULL;
-	}
 	if(!mapIsEmpty(curr->left) && curr->left->entry.key == key || !mapIsEmpty(curr->right) && curr->right->entry.key == key){  // BUG (solved?): potential NULL pointer de-ref (curr-left or curr->right needs to exist before checking)
 		return *map;
 	}
-	if(curr->entry.key > key){
-		return entryFind(curr->left, key);
+	else if(keyCompare(key,parent->entry.key)<0){
+		return findParent(parent->left,key);
 	}
-	if(curr->entry.key < key){
-		return entryFind(curr->right, key);
+	else if(keyCompare(key,parent->entry.key)>0){
+		return findParent(parent->right,key);
 	}
-
+	return NULL;
 }
 
 // ----- DELETERS -----
