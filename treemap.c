@@ -82,7 +82,8 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 	{
 		mapInsert(&curr->right, key, value);
 	}
-	else if(key == curr->entry.key){
+	else if(mapHasKey(*map, key)){
+		curr = entryFind(*map, key);
 		curr->entry.value = value;
 	}
 }
