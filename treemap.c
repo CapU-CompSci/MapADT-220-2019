@@ -74,7 +74,10 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 		*map = nodeCreate(value,key);
 		return;
 	}
-	if(keyCompare(key, curr->entry.key)<0)
+	if(keyCompare(key, curr->entry.key) == 0){
+		curr->entry.value = value;
+	}
+	else if(keyCompare(key, curr->entry.key)<0)
 	{
 		mapInsert(&curr->left, key, value);
 	}
