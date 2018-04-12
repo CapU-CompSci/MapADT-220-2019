@@ -25,13 +25,17 @@ bstNode_t* findSmallestNode(map_t node);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findParent(map_t* map, keytype key);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1517663caa1ba0312e01be4eea99105a5a58006e
 // ----- DELETERS -----
 void leafDelete(map_t* cur, map_t parent);
 void oneChildDelete(map_t* cur, map_t parent);
 void twoChildDelete(map_t* cur, map_t parent);
 
 // ----- MISC. HELPERS -----
+int keyCompare(keytype insertkey, keytype mapkey);
 bool mapIsEmpty(map_t tree);
 void getEntries(map_t map, entry_t* entries[]);
 void traverseInOrder(map_t map, entry_t* entries[], int index);
@@ -199,15 +203,19 @@ keytype* mapKeySet(map_t* mapref)
  * Helper function for finding a key in tree
  */
 bstNode_t* entryFind(map_t t, keytype key){
-	if(keysEqual(key,t->entry.key) || t == NULL){
+	if(t == NULL){
+		return NULL;	
+	}
+	if(keyCompare(key, t->entry.key)==0){
 		return (t);
 	}
-	if(keyCompare(key, t->entry.key)<0){
+	if(keyCompare(key,t->entry.key)<0){
 		return entryFind(t->left,key);
 	}
-	else if(keyCompare(key, t->entry.key)>0){
+	if(keyCompare(key,t->entry.key)>0){
 		return entryFind(t->right,key);
 	}
+	
 }
  
 /*
@@ -266,19 +274,16 @@ bstNode_t* findParent(map_t* map, keytype key){
 	if(mapIsEmpty(curr)){
 		return NULL;
 	}
-	if(curr->entry.key == key){
-		return NULL;
-	}
 	if(!mapIsEmpty(curr->left) && curr->left->entry.key == key || !mapIsEmpty(curr->right) && curr->right->entry.key == key){  // BUG (solved?): potential NULL pointer de-ref (curr-left or curr->right needs to exist before checking)
 		return *map;
 	}
-	if(curr->entry.key > key){
-		return entryFind(curr->left, key);
+	else if(keyCompare(key,parent->entry.key)<0){
+		return findParent(parent->left,key);
 	}
-	if(curr->entry.key < key){
-		return entryFind(curr->right, key);
+	else if(keyCompare(key,parent->entry.key)>0){
+		return findParent(parent->right,key);
 	}
-
+	return NULL;
 }
 
 // ----- DELETERS -----
@@ -375,14 +380,4 @@ void mapPrint(map_t map)
 		mapPrint(map->right);
 	}
 }
-
-
-/*
- * helper function:  returns true if string a and b are the same
- * 
- */
-bool keysEqual(keytype a, keytype b){
-	return strcmp(a,b) == 0;
-}
-
 
