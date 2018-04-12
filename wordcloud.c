@@ -52,11 +52,19 @@ int main (int argc, char* argv[])
 	char word[MAX_WORD_LENGTH + 1];
 	
 	while(fscanf(f, WORD_FORMAT, word) == 1) {
-		int count = 1;
-		// TODO: if word already in map, get existing count, increment, then insert
+		int count;
+		if(mapHasKey(wordmap, word)) {
+			count = mapGet(wordmap, word) + 1;
+		}
+		else {
+			count = 1;
+		}
 		mapInsert(&wordmap, word, count);  
 	}
-		
+	
+	//FOR DEBUGGING:
+	mapPrint(wordmap);
+	
 	printf("WordCloud Frequency \n");
 	// TODO: print tabular form needs formatting...
 	
