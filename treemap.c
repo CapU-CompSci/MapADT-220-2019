@@ -237,11 +237,11 @@ bstNode_t* findInsertionPoint(map_t map, keytype key){
 	{
 		return curr;
 	}
-	if(key < curr->entry.key)
+	if(keyCompare(key, curr->entry.key)<0)
 	{
 		return findInsertionPoint(map->left, key);
 	}
-	else if (key > curr->entry.key)
+	else if (keyCompare(key, curr->entry.key)>0)
 	{
 		return findInsertionPoint(map->right, key);
 	}
@@ -321,7 +321,7 @@ void twoChildDelete(map_t map, map_t parent){
 		bstNode_t* smallest = findSmallestNode(parent->right);
 		bstNode_t* smallestparent = findParent(map, smallest->entry.key);
 		parent->entry = smallest->entry;
-		smallestparent->left = NULL;
+		smallestparent->left = NULL;//potential bug not sure which one
 		free(smallest);
 		return;
 
@@ -330,7 +330,7 @@ void twoChildDelete(map_t map, map_t parent){
 		bstNode_t* largest = findLargestNode(parent->left);
 		bstNode_t* largestparent = findParent(map, largest->entry.key);
 		parent->entry = largest->entry;
-		largestparent->left = NULL;
+		largestparent->left = NULL;//potential bug
 		free(largest);
 		return;
 	}
