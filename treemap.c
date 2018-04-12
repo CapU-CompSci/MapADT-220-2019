@@ -391,7 +391,7 @@ void mapPrint(map_t map)
 {
 	if(map != NULL){
 		mapPrint(map->left);
-		printf("|%s|\t|%d|\n", map->entry.key, map->entry.value);
+		printf("|%s|\t|%d|\n\n", map->entry.key, map->entry.value);
 		mapPrint(map->right);
 	}
 }
