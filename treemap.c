@@ -316,12 +316,24 @@ void oneChildDelete(map_t* cur, map_t parent){
 /*
  *Helper function to delete two child node
  */
-void twoChildDelete(map_t* cur, map_t parent){
-	bstNode_t* curr = *cur;
-	bstNode_t* smallest = findSmallestNode(curr->right);
-	curr->entry = smallest->entry;
-	smallest->entry = curr->entry;
-	mapRemove(&curr, smallest->entry.key);
+void twoChildDelete(map_t map, map_t parent){
+	if(keyCompare(parent->entry.key, map->entry.key)>0){
+		bstNode_t* smallest = findSmallestNode(parent->right);
+		bstNode_t* smallestparent = findParent(map, smallest->entry.key);
+		parent->entry = smallest->entry;
+		smallestparent->left = NULL;
+		free(smallest);
+		return;
+
+	}
+	else if(keyCompare(parent->entry.key, map->entry.key)<0){
+		bstNode_t* largest = findLargestNode(parent->left);
+		bstNode_t* largestparent = findParent(map, largest->entry.key);
+		parent->entry = largest->entry;
+		largestparent->left = NULL;
+		free(largest);
+		return;
+	}
 }
 
 // ----- MISC. HELPERS -----
