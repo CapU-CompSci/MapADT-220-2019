@@ -172,7 +172,6 @@ void mapClear(map_t * map){
 */
 keytype* mapKeySet(map_t* mapref)
 {
-
 	map_t map = *mapref;
 	int size = mapSize(map);
 	// Get pointers to all the entries
@@ -273,11 +272,11 @@ bstNode_t* findParent(map_t* map, keytype key){
 	if(!mapIsEmpty(curr->left) && curr->left->entry.key == key || !mapIsEmpty(curr->right) && curr->right->entry.key == key){  // BUG (solved?): potential NULL pointer de-ref (curr-left or curr->right needs to exist before checking)
 		return *map;
 	}
-	else if(keyCompare(key,parent->entry.key)<0){
-		return findParent(parent->left,key);
+	else if(keyCompare(key,curr->entry.key)<0){
+		return entryFind(curr->left,key);
 	}
-	else if(keyCompare(key,parent->entry.key)>0){
-		return findParent(parent->right,key);
+	else if(keyCompare(key,curr->entry.key)>0){
+		return entryFind(curr->right,key);
 	}
 	return NULL;
 }
@@ -354,13 +353,18 @@ void getEntries(map_t map, entry_t* entries[]){
 * POST: entries array is filled with pointers to map entries, in "in order" sequence
 */
 void traverseInOrder(map_t map, entry_t* entries[], int index){
-
+	
 	if(map != NULL){  
-		traverseInOrder(map->left, entries, index);
+		if(!mapIsEmpty(map->left)){
+			traverseInOrder(map->left, entries, index);
+			index++;
+		}
 		entries[index] = &(map->entry);
 	// a pointer to the entry, not a copy!
-		(index)++;
-		traverseInOrder(map->right, entries, index);
+		index++;
+		if(!mapIsEmpty(map->right)){
+			traverseInOrder(map->right, entries, index);
+		}
 	}							
 }
 
