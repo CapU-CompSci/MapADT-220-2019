@@ -74,11 +74,11 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 		*map = curr;
 		return;
 	}
-	if(key < curr->entry.key)
+	if(keyCompare(key, curr->entry.key)<0)
 	{
 		mapInsert(&curr->left, key, value);
 	}
-	else if (key > curr->entry.key)
+	else if (keyCompare(key, curr->entry.key)>0)
 	{
 		mapInsert(&curr->right, key, value);
 	}
@@ -332,7 +332,12 @@ void twoChildDelete(map_t* cur, map_t parent){
 }
 
 // ----- MISC. HELPERS -----
+/*
+ *returns 1 if insertkey>mapkey, -1 if insertkey<mapkey, and 0 if ==
+ */
 
+int keyCompare(keytype insertkey, keytype mapkey){
+	return strcmp( insertkey, mapkey);
 /*
 * returns tree if the tree is empty.
 */
