@@ -67,11 +67,14 @@ int main ()
     printf("mapKeySet works\n");
     
     //REMOVE
+    mapPrint(map);
     mapRemove(&map,"b");
     assert(!mapHasKey(map,"b"));
     assert(mapSize(map) == 3);
-    printf("mapRemove works\n");
-    
+    mapPrint(map);
+    printf("mapRemove works\n"); 
+    mapRemove(&map,"d");
+    mapPrint(map);    
     //DELETE MAP
     mapClear(&map);
     assert(mapSize(map)==0);

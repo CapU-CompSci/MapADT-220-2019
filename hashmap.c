@@ -46,7 +46,8 @@ int mapindex(keytype Key)
 {
     long hash = Hmapfunction(Key);
     int index = hash%ARRAY_SIZE;
-    return index;
+    return abs(index);  //TEMPORARY FIX: returns abs(index) to prevent accessing
+                        //                  negative indices of an array
 }
 //Please Review and test
 
