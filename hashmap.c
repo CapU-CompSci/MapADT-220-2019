@@ -226,16 +226,6 @@ int mapSize(map_t map)
 
 
 
-/*
- * Author: Reece Whitehead
- * Last Changed: 4/9/018
- * Needs to be reviewed and tested
- */
- /*
-* returns a dynamic array containing all the Map Keys (in any sequence)
-* it is the caller's responsibility to free the returned array.
-*/
-//keytype* mapKeySet(map_t * map){
 
   /*
   *Author: Reece Whitehead + Greagorey+ Joseph Fall

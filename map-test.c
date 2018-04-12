@@ -27,11 +27,10 @@ int main ()
     printf("Testing...\n");
 
     //INSERT
-    mapInsert(&map,"b",1);
-    mapInsert(&map,"a",2);
+    mapInsert(&map,"a",1);
+    mapInsert(&map,"b",2);
     mapInsert(&map,"c",3);
     mapInsert(&map,"d",4);
-    mapPrint(map);
     printf("mapInsert works\n");
 
     //SIZE
@@ -39,8 +38,8 @@ int main ()
     assert(mapSize(map) == 4);
 
     //GET
-    assert(mapGet(map,"a") == 2);
-    assert(mapGet(map,"b") == 1);
+    assert(mapGet(map,"a") == 1);
+    assert(mapGet(map,"b") == 2);
     assert(mapGet(map,"c") == 3);
     assert(mapGet(map,"d") == 4);
     printf("mapGet works\n");
