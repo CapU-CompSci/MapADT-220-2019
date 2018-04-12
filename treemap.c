@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <string.h>
 
 #include "treemap.h"
 #include "map.h"
@@ -19,16 +20,16 @@
  ******************************************/
 
 // ----- FINDERS -----
-bstNode_t* entryFind(BinaryTree t, keytype key);
+bstNode_t* entryFind(map_t t, keytype key);
 bstNode_t* findSmallestNode(map_t node);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
-bstNode_t* findParent(map_t map, keytype key);
-
+bstNode_t* findParent(map_t* map, keytype key);
+int keyToInt(keytype k);
 // ----- DELETERS -----
-void leafDelete(map_t cur, map_t parent);
-void oneChildDelete(map_t cur, map_t parent);
-void twoChildDelete(map_t cur, map_t parent);
+void leafDelete(map_t* cur, map_t parent);
+void oneChildDelete(map_t* cur, map_t parent);
+void twoChildDelete(map_t* cur, map_t parent);
 
 // ----- MISC. HELPERS -----
 bool mapIsEmpty(map_t tree);
@@ -92,8 +93,13 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 		return;
 	}
 	map_t cur;
-	bstNode_t* parent = findParent(*map, key); // IMPROVE: just findParent, then cur is one of its children!
-	if(parent->left->entry.key == key){
+	bstNode_t* parent = findParent(map, key); // IMPROVE: just findParent, then cur is one of its children!
+	
+	if(parent == NULL){  //if parent is the root (Needs to change/checked/evaluated)
+		parent = *map;
+		cur = *map;
+	}
+	else if(!mapIsEmpty(parent->left) && parent->left->entry.key == key){
 		cur = parent->left;
 	}
 	else{
@@ -101,15 +107,15 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 	}
 	
 	if(cur->left == NULL && cur->right == NULL){
-		leafDelete(cur, parent);
+		leafDelete(&cur, parent);
+		return;
+	}
+	else if(cur->left != NULL && cur->right != NULL){
+		twoChildDelete(&cur, parent);
 		return;
 	}
 	else if(cur->left == NULL || cur->right == NULL){
-		oneChildDelete(cur, parent);
-		return;
-	}	
-	else if (cur->left != NULL && cur->right != NULL){
-		twoChildDelete(cur, parent);
+		oneChildDelete(&cur, parent);
 		return;
 	}
 }
@@ -128,7 +134,9 @@ valuetype mapGet(map_t map, keytype key){
 * returns true iff the Map contains the given key
 */
 bool mapHasKey(map_t map, keytype key){
-
+	if(entryFind(map,key)==NULL){
+		return false;
+	}
 	return(entryFind(map,key)->entry.key == key);
 }
 
@@ -190,13 +198,20 @@ keytype* mapKeySet(map_t* mapref)
 /*
  * Helper function for finding a key in tree
  */
-bstNode_t* entryFind(BinaryTree t, keytype key){
-	if(t->entry.key == key)
+bstNode_t* entryFind(map_t t, keytype key){
+	if(t == NULL){
+		return NULL;	
+	}
+	if(t->entry.key == key){
 		return (t);
-	if(t->entry.key > key)
+	}
+	if(t->entry.key > key){
 		return entryFind(t->left,key);
-	if(t->entry.key < key)
+	}
+	if(t->entry.key < key){
 		return entryFind(t->right,key);
+	}
+	
 }
  
 /*
@@ -213,27 +228,25 @@ bstNode_t* findSmallestNode(map_t node){ //check
 } 
  
 /*
- * Finds the appropirate node to insert the given key in the tree.
+ * Finds the appropirate pointer to insert the given key in the tree.
  */
 bstNode_t* findInsertionPoint(map_t map, keytype key){ 
 	// needs work -- this algorithm needs to return a pointer to an insertion point, not just NULL!
 	//    have a look at the code we wrote for the BST in lab9.
 	bstNode_t* curr = map;
-	
 	if(curr == NULL)
 	{
 		return curr;
 	}
 	if(key < curr->entry.key)
 	{
-		findInsertionPoint(map->left, key);
-		return curr;
+		return findInsertionPoint(map->left, key);
 	}
 	else if (key > curr->entry.key)
 	{
-		findInsertionPoint(map->right, key);
-		return curr;
+		return findInsertionPoint(map->right, key);
 	}
+	return NULL;
 }
 
 /*
@@ -252,21 +265,24 @@ bstNode_t* findLargestNode(map_t map){
 /*
  * Finds the parent node of the given key.
  */
-bstNode_t* findParent(map_t map, keytype key){
-	bstNode_t* parent;
-	if(mapIsEmpty(map)){
+bstNode_t* findParent(map_t* map, keytype key){
+	bstNode_t* curr = *map;
+	if(mapIsEmpty(curr)){
 		return NULL;
 	}
-	else if(map->left->entry.key == key || map->right->entry.key == key){  // BUG: potential NULL pointer de-ref
-		return(map);
+	if(curr->entry.key == key){
+		return NULL;
 	}
-	else if(map->entry.key > key){
-		 return entryFind(map->left, key);
+	if(!mapIsEmpty(curr->left) && curr->left->entry.key == key || !mapIsEmpty(curr->right) && curr->right->entry.key == key){  // BUG (solved?): potential NULL pointer de-ref (curr-left or curr->right needs to exist before checking)
+		return *map;
 	}
-	else if(map->entry.key < key){
-		return entryFind(map->right, key);
+	if(curr->entry.key > key){
+		return entryFind(curr->left, key);
 	}
-	return NULL;
+	if(curr->entry.key < key){
+		return entryFind(curr->right, key);
+	}
+
 }
 
 // ----- DELETERS -----
@@ -274,37 +290,41 @@ bstNode_t* findParent(map_t map, keytype key){
 /*
  *Helper function to delete leaf node
  */
-void leafDelete(map_t cur, map_t parent){
-	if(parent->left = cur){
-	parent->left = NULL;
+void leafDelete(map_t* cur, map_t parent){
+	bstNode_t* curr = *cur;
+	if(parent->left = curr){
+		parent->left = NULL;
 	}
 	else{
 		parent->right = NULL;
 	}
-	free(cur);
+	free(curr);
 }
 
 /*
  *Helper function to delete one child node
  */
-void oneChildDelete(map_t cur, map_t parent){
-	if(cur->left != NULL){
-		parent->left = cur->left;
+void oneChildDelete(map_t* cur, map_t parent){
+	bstNode_t* curr = *cur;
+	if(curr->left != NULL){
+		parent->left = curr->left;
 	}
 	else{
-		parent->right = cur->right;
+		parent->right = curr->right;
 	}
-	free(cur);
+	free(curr);
+	
 }
 
 /*
  *Helper function to delete two child node
  */
-void twoChildDelete(map_t cur, map_t parent){
-	bstNode_t* smallest = findSmallestNode(cur->right);
-	cur->entry = smallest->entry;
-	smallest->entry = cur->entry;
-	mapRemove(&cur, smallest->entry.key);
+void twoChildDelete(map_t* cur, map_t parent){
+	bstNode_t* curr = *cur;
+	bstNode_t* smallest = findSmallestNode(curr->right);
+	curr->entry = smallest->entry;
+	smallest->entry = curr->entry;
+	mapRemove(&curr, smallest->entry.key);
 }
 
 // ----- MISC. HELPERS -----
@@ -353,5 +373,3 @@ void mapPrint(map_t map)
 		mapPrint(map->right);
 	}
 }
-
-
