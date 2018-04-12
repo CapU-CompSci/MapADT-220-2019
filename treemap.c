@@ -290,13 +290,14 @@ bstNode_t* findParent(map_t map, keytype key){
  */
 void leafDelete(map_t* cur, map_t parent){
 	bstNode_t* curr = *cur;
-	if(parent->left = curr){
+	if(curr = parent->left){
 		parent->left = NULL;
+		free(curr);
 	}
 	else{
 		parent->right = NULL;
+		free(curr);
 	}
-	free(curr);
 }
 
 /*
@@ -311,7 +312,6 @@ void oneChildDelete(map_t* cur, map_t parent){
 		parent->right = curr->right;
 	}
 	free(curr);
-	
 }
 
 /*
@@ -325,6 +325,7 @@ void twoChildDelete(map_t* mapref, map_t parent){
 		parent->entry = smallest->entry;
 		smallestparent->left = NULL;
 		free(smallest);
+		printf("\nTWO CHILD\n");
 		return;
 
 	}
@@ -334,6 +335,7 @@ void twoChildDelete(map_t* mapref, map_t parent){
 		parent->entry = largest->entry;
 		largestparent->right = NULL;
 		free(largest);
+		printf("\nTWO CHILD\n");
 		return;
 	}
 }
@@ -391,7 +393,7 @@ void mapPrint(map_t map)
 {
 	if(map != NULL){
 		mapPrint(map->left);
-		printf("|%s|\t|%d|\n\n", map->entry.key, map->entry.value);
+		printf("|%s|\t|%d|\n", map->entry.key, map->entry.value);
 		mapPrint(map->right);
 	}
 }
