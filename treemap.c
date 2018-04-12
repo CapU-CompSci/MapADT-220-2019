@@ -25,13 +25,13 @@ bstNode_t* findSmallestNode(map_t node);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findParent(map_t* map, keytype key);
-int keyToInt(keytype k);
 // ----- DELETERS -----
 void leafDelete(map_t* cur, map_t parent);
 void oneChildDelete(map_t* cur, map_t parent);
 void twoChildDelete(map_t* cur, map_t parent);
 
 // ----- MISC. HELPERS -----
+int keyCompare(keytype insertkey, keytype mapkey);
 bool mapIsEmpty(map_t tree);
 void getEntries(map_t map, entry_t* entries[]);
 void traverseInOrder(map_t map, entry_t* entries[], int index);
