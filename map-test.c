@@ -74,7 +74,8 @@ int main ()
     mapPrint(map);
     printf("mapRemove works\n"); 
     mapRemove(&map,"d");
-    mapPrint(map);    
+    mapPrint(map);
+    
     //DELETE MAP
     mapClear(&map);
     assert(mapSize(map)==0);
