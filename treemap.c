@@ -321,7 +321,7 @@ void twoChildDelete(map_t map, map_t parent){
 		bstNode_t* smallest = findSmallestNode(parent->right);
 		bstNode_t* smallestparent = findParent(map, smallest->entry.key);
 		parent->entry = smallest->entry;
-		smallestparent->left = NULL;//potential bug not sure which one
+		smallestparent->left = NULL;
 		free(smallest);
 		return;
 
@@ -330,7 +330,7 @@ void twoChildDelete(map_t map, map_t parent){
 		bstNode_t* largest = findLargestNode(parent->left);
 		bstNode_t* largestparent = findParent(map, largest->entry.key);
 		parent->entry = largest->entry;
-		largestparent->left = NULL;//potential bug
+		largestparent->right = NULL;
 		free(largest);
 		return;
 	}
