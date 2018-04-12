@@ -264,20 +264,21 @@ bstNode_t* findLargestNode(map_t map){
 /*
  * Finds the parent node of the given key.
  */
-bstNode_t* findParent(map_t* map, keytype key){
-	bstNode_t* curr = *map;
-	if(mapIsEmpty(curr)){
+bstNode_t* findParent(map_t map, keytype key){
+	bstNode_t* parent = map;
+	if(mapIsEmpty(map)){//
 		return NULL;
 	}
-	if(!mapIsEmpty(curr->left) && curr->left->entry.key == key || !mapIsEmpty(curr->right) && curr->right->entry.key == key){  // BUG (solved?): potential NULL pointer de-ref (curr-left or curr->right needs to exist before checking)
-		return *map;
+	else if(!mapIsEmpty(map->left) && keyCompare(key, parent->left->entry.key) == 0 || !mapIsEmpty(map->right) && keyCompare(key, parent->right->entry.key) == 0){
+		return(parent);	
 	}
-	else if(keyCompare(key,curr->entry.key)<0){
-		return entryFind(curr->left,key);
+	else if(keyCompare(key,parent->entry.key)<0){
+		return findParent(parent->left,key);
 	}
-	else if(keyCompare(key,curr->entry.key)>0){
-		return entryFind(curr->right,key);
+	else if(keyCompare(key,parent->entry.key)>0){
+		return findParent(parent->right,key);
 	}
+	
 	return NULL;
 }
 
