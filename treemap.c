@@ -25,6 +25,10 @@ bstNode_t* findSmallestNode(map_t node);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findParent(map_t* map, keytype key);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1517663caa1ba0312e01be4eea99105a5a58006e
 // ----- DELETERS -----
 void leafDelete(map_t* cur, map_t parent);
 void oneChildDelete(map_t* cur, map_t parent);
@@ -36,6 +40,8 @@ bool mapIsEmpty(map_t tree);
 void getEntries(map_t map, entry_t* entries[]);
 void traverseInOrder(map_t map, entry_t* entries[], int index);
 void mapPrint(map_t map);
+bool keysEqual(keytype a, keytype b);
+int keyCompare(keytype insertkey,keytype mapkey);
 
 /*****************************
  * ----- MAP FUNCTIONS ----- *
@@ -68,23 +74,19 @@ map_t mapCreate(){
 */
 void mapInsert(map_t* map, keytype key, valuetype value){
 	bstNode_t* curr = *map;
-	if(curr == NULL)
-	{
-		curr = nodeCreate(value,key);
-		*map = curr;
+	
+	if(curr == NULL){
+	
+		*map = nodeCreate(value,key);
 		return;
 	}
 	if(keyCompare(key, curr->entry.key)<0)
 	{
 		mapInsert(&curr->left, key, value);
 	}
-	else if (keyCompare(key, curr->entry.key)>0)
+	else if(keyCompare(key, curr->entry.key)>0)
 	{
 		mapInsert(&curr->right, key, value);
-	}
-	else if(mapHasKey(*map, key)){
-		curr = entryFind(*map, key);
-		curr->entry.value = value;
 	}
 }
 
@@ -130,7 +132,6 @@ void mapRemove(map_t* map, keytype key){ //differnt type names between keytype a
 */
 valuetype mapGet(map_t map, keytype key){
 	assert(mapHasKey(map,key));
-	
 	return entryFind(map,key)->entry.value;
 }
 
@@ -138,7 +139,7 @@ valuetype mapGet(map_t map, keytype key){
 * returns true iff the Map contains the given key
 */
 bool mapHasKey(map_t map, keytype key){
-	if(entryFind(map,key)==NULL){
+	if(entryFind(map,key) == NULL){	//if entry does not exist		
 		return false;
 	}
 	return(entryFind(map,key)->entry.key == key);
@@ -175,13 +176,12 @@ void mapClear(map_t * map){
 */
 keytype* mapKeySet(map_t* mapref)
 {
+
 	map_t map = *mapref;
 	int size = mapSize(map);
-
 	// Get pointers to all the entries
 	entry_t** entries = calloc(size, sizeof(entry_t*));
 	getEntries(map, entries);
-	
 	// Extract the keys	
 	keytype* keys = calloc(size, sizeof(keytype));
 	int i = 0;
@@ -335,6 +335,7 @@ void twoChildDelete(map_t* cur, map_t parent){
 
 int keyCompare(keytype insertkey, keytype mapkey){
 	return strcmp( insertkey, mapkey);
+}
 /*
 * returns tree if the tree is empty.
 */
@@ -364,7 +365,7 @@ void traverseInOrder(map_t map, entry_t* entries[], int index){
 	// a pointer to the entry, not a copy!
 		(index)++;
 		traverseInOrder(map->right, entries, index);
-	}									
+	}							
 }
 
 /*
@@ -379,3 +380,4 @@ void mapPrint(map_t map)
 		mapPrint(map->right);
 	}
 }
+

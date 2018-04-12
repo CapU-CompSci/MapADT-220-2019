@@ -236,9 +236,7 @@ int mapSize(map_t map)
 * it is the caller's responsibility to free the returned array.
 */
 //keytype* mapKeySet(map_t * map){
-    
-    
-    
+
   /*
   *Author: Reece Whitehead + Greagorey+ Joseph Fall
   *
