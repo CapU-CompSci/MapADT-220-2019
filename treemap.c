@@ -83,7 +83,7 @@ void mapInsert(map_t* map, keytype key, valuetype value){
 		mapInsert(&curr->right, key, value);
 	}
 	else if(key == curr->entry.key){
-		curr->entry.vale = value;
+		curr->entry.value = value;
 	}
 }
 
