@@ -24,7 +24,7 @@ bstNode_t* entryFind(map_t t, keytype key);
 bstNode_t* findSmallestNode(map_t node);
 bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
-bstNode_t* findParent(map_t* map, keytype key);
+bstNode_t* findParent(map_t map, keytype key);
 
 // ----- DELETERS -----
 void leafDelete(map_t* cur, map_t parent);
@@ -90,16 +90,17 @@ void mapInsert(map_t* map, keytype key, valuetype value){
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  * POST: HasKey(key) == false
  */
-void mapRemove(map_t* map, keytype key){ //differnt type names between keytype and char* key....
-	if(!mapHasKey(*map, key)){
+void mapRemove(map_t* mapref, keytype key){ //differnt type names between keytype and char* key....
+	map_t map = *mapref;
+	if(!mapHasKey(map, key)){
 		return;
 	}
 	map_t cur;
 	bstNode_t* parent = findParent(map, key); // IMPROVE: just findParent, then cur is one of its children!
 	
 	if(parent == NULL){  //if parent is the root (Needs to change/checked/evaluated)
-		parent = *map;
-		cur = *map;
+		parent = map;
+		cur = map;
 	}
 	else if(!mapIsEmpty(parent->left) && parent->left->entry.key == key){
 		cur = parent->left;
@@ -316,7 +317,8 @@ void oneChildDelete(map_t* cur, map_t parent){
 /*
  *Helper function to delete two child node
  */
-void twoChildDelete(map_t map, map_t parent){
+void twoChildDelete(map_t* mapref, map_t parent){
+	map_t map = *mapref;
 	if(keyCompare(parent->entry.key, map->entry.key)>0){
 		bstNode_t* smallest = findSmallestNode(parent->right);
 		bstNode_t* smallestparent = findParent(map, smallest->entry.key);
