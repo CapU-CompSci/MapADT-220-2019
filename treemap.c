@@ -70,9 +70,7 @@ map_t mapCreate(){
 */
 void mapInsert(map_t* map, keytype key, valuetype value){
 	bstNode_t* curr = *map;
-	
 	if(curr == NULL){
-	
 		*map = nodeCreate(value,key);
 		return;
 	}
@@ -307,9 +305,11 @@ void oneChildDelete(map_t* cur, map_t parent){
 	bstNode_t* curr = *cur;
 	if(curr->left != NULL){
 		parent->left = curr->left;
+		curr->left = NULL;
 	}
 	else{
 		parent->right = curr->right;
+		curr->right = NULL;
 	}
 	free(curr);
 }
@@ -325,7 +325,7 @@ void twoChildDelete(map_t* mapref, map_t parent){
 		parent->entry = smallest->entry;
 		smallestparent->left = NULL;
 		free(smallest);
-		printf("\nTWO CHILD\n");
+		printf("\nTWO CHILD\n"); //For testing function
 		return;
 
 	}
@@ -335,7 +335,7 @@ void twoChildDelete(map_t* mapref, map_t parent){
 		parent->entry = largest->entry;
 		largestparent->right = NULL;
 		free(largest);
-		printf("\nTWO CHILD\n");
+		printf("\nTWO CHILD\n"); //For testing function
 		return;
 	}
 }
@@ -346,7 +346,7 @@ void twoChildDelete(map_t* mapref, map_t parent){
  */
 
 int keyCompare(keytype insertkey, keytype mapkey){
-	return strcmp( insertkey, mapkey);
+	return strcmp(insertkey, mapkey);
 }
 /*
 * returns tree if the tree is empty.
