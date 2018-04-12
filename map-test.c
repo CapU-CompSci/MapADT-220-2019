@@ -68,12 +68,20 @@ int main ()
     
     //REMOVE
     mapPrint(map);
-    mapRemove(&map,"b");
-    assert(!mapHasKey(map,"b"));
-    assert(mapSize(map) == 3);
+    printf("\n");
+    mapRemove(&map,"c");
+ 
+    
     mapPrint(map);
-    printf("mapRemove works\n"); 
+    printf("\n");
+    mapRemove(&map,"b");
+    mapPrint(map);    
+    assert(!mapHasKey(map,"b"));
+    assert(mapSize(map) == 2);
+
+    printf("\n");
     mapRemove(&map,"d");
+    assert(!mapHasKey(map,"d"));   
     mapPrint(map);
     
     //DELETE MAP
