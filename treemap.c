@@ -290,6 +290,7 @@ bstNode_t* findParent(map_t map, keytype key){
  *Helper function to delete leaf node
  */
 void leafDelete(map_t* cur, map_t parent){
+	printf("LEAF\n");
 	bstNode_t* curr = *cur;
 	if(curr = parent->left){
 		parent->left = NULL;
@@ -307,27 +308,36 @@ void leafDelete(map_t* cur, map_t parent){
 void oneChildDelete(map_t* cur, map_t parent){
 	bstNode_t* curr = *cur;
 	if(curr==parent){							//if root is being deleted
+	printf("\nONE CHILD #1\n");
 		if(curr->left != NULL){
+			printf("A");
 			curr->entry=curr->left->entry;
 			curr->left = NULL;
 			free(curr->left);
 		}
 		else{
-			curr->entry=curr->right->entry;
+			printf("B\n");
+			curr->entry = curr->right->entry;
 			curr->right = NULL;
 			free(curr->right);
+
 		}
 	}
 	else{
+	printf("\nONE CHILD #2\n");
 		if(curr->left != NULL){
+			printf("A");
 			parent->left = curr->left;
 			curr->left = NULL;
+			free(curr);
 		}
 		else{
+			printf("B\n");
 			parent->right = curr->right;
 			curr->right = NULL;
+			free(curr);
 		}
-		free(curr);
+
 	}
 }
 
