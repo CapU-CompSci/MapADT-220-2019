@@ -27,10 +27,10 @@ int main ()
     printf("Testing...\n");
 
     //INSERT
-    mapInsert(&map,"a",1);
+    mapInsert(&map,"d",1);
     mapInsert(&map,"b",2);
-    mapInsert(&map,"c",3);
-    mapInsert(&map,"d",4);
+    mapInsert(&map,"a",3);
+    mapInsert(&map,"c",4);
     printf("mapInsert works\n");
 
     //SIZE
@@ -38,11 +38,11 @@ int main ()
     assert(mapSize(map) == 4);
 
     //GET
-    assert(mapGet(map,"a") == 1);
+   /* assert(mapGet(map,"a") == 1);
     assert(mapGet(map,"b") == 2);
     assert(mapGet(map,"c") == 3);
     assert(mapGet(map,"d") == 4);
-    printf("mapGet works\n");
+    printf("mapGet works\n");*/
     
     //HASKEY?
     assert(mapHasKey(map,"a"));
@@ -52,7 +52,7 @@ int main ()
     printf("mapHasKey works\n");
     
     //MAPKEYSET
-    keytype* set = mapKeySet(&map);
+    /*keytype* set = mapKeySet(&map);
     map_t map2 = mapCreate();
     
     mapInsert(&map2,set[0], 1);
@@ -64,14 +64,14 @@ int main ()
     assert(mapHasKey(map2,"b"));
     assert(mapHasKey(map2,"c"));
     assert(mapHasKey(map2,"d"));
-    printf("mapKeySet works\n");
+    printf("mapKeySet works\n");*/
     
     //REMOVE
     mapPrint(map);
     printf("\n");
-    mapRemove(&map,"c");
+    mapRemove(&map,"a");
+    assert(!mapHasKey(map, "a"));
  
-    
     mapPrint(map);
     printf("\n");
     mapRemove(&map,"b");
