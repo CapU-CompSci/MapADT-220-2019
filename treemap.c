@@ -22,7 +22,6 @@
 // ----- FINDERS -----
 bstNode_t* entryFind(map_t t, keytype key);
 bstNode_t* findSmallestNode(map_t node);
-bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findParent(map_t map, keytype key);
 
@@ -233,27 +232,6 @@ bstNode_t* findSmallestNode(map_t node){ //check
 	findSmallestNode(node->left);
 } 
  
-/*
- * Finds the appropirate pointer to insert the given key in the tree.
- */
-bstNode_t* findInsertionPoint(map_t map, keytype key){ 
-	// needs work -- this algorithm needs to return a pointer to an insertion point, not just NULL!
-	//    have a look at the code we wrote for the BST in lab9.
-	bstNode_t* curr = map;
-	if(curr == NULL)
-	{
-		return curr;
-	}
-	if(keyCompare(key, curr->entry.key)<0)
-	{
-		return findInsertionPoint(map->left, key);
-	}
-	else if (keyCompare(key, curr->entry.key)>0)
-	{
-		return findInsertionPoint(map->right, key);
-	}
-	return NULL;
-}
 
 /*
  * Finds the largest node in the tree.
