@@ -163,8 +163,8 @@ void mapClear(map_t * map){
 		mapClear(&curr->left);
 		mapClear(&curr->right);
 		free(curr);
+		*map = NULL;
 	}
-	*map = NULL;
 }
 
 /*
@@ -306,23 +306,38 @@ void leafDelete(map_t* cur, map_t parent){
  */
 void oneChildDelete(map_t* cur, map_t parent){
 	bstNode_t* curr = *cur;
-	if(curr->left != NULL){
-		parent->left = curr->left;
-		curr->left = NULL;
+	if(curr==parent){							//if root is being deleted
+		if(curr->left != NULL){
+			curr->entry=curr->left->entry;
+			curr->left = NULL;
+			free(curr->left);
+		}
+		else{
+			curr->entry=curr->right->entry;
+			curr->right = NULL;
+			free(curr->right);
+		}
 	}
 	else{
-		parent->right = curr->right;
-		curr->right = NULL;
+		if(curr->left != NULL){
+			parent->left = curr->left;
+			curr->left = NULL;
+		}
+		else{
+			parent->right = curr->right;
+			curr->right = NULL;
+		}
+		free(curr);
 	}
-	free(curr);
 }
 
 /*
  *Helper function to delete two child node
  */
+
 void twoChildDelete(map_t* mapref, map_t parent){
 	map_t map = *mapref;
-	if(keyCompare(parent->entry.key, map->entry.key)>0){
+	if(keyCompare(parent->entry.key, map->entry.key)>0 ){
 		bstNode_t* smallest = findSmallestNode(parent->right);
 		bstNode_t* smallestparent = findParent(map, smallest->entry.key);
 		parent->entry = smallest->entry;
@@ -340,6 +355,20 @@ void twoChildDelete(map_t* mapref, map_t parent){
 		free(largest);
 		printf("\nTWO CHILD\n"); //For testing function
 		return;
+	}
+	else if(keyCompare(parent->entry.key, map->entry.key)==0){	// if the deletion occurs at root
+		if(!mapIsEmpty(map->right)){
+			bstNode_t* child = findSmallestNode(parent->right);
+			bstNode_t* deleteParent = findParent(map, child->entry.key);
+			map->entry=child->entry;
+			oneChildDelete(&child,deleteParent);
+		}	
+		else{
+			bstNode_t* child = findLargestNode(parent->left);
+			bstNode_t* deleteParent = findParent(map, child->entry.key);
+			map->entry=child->entry;
+			oneChildDelete(&child,deleteParent);
+		}
 	}
 }
 
