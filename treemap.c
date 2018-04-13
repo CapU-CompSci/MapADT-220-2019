@@ -22,7 +22,6 @@
 // ----- FINDERS -----
 bstNode_t* entryFind(map_t t, keytype key);
 bstNode_t* findSmallestNode(map_t node);
-bstNode_t* findInsertionPoint(map_t map, keytype key);
 bstNode_t* findLargestNode(map_t map);
 bstNode_t* findParent(map_t map, keytype key);
 
@@ -96,6 +95,10 @@ void mapRemove(map_t* mapref, keytype key){ //differnt type names between keytyp
 	if(!mapHasKey(map, key)){
 		return;
 	}
+	if(keyCompare(map->entry.key,key)==0 && map->left == NULL && map->right == NULL){		//if the only node that exist is the root			
+		free(map);
+		*mapref = NULL;
+	}
 	map_t cur;
 	bstNode_t* parent = findParent(map, key); // IMPROVE: just findParent, then cur is one of its children!
 	
@@ -158,6 +161,7 @@ int mapSize(map_t map){
 * removes all items from the Map (without creating memory leaks!)
 */
 void mapClear(map_t * map){
+	
 	map_t curr = *map;
 	if(curr != NULL){
 		mapClear(&curr->left);
@@ -228,27 +232,6 @@ bstNode_t* findSmallestNode(map_t node){ //check
 	findSmallestNode(node->left);
 } 
  
-/*
- * Finds the appropirate pointer to insert the given key in the tree.
- */
-bstNode_t* findInsertionPoint(map_t map, keytype key){ 
-	// needs work -- this algorithm needs to return a pointer to an insertion point, not just NULL!
-	//    have a look at the code we wrote for the BST in lab9.
-	bstNode_t* curr = map;
-	if(curr == NULL)
-	{
-		return curr;
-	}
-	if(keyCompare(key, curr->entry.key)<0)
-	{
-		return findInsertionPoint(map->left, key);
-	}
-	else if (keyCompare(key, curr->entry.key)>0)
-	{
-		return findInsertionPoint(map->right, key);
-	}
-	return NULL;
-}
 
 /*
  * Finds the largest node in the tree.
@@ -290,6 +273,7 @@ bstNode_t* findParent(map_t map, keytype key){
  *Helper function to delete leaf node
  */
 void leafDelete(map_t* cur, map_t parent){
+	printf("LEAF\n");
 	bstNode_t* curr = *cur;
 	if(curr = parent->left){
 		parent->left = NULL;
@@ -299,6 +283,7 @@ void leafDelete(map_t* cur, map_t parent){
 		parent->right = NULL;
 		free(curr);
 	}
+	
 }
 
 /*
@@ -307,27 +292,36 @@ void leafDelete(map_t* cur, map_t parent){
 void oneChildDelete(map_t* cur, map_t parent){
 	bstNode_t* curr = *cur;
 	if(curr==parent){							//if root is being deleted
+	printf("\nONE CHILD #1\n");
 		if(curr->left != NULL){
+			printf("A");
 			curr->entry=curr->left->entry;
 			curr->left = NULL;
 			free(curr->left);
 		}
 		else{
-			curr->entry=curr->right->entry;
+			printf("B\n");
+			curr->entry = curr->right->entry;
 			curr->right = NULL;
 			free(curr->right);
+
 		}
 	}
 	else{
+	printf("\nONE CHILD #2\n");
 		if(curr->left != NULL){
+			printf("A");
 			parent->left = curr->left;
 			curr->left = NULL;
+			free(curr);
 		}
 		else{
+			printf("B\n");
 			parent->right = curr->right;
 			curr->right = NULL;
+			free(curr);
 		}
-		free(curr);
+
 	}
 }
 
