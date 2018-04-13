@@ -96,6 +96,10 @@ void mapRemove(map_t* mapref, keytype key){ //differnt type names between keytyp
 	if(!mapHasKey(map, key)){
 		return;
 	}
+	if(keyCompare(map->entry.key,key)==0 && map->left == NULL && map->right == NULL){		//if the only node that exist is the root			
+		free(map);
+		*mapref = NULL;
+	}
 	map_t cur;
 	bstNode_t* parent = findParent(map, key); // IMPROVE: just findParent, then cur is one of its children!
 	
@@ -158,6 +162,7 @@ int mapSize(map_t map){
 * removes all items from the Map (without creating memory leaks!)
 */
 void mapClear(map_t * map){
+	
 	map_t curr = *map;
 	if(curr != NULL){
 		mapClear(&curr->left);
@@ -299,6 +304,7 @@ void leafDelete(map_t* cur, map_t parent){
 		parent->right = NULL;
 		free(curr);
 	}
+	
 }
 
 /*
