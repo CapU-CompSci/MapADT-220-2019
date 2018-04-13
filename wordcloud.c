@@ -52,7 +52,7 @@ int main (int argc, char* argv[])
 	char word[MAX_WORD_LENGTH + 1];
 	
 	while(fscanf(f, WORD_FORMAT, word) == 1) {
-		int count;
+		int count=0;
 		if(mapHasKey(wordmap, word)) {
 			count = mapGet(wordmap, word) + 1;
 		}
@@ -65,16 +65,82 @@ int main (int argc, char* argv[])
 	
 	//FOR DEBUGGING:
 	mapPrint(wordmap);
+
+
+
+
+/*Attempt at printing the data in order based on frequency
+Does not work atm, i need to make a copy of the string cointaining keys so i can remove a key after it is printed 
+was getting segmentation faults or other errors when i tried to do as above
+
+
+Author: Reece Whitehead
+/*
+	keytype* keylist = mapKeySet(&wordmap);
+	//keytype list = *keylist;
+	keytype reallist;
+	
+	//strcpy(reallist,*keylist);
+
+	
+	int highVal = 0;
+	char* highKey = '\0';
+	int i=0;
+	int q=0;
+	int index=0;
+	
+	while(keylist[i] != '\0'){
+		//printf(" %s\n\n", keylist[i]);
+		i++;
+	}
+	
+	char list[i];
+	
+							//(mapHasKey(wordmap, &list[q]) &&
+
+	int p;
+	int t=0;
+
+	while(t<i){
+	
+		highVal = 0;
+		q=0;
+		while(q<i){
+			
+			
+			if(highVal < mapGet(wordmap, keylist[q])){
+				printf("\n%d\n", q);
+				printf("%s", keylist[q]);
+				highVal = mapGet(wordmap,keylist[q]);
+				highKey = keylist[q];
+				index = q;
+			}
+			
+
+			q++;
+		
+		}
+//	printf(" %s-----%d\n", highKey, highVal);
+//	keylist[index] = '\0';
+		 
+		t++;
+	}
+
+
+
+
+*/
 	
 	printf("WordCloud Frequency \n");
 	// TODO: print tabular form needs formatting...
 	
 	// This idea won't work:  "InOrder" is a tree concept - Maps are like Sets, they don't have an order!
 	// Besides, even in the treemap implementation, it is sorted in alphabetic order, not frequency order!
-	inorderPrint(wordmap);
+	//inorderPrint(wordmap);
 	
 	fclose(f);
 	printf("\nIn order Finished...");
+//	free(keylist);
 }
 
 //removes all punction from input string
