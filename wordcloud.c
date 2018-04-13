@@ -59,6 +59,7 @@ int main (int argc, char* argv[])
 		else {
 			count = 1;
 		}
+		removePunc(word);
 		mapInsert(&wordmap, word, count);  
 	}
 	
@@ -77,13 +78,13 @@ int main (int argc, char* argv[])
 }
 
 //removes all punction from input string
-/*void removePunc(char* word){
+void removePunc(char* word){
  	int i;
  	for(i=0; i<strlen(word); i++){
- 		if ( ispunc(word[i])) 
+ 		if ( ispunct(word[i])) 
  			shiftLeft(word, i);
  	}
-}*/
+}
 
 
 // shifts characters following index 1 place to left, 
