@@ -176,9 +176,8 @@ void mapClear(map_t * map){
 * it is the caller's responsibility to free the returned array.
 * Use of a List ADT here would help reduce complexity as current algoirthm needs to manage dynamic arrays
 */
-keytype* mapKeySet(map_t* mapref)
+keytype* mapKeySet(map_t map)
 {
-	map_t map = *mapref;
 	int size = mapSize(map);
 	// Get pointers to all the entries
 	entry_t** entries = calloc(size, sizeof(entry_t*));

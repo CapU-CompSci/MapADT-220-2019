@@ -278,16 +278,15 @@ void mapPrint(map_t map){
  * returns a dynamic array containing all the Map Keys (in any sequence)
  * it is the caller's responsibility to free the returned array.
  */
-keytype* mapKeySet(map_t * map){
-    map_t mapCur = * map;
-    int size = mapSize(mapCur);
+keytype* mapKeySet(map_t map){
+    int size = mapSize(map);
     int i, c;
     int arrIndex = 0;
     keytype* keys = calloc(size, sizeof(keytype));
     for( i=0; i < ARRAY_SIZE; i++ ){
         for( c=0; c < COL_SIZE; c++ ){
-            if ( mapCur->hashtable[i][c].key != NULL ){
-                keys[arrIndex] = mapCur->hashtable[i][c].key;
+            if ( map->hashtable[i][c].key != NULL ){
+                keys[arrIndex] = map->hashtable[i][c].key;
                 arrIndex++;
             }
         }

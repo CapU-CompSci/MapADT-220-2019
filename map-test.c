@@ -60,7 +60,7 @@ int main ()
     printf("mapGet works\n");
 
     //MAPKEYSET
-    keytype* set = mapKeySet(&map);
+    keytype* set = mapKeySet(map);
     for(i=0; i<NUM_TESTS; i++) {
         assert(mapHasKey(map, set[i]));
     }
