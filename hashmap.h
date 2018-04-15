@@ -24,6 +24,6 @@
 
  typedef struct{
      entry_t hashtable[ARRAY_SIZE][COL_SIZE];
- }Hmap;
+ }Hmap_t;
 
- typedef Hmap* map_t;
+ typedef Hmap_t* map_t;

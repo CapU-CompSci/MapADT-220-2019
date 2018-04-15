@@ -17,15 +17,15 @@
 #define COL_SIZE 20
 #define ARRAY_SIZE 100
 
-unsigned long Hmapfunction( keytype Key);
-int mapindex(keytype Key);
+unsigned long htHash( keytype Key);
+int htIndex(keytype Key);
 entry_t* htBin(map_t map, int row, int col);
 int htGetBinIndex(map_t map, int rowIndex, keytype key);
 entry_t* htGetBin(map_t map, keytype key);
 void htClearBin(entry_t* bin);
 bool htBinIsEmpty(entry_t* bin);
 void htShiftLeft(map_t* mapref, int row, int col);
-keytype deepCopy(keytype key);
+keytype keyDeepCopy(keytype key);
 bool keysEqual(keytype key1,keytype key2);
 
 /*
@@ -33,12 +33,12 @@ bool keysEqual(keytype key1,keytype key2);
  * Credit: Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
  * Last Changed: 2018/04/06
  */
-unsigned long Hmapfunction( keytype Key)
+unsigned long htHash( keytype key)
 {
     unsigned long hash = 5381;
     int c;
     
-    while( c = *Key++) {
+    while( c = *key++) {
         hash = (( hash<<5 ) + hash) + c;
     }
     return hash;
@@ -47,9 +47,9 @@ unsigned long Hmapfunction( keytype Key)
 
 //Author: Greagorey Markerian
 // Return the index in the hash table where the given key belongs.
-int mapindex(keytype Key)
+int htIndex(keytype key)
 {
-    unsigned long hash = Hmapfunction(Key);
+    unsigned long hash = htHash(key);
     int index = hash%ARRAY_SIZE;
     return abs(index);  // abs is probably redundant now -- fixed by using unsigned.
 }
@@ -93,7 +93,7 @@ int htGetBinIndex(map_t map, int row, keytype key) {
 //   or NULL if the hash table row would overflow if that key were inserted.
 entry_t* htGetBin(map_t map, keytype key) 
 {
-    int row = mapindex(key);
+    int row = htIndex(key);
     int col = htGetBinIndex(map, row, key);
     if (col >= 0) 
         return htBin(map,row, col);
@@ -115,7 +115,7 @@ void mapInsert(map_t* mapref, keytype key, valuetype value)
         printf("Hash Map Overflow for key %s \n", key);
         assert(entry != NULL);
     }
-    entry->key = deepCopy(key);
+    entry->key = keyDeepCopy(key);
     entry->value = value;
 }
 
@@ -127,7 +127,7 @@ void mapInsert(map_t* mapref, keytype key, valuetype value)
 map_t mapCreate()
 {
     map_t map;
-    map = calloc(1,sizeof(Hmap)); // assumes all hashtable values set to NULL
+    map = calloc(1,sizeof(Hmap_t)); // assumes all hashtable values set to NULL
     return map;
 }
     
@@ -166,7 +166,7 @@ int mapGet(map_t map, keytype key)
 void mapRemove(map_t* mapref, keytype key)
 {
     map_t map = *mapref;
-    int row = mapindex(key);
+    int row = htIndex(key);
     int col = htGetBinIndex(map, row, key);
     if (col == -1 || htBinIsEmpty( htBin(map, row, col) ))
         return;  // no need to remove keys that are not in the map
@@ -210,10 +210,10 @@ bool mapHasKey(map_t map, keytype key)
 void mapClear(map_t* mapref)
 {
     map_t map = *mapref;
-    int i, c;
-    for(i = 0; i < ARRAY_SIZE-1; i++) {
+    int r, c;
+    for(r = 0; r < ARRAY_SIZE-1; r++) {
         for(c = 0; c < COL_SIZE-1; c++) {
-            htClearBin( htBin(map, i, c) );
+            htClearBin( htBin(map, r, c) );
         }
     }
 }
@@ -226,9 +226,9 @@ void mapClear(map_t* mapref)
  */
 int mapSize(map_t map)
 {
-    int i, c, size = 0;
-    for(i=0; i<ARRAY_SIZE-1; i++) {
-        for(c=0; !htBinIsEmpty( htBin(map,i,c) ); c++) {
+    int r, c, size = 0;
+    for(r=0; r<ARRAY_SIZE-1; r++) {
+        for(c=0; !htBinIsEmpty( htBin(map,r,c) ); c++) {
             size++;
         }
     }
@@ -243,7 +243,7 @@ int mapSize(map_t map)
   *
   *Last edited: 4/10/2018
   */
-keytype deepCopy(keytype key){
+keytype keyDeepCopy(keytype key){
     keytype newKey = calloc(strlen(key), sizeof(char));
     strcpy(newKey, key);
     return newKey;
@@ -269,13 +269,13 @@ bool keysEqual(keytype key1,keytype key2){
  * Prints a text representation of the hash table for debugging purposes
  */
 void mapPrint(map_t map){
-    int i, c;
+    int r, c;
     printf("===MAP: HASH TABLE===\n");
-    for( i = 0; i < ARRAY_SIZE-1; i++ ){
+    for( r = 0; r < ARRAY_SIZE-1; r++ ){
         for( c = 0; c < COL_SIZE-1; c++ ){
-            entry_t* entry = htBin(map,i,c);
+            entry_t* entry = htBin(map,r,c);
             if( !htBinIsEmpty( entry ) ){
-                printf("[bucket:%d; key:%s; value:%d]\n", i, entry->key, entry->value);
+                printf("[bucket:%d; key:%s; value:%d]\n", r, entry->key, entry->value);
             }
         }
     }
@@ -291,12 +291,12 @@ void mapPrint(map_t map){
  */
 keytype* mapKeySet(map_t map){
     int size = mapSize(map);
-    int i, c;
+    int r, c;
     int arrIndex = 0;
     keytype* keys = calloc(size, sizeof(keytype));
-    for( i=0; i < ARRAY_SIZE; i++ ){
+    for( r=0; r < ARRAY_SIZE; r++ ){
         for( c=0; c < COL_SIZE; c++ ){
-            entry_t* bin = htBin(map,i,c);
+            entry_t* bin = htBin(map,r,c);
             if ( !htBinIsEmpty( bin ) ){
                 keys[arrIndex] = bin->key;
                 arrIndex++;
