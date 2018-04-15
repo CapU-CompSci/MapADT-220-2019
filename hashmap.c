@@ -17,8 +17,10 @@
 #define COL_SIZE 20
 #define ARRAY_SIZE 100
 
-long Hmapfunction( keytype Key);
+unsigned long Hmapfunction( keytype Key);
 int mapindex(keytype Key);
+entry_t* htGetBin(map_t map, keytype key);
+bool htBinIsEmpty(entry_t* bin);
 keytype deepCopy(keytype key);
 bool keysEqual(keytype key1,keytype key2);
 
@@ -27,7 +29,7 @@ bool keysEqual(keytype key1,keytype key2);
  * Credit: Hashing algortihm by Dan Bernstein, via http://www.cse.yorku.ca/~oz/hash.html
  * Last Changed: 2018/04/06
  */
-long Hmapfunction( keytype Key)
+unsigned long Hmapfunction( keytype Key)
 {
     unsigned long hash = 5381;
     int c;
@@ -37,20 +39,38 @@ long Hmapfunction( keytype Key)
     }
     return hash;
 }
-//Please review and test
 
 
 //Author: Greagorey Markerian
-
+// Return the index in the hash table where the given key belongs.
 int mapindex(keytype Key)
 {
-    long hash = Hmapfunction(Key);
+    unsigned long hash = Hmapfunction(Key);
     int index = hash%ARRAY_SIZE;
-    return abs(index);  //TEMPORARY FIX: returns abs(index) to prevent accessing
-                        //                  negative indices of an array
+    return abs(index);  // abs is probably redundant now -- fixed by using unsigned.
 }
-//Please Review and test
 
+// Return true iff the given hash table bin is empty
+bool htBinIsEmpty(entry_t* bin) 
+{
+    return bin->key == NULL;
+} 
+
+// Return a pointer to the "bin" in the hashtable where the key is found, 
+//   or a pointer to the empty "bin" where the key should have been found,
+//   or NULL if the hash table row would overflow if that key were inserted.
+entry_t* htGetBin(map_t map, keytype key) 
+{
+    int index = mapindex(key);
+    int counter = 0;
+
+    for (counter=0; counter < COL_SIZE; counter++) {
+        if (htBinIsEmpty(&(map->hashtable[index][counter])) ||
+            keysEqual(map->hashtable[index][counter].key, key) )
+            return &(map->hashtable[index][counter]);
+    }
+    return NULL; // overflow -- key not found, no empty bins to put it in.
+}
 
 
 /*
@@ -61,28 +81,13 @@ int mapindex(keytype Key)
 void mapInsert(map_t* mapref, keytype key, valuetype value)
 {
     map_t map = *mapref;
-    int index = mapindex(key);
-    int counter = 0;
-    
-    keytype KEY = deepCopy(key);
-    
-    while(map->hashtable[index][counter].key!=NULL && !keysEqual(map->hashtable[index][counter].key, KEY)) {
-    
-        if(counter >= COL_SIZE)
-        {
-            printf("Overflow");
-            assert(counter < COL_SIZE);
-        }
-        else
-        {
-            counter++;
-        }
-     
-        
-    }   
-    entry_t entry = {KEY, value};
-    map->hashtable[index][counter] = entry;
- 
+    entry_t* entry = htGetBin(map, key);
+    if (entry == NULL) {
+        printf("Hash Map Overflow for key %s \n", key);
+        assert(entry != NULL);
+    }
+    entry->key = deepCopy(key);
+    entry->value = value;
 }
 
 /*
@@ -109,17 +114,12 @@ map_t mapCreate()
  */
 int mapGet(map_t map, keytype key)
 {
-    assert(mapHasKey(map, key));  
-    int index = mapindex(key);
-    int counter = 0;
-
-    while(keysEqual(map->hashtable[index][counter].key, key)==0) {
-        counter++;
-    }
-    return map->hashtable[index][counter].value;
+    entry_t* entry = htGetBin(map, key);
+    assert(entry != NULL);  
+    return entry->value;
 }
 
- 
+
 
 
 
@@ -173,18 +173,8 @@ void mapRemove(map_t* mapref, keytype key)
  */
 bool mapHasKey(map_t map, keytype key)
 {
-    int counter =0;
-    int index = mapindex(key);
-    keytype KEY = deepCopy(key);
-   
-    while(map->hashtable[index][counter].key!=NULL) { // BUG: just loop over all bins.
-        if(keysEqual(map->hashtable[index][counter].key, KEY)) { //UPDATE: arent these correct since we search only where the index is -Greg
-            return true;                                    //If there are more than one key, it will still give the same index.
-        }
-        counter++;
-    }
-    
-    return false;
+    entry_t* entry = htGetBin(map, key);
+    return entry != NULL && !htBinIsEmpty(entry);
 }
 
 /*
@@ -217,11 +207,10 @@ int mapSize(map_t map)
 {
     int i, c, size = 0;
     for(i=0; i<ARRAY_SIZE-1; i++) {
-        for(c=0; map->hashtable[i][c].key!=NULL; c++) {
+        for(c=0; !htBinIsEmpty(&map->hashtable[i][c]); c++) {
             size++;
         }
     }
-    // BUG:  no return statement!
     return size;
 }
 
@@ -263,7 +252,7 @@ void mapPrint(map_t map){
     printf("===MAP: HASH TABLE===\n");
     for( i = 0; i < ARRAY_SIZE-1; i++ ){
         for( c = 0; c < COL_SIZE-1; c++ ){
-            if( map->hashtable[i][c].key != NULL ){
+            if( !htBinIsEmpty(&map->hashtable[i][c]) ){
                 printf("[bucket:%d; key:%s; value:%d]\n", i, map->hashtable[i][c].key, map->hashtable[i][c].value);
             }
         }
@@ -285,7 +274,7 @@ keytype* mapKeySet(map_t map){
     keytype* keys = calloc(size, sizeof(keytype));
     for( i=0; i < ARRAY_SIZE; i++ ){
         for( c=0; c < COL_SIZE; c++ ){
-            if ( map->hashtable[i][c].key != NULL ){
+            if ( !htBinIsEmpty(&map->hashtable[i][c]) ){
                 keys[arrIndex] = map->hashtable[i][c].key;
                 arrIndex++;
             }
