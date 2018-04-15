@@ -18,6 +18,16 @@
 #endif
 #include "map.h"
 
+typedef struct mapEntry {
+    char* key;
+    int value;
+} E_t;
+
+const E_t TEST_DATA[] = {
+    {"d", 1}, {"b", 2}, {"a", 3}, {"c", 4}, 
+    {"g", 5}, {"f", 6}, {"e", 7}, {"h", 8}
+};
+int NUM_TESTS = 8;
 
 int main ()
 {
@@ -27,63 +37,53 @@ int main ()
     printf("Testing...\n");
 
     //INSERT
-    mapInsert(&map,"d",1);
-    mapInsert(&map,"b",2);
-    mapInsert(&map,"a",3);
-    mapInsert(&map,"c",4);
+    int i;
+    for (i=0; i<NUM_TESTS; i++)
+        mapInsert(&map,TEST_DATA[i].key, TEST_DATA[i].value);
     printf("mapInsert works\n");
-
+    int size = NUM_TESTS;
+    
     //SIZE
     printf("The map contains %d keypairs\n", mapSize(map));
-    assert(mapSize(map) == 4);
+    assert(mapSize(map) == size);
 
-    //GET
-   /* assert(mapGet(map,"a") == 1);
-    assert(mapGet(map,"b") == 2);
-    assert(mapGet(map,"c") == 3);
-    assert(mapGet(map,"d") == 4);
-    printf("mapGet works\n");*/
-    
     //HASKEY?
-    assert(mapHasKey(map,"a"));
-    assert(mapHasKey(map,"b"));
-    assert(mapHasKey(map,"c"));
     assert(mapHasKey(map,"d"));
+    assert(mapHasKey(map,"a"));
+    assert(mapHasKey(map,"e"));
+    assert(mapHasKey(map,"h"));
     printf("mapHasKey works\n");
     
+    //GET
+    for (i=0; i<NUM_TESTS; i++)
+        assert(mapGet(map,TEST_DATA[i].key) == TEST_DATA[i].value);
+    printf("mapGet works\n");
+
     //MAPKEYSET
-    /*keytype* set = mapKeySet(&map);
-    map_t map2 = mapCreate();
-    
-    mapInsert(&map2,set[0], 1);
-    mapInsert(&map2,set[1], 2);
-    mapInsert(&map2,set[2], 3);
-    mapInsert(&map2,set[3], 4);
-    
-    assert(mapHasKey(map2,"a"));
-    assert(mapHasKey(map2,"b"));
-    assert(mapHasKey(map2,"c"));
-    assert(mapHasKey(map2,"d"));
-    printf("mapKeySet works\n");*/
+    keytype* set = mapKeySet(&map);
+    for(i=0; i<NUM_TESTS; i++) {
+        assert(mapHasKey(map, set[i]));
+    }
+    free(set);
+    printf("mapKeySet works\n");
     
     //REMOVE
     mapPrint(map);
-    printf("\n");
+    printf("\n Removing nodes a, f, and e: \n");
     mapRemove(&map,"a");
+    size--;
     assert(!mapHasKey(map, "a"));
- 
-    mapPrint(map);
-    printf("\n");
-    mapRemove(&map,"b");
-    mapPrint(map);    
-    assert(!mapHasKey(map,"b"));
-    assert(mapSize(map) == 2);
-
-    printf("\n");
-    mapRemove(&map,"d");
-    assert(!mapHasKey(map,"d"));   
-    mapPrint(map);
     
+    mapRemove(&map,"f");
+    size--;
+    assert(!mapHasKey(map,"f"));
+
+    mapRemove(&map,"e");
+    size--;
+    assert(!mapHasKey(map,"e"));
+    assert(mapSize(map) == size);
+    mapPrint(map);    
+
     //DELETE MAP
     mapClear(&map);
     assert(mapSize(map)==0);
