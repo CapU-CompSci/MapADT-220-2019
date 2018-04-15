@@ -60,11 +60,12 @@ int main ()
     printf("mapGet works\n");
 
     //MAPKEYSET
-    keytype* set = mapKeySet(map);
+    keytype* keySet = mapKeySet(map);
     for(i=0; i<NUM_TESTS; i++) {
-        assert(mapHasKey(map, set[i]));
+        printf("i %d, key %s\n", i, keySet[i]);  fflush(stdout);
+        assert(mapHasKey(map, keySet[i]));
     }
-    free(set);
+    free(keySet);
     printf("mapKeySet works\n");
     
     //REMOVE

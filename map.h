@@ -65,12 +65,11 @@ int mapSize(map_t map);
 */
 void mapClear(map_t * map);
 
-
 /*
 * returns a dynamic array containing all the Map Keys (in any sequence)
 * it is the caller's responsibility to free the returned array.
 */
-keytype* mapKeySet(map_t * map);
+keytype* mapKeySet(map_t map);
 
 /*
  * Prints to screen a text representation of the all the keys and values in map
