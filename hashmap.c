@@ -19,8 +19,12 @@
 
 unsigned long Hmapfunction( keytype Key);
 int mapindex(keytype Key);
+entry_t* htBin(map_t map, int row, int col);
+int htGetBinIndex(map_t map, int rowIndex, keytype key);
 entry_t* htGetBin(map_t map, keytype key);
+void htClearBin(entry_t* bin);
 bool htBinIsEmpty(entry_t* bin);
+void htShiftLeft(map_t* mapref, int row, int col);
 keytype deepCopy(keytype key);
 bool keysEqual(keytype key1,keytype key2);
 
@@ -50,26 +54,51 @@ int mapindex(keytype Key)
     return abs(index);  // abs is probably redundant now -- fixed by using unsigned.
 }
 
+// Return a pointer to the "bin" in the hashtable at given row, col.
+// PRE: 0<= row < ARRAY_SIZE && 0<= col < COL_SIZE
+entry_t* htBin(map_t map, int row, int col) 
+{
+    return &(map->hashtable[row][col]);
+}
+
+// Clear the contents from the given bin in the hash table
+void htClearBin(entry_t* bin)
+{
+    bin->key = '\0';
+    bin->value = 0;
+}
+
 // Return true iff the given hash table bin is empty
 bool htBinIsEmpty(entry_t* bin) 
 {
     return bin->key == NULL;
 } 
 
+// Return index of "bin" in given hashtable row where the key is found, 
+//   or index of empty "bin" where the key should have been found,
+//   or -1 if the hash table row would overflow if that key were inserted.
+int htGetBinIndex(map_t map, int row, keytype key) {
+    int col;
+    for (col=0; col < COL_SIZE; col++) {
+        entry_t* bin = htBin(map,row, col);
+        if ( htBinIsEmpty( bin ) ||
+             keysEqual(bin->key, key) )
+            return col;
+    }
+    return -1; // overflow -- key not found, no empty bins to put it in.
+}    
+
 // Return a pointer to the "bin" in the hashtable where the key is found, 
 //   or a pointer to the empty "bin" where the key should have been found,
 //   or NULL if the hash table row would overflow if that key were inserted.
 entry_t* htGetBin(map_t map, keytype key) 
 {
-    int index = mapindex(key);
-    int counter = 0;
-
-    for (counter=0; counter < COL_SIZE; counter++) {
-        if (htBinIsEmpty(&(map->hashtable[index][counter])) ||
-            keysEqual(map->hashtable[index][counter].key, key) )
-            return &(map->hashtable[index][counter]);
-    }
-    return NULL; // overflow -- key not found, no empty bins to put it in.
+    int row = mapindex(key);
+    int col = htGetBinIndex(map, row, key);
+    if (col >= 0) 
+        return htBin(map,row, col);
+    else
+        return NULL; // overflow -- key not found, no empty bins to put it in.
 }
 
 
@@ -137,29 +166,24 @@ int mapGet(map_t map, keytype key)
 void mapRemove(map_t* mapref, keytype key)
 {
     map_t map = *mapref;
-    if (!mapHasKey(map, key)) {
-        return;
+    int row = mapindex(key);
+    int col = htGetBinIndex(map, row, key);
+    if (col == -1 || htBinIsEmpty( htBin(map, row, col) ))
+        return;  // no need to remove keys that are not in the map
+    
+    htShiftLeft(mapref, row, col);
+}
+
+// Shift all entries in the given row of the hash table to the left
+//   starting at the given col -- effectively closes a "hole" in the bins
+void htShiftLeft(map_t* mapref, int row, int col)
+{
+    map_t map = *mapref;
+    int t;
+    for(t=col; t<COL_SIZE-1; t++){
+        map->hashtable[row][t] = map->hashtable[row][t+1];
     }
-    else {
-        int c;
-        int i = mapindex(key);
-        int t;
-       
-        
-       
-        while(map->hashtable[i][c].key!=NULL) {  
-            if(keysEqual(map->hashtable[i][c].key, key)) {   
-                
-                //map->hashtable[i][c].key = '\0';
-                //map->hashtable[i][c].value = 0;
-                for(t=c;t<COL_SIZE-1;t++){
-                    
-                    map->hashtable[i][t] = map->hashtable[i][t+1]; //I think this should work for deleting an entry at a found index by overwriting the data with whatever is left of it
-                    //I do this to keep the overflow bin compressed to the left side of the array
-                }
-            }
-        }
-    }
+    htClearBin( htBin(map, row, COL_SIZE-1) ); // ensure last bin (at least) is now empt
 }
 
 
@@ -173,8 +197,8 @@ void mapRemove(map_t* mapref, keytype key)
  */
 bool mapHasKey(map_t map, keytype key)
 {
-    entry_t* entry = htGetBin(map, key);
-    return entry != NULL && !htBinIsEmpty(entry);
+    entry_t* bin = htGetBin(map, key);
+    return bin != NULL && !htBinIsEmpty(bin);
 }
 
 /*
@@ -189,10 +213,7 @@ void mapClear(map_t* mapref)
     int i, c;
     for(i = 0; i < ARRAY_SIZE-1; i++) {
         for(c = 0; c < COL_SIZE-1; c++) {
-            
-            map->hashtable[i][c].key = '\0';
-            map->hashtable[i][c].value =0;
-
+            htClearBin( htBin(map, i, c) );
         }
     }
 }
@@ -207,7 +228,7 @@ int mapSize(map_t map)
 {
     int i, c, size = 0;
     for(i=0; i<ARRAY_SIZE-1; i++) {
-        for(c=0; !htBinIsEmpty(&map->hashtable[i][c]); c++) {
+        for(c=0; !htBinIsEmpty( htBin(map,i,c) ); c++) {
             size++;
         }
     }
@@ -252,8 +273,9 @@ void mapPrint(map_t map){
     printf("===MAP: HASH TABLE===\n");
     for( i = 0; i < ARRAY_SIZE-1; i++ ){
         for( c = 0; c < COL_SIZE-1; c++ ){
-            if( !htBinIsEmpty(&map->hashtable[i][c]) ){
-                printf("[bucket:%d; key:%s; value:%d]\n", i, map->hashtable[i][c].key, map->hashtable[i][c].value);
+            entry_t* entry = htBin(map,i,c);
+            if( !htBinIsEmpty( entry ) ){
+                printf("[bucket:%d; key:%s; value:%d]\n", i, entry->key, entry->value);
             }
         }
     }
@@ -274,8 +296,9 @@ keytype* mapKeySet(map_t map){
     keytype* keys = calloc(size, sizeof(keytype));
     for( i=0; i < ARRAY_SIZE; i++ ){
         for( c=0; c < COL_SIZE; c++ ){
-            if ( !htBinIsEmpty(&map->hashtable[i][c]) ){
-                keys[arrIndex] = map->hashtable[i][c].key;
+            entry_t* bin = htBin(map,i,c);
+            if ( !htBinIsEmpty( bin ) ){
+                keys[arrIndex] = bin->key;
                 arrIndex++;
             }
         }
