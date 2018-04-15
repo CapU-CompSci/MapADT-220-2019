@@ -34,7 +34,7 @@ void twoChildDelete(map_t* cur, map_t parent);
 int keyCompare(keytype insertkey, keytype mapkey);
 bool mapIsEmpty(map_t tree);
 void getEntries(map_t map, entry_t* entries[]);
-void traverseInOrder(map_t map, entry_t* entries[], int index);
+void traverseInOrder(map_t map, entry_t* entries[], int* index);
 void mapPrint(map_t map);
 int keyCompare(keytype insertkey,keytype mapkey);
 
@@ -182,6 +182,7 @@ keytype* mapKeySet(map_t map)
 	// Get pointers to all the entries
 	entry_t** entries = calloc(size, sizeof(entry_t*));
 	getEntries(map, entries);
+	
 	// Extract the keys	
 	keytype* keys = calloc(size, sizeof(keytype));
 	int i = 0;
@@ -386,7 +387,8 @@ bool mapIsEmpty(map_t tree){
 * POST: entries array is filled with pointers to map entries, in "in order" sequence
 */
 void getEntries(map_t map, entry_t* entries[]){
-	traverseInOrder(map, entries, 0);
+	int index = 0;
+	traverseInOrder(map, entries, &index);
 }
 
 /*
@@ -394,16 +396,15 @@ void getEntries(map_t map, entry_t* entries[]){
 * PRE: entries array is sized >= mapSize(map);  0 <= index < mapSize(map)
 * POST: entries array is filled with pointers to map entries, in "in order" sequence
 */
-void traverseInOrder(map_t map, entry_t* entries[], int index){
+void traverseInOrder(map_t map, entry_t* entries[], int* index){
 	
 	if(map != NULL){  
 		if(!mapIsEmpty(map->left)){
 			traverseInOrder(map->left, entries, index);
-			index++;
 		}
-		entries[index] = &(map->entry);
-	// a pointer to the entry, not a copy!
-		index++;
+		// a pointer to the entry, not a copy!
+		entries[*index] = &(map->entry);
+		(*index)++;
 		if(!mapIsEmpty(map->right)){
 			traverseInOrder(map->right, entries, index);
 		}
