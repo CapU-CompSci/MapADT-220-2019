@@ -75,9 +75,9 @@ int main (int argc, char* argv[])
 	ftPrint(frequencies, WORDCLOUD_SIZE);
 
 	// Clean up dynamic structures
+	// ftDestroy(&frequencies);  TODO: BUG #127
 	free(words);
 	mapClear(&wordmap);
-	ftDestroy(&frequencies);
 }
 
 //removes all non-alphabetic character (e.g., punction) from input string
