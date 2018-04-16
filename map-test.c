@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <assert.h>
 #ifdef HASHMAP
 #include "hashmap.h"
@@ -88,5 +89,26 @@ int main ()
     //DELETE MAP
     mapClear(&map);
     assert(mapSize(map)==0);
+
+    // DEEP COPY OF DATA
+    printf("\n Testing for key deep copy and deep comparison: \n");
+    char key[10];
+    int value = 1;
+    strncpy(key, "one", 9);
+    mapInsert(&map, key, value);
+    strncpy(key, "two", 9);
+    value = 2;
+    mapInsert(&map, key, value);
+    strncpy(key, "three", 9);
+    value = 3;
+    mapInsert(&map, key, value);
+    strncpy(key, "four", 9);
+    value = 4;
+    mapInsert(&map, key, value);
+    assert(mapGet(map, "one") == 1);
+    assert(mapGet(map, "two") == 2);
+    assert(mapGet(map, "three") == 3);
+    assert(mapGet(map, "four") == 4);
     
+    mapClear(&map);    
 } 
