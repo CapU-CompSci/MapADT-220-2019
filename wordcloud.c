@@ -20,6 +20,9 @@
 #endif
 #include "map.h"
 
+#include "freqTree.h"
+
+#define WORDCLOUD_SIZE 25
 
 //PSUEDO CODE
    //create new treemap
@@ -131,7 +134,16 @@ Author: Reece Whitehead
 
 */
 	
-	printf("WordCloud Frequency \n");
+	FreqTree_t frequencies = ftCreate();
+	keytype* words = mapKeySet(wordmap);
+	int i;
+	int n = mapSize(wordmap);
+	for (i=0; i<n; i++) {
+		ftInsert(&frequencies, mapGet(wordmap, words[i]), words[i]);
+	}
+	
+	printf("WordCloud Frequencies \n");
+	ftPrint(frequencies, WORDCLOUD_SIZE);
 	// TODO: print tabular form needs formatting...
 	
 	// This idea won't work:  "InOrder" is a tree concept - Maps are like Sets, they don't have an order!
