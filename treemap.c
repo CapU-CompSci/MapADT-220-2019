@@ -32,6 +32,7 @@ void twoChildDelete(map_t* cur, map_t parent);
 
 // ----- MISC. HELPERS -----
 int keyCompare(keytype insertkey, keytype mapkey);
+keytype keyDeepCopy(keytype key);
 bool mapIsEmpty(map_t tree);
 void getEntries(map_t map, entry_t* entries[]);
 void traverseInOrder(map_t map, entry_t* entries[], int* index);
@@ -48,7 +49,7 @@ int keyCompare(keytype insertkey,keytype mapkey);
 bstNode_t* nodeCreate(valuetype value, keytype key){
 	bstNode_t* node = malloc(sizeof(bstNode_t));
 	node->entry.value = value;
-	node->entry.key = key;
+	node->entry.key = keyDeepCopy(key);
 	node->left = NULL;
 	node->right = NULL;
 	return node;
@@ -143,7 +144,7 @@ bool mapHasKey(map_t map, keytype key){
 	if(entryFind(map,key) == NULL){	//if entry does not exist		
 		return false;
 	}
-	return(entryFind(map,key)->entry.key == key);
+	return true;
 }
 
 /*
@@ -374,6 +375,17 @@ void twoChildDelete(map_t* mapref, map_t parent){
 int keyCompare(keytype insertkey, keytype mapkey){
 	return strcmp(insertkey, mapkey);
 }
+
+/*
+ * Make a deep copy of the key
+ * Author: Reece Whitehead + Greagorey+ Joseph Fall
+ */
+keytype keyDeepCopy(keytype key){
+    keytype newKey = calloc(strlen(key), sizeof(char));
+    strcpy(newKey, key);
+    return newKey;
+}
+
 /*
 * returns tree if the tree is empty.
 */
