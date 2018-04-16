@@ -107,8 +107,6 @@ void ftInsert(FreqTree_t* treeref, KeyType key, ValueType value)
       *treeref = ftnodeCreate(entry);
    else if (key > tree->entry.key)
       ftInsert(&tree->left, key, value);
-   else if (key < tree->entry.key)
+   else // duplicate inserts are essential since frequencies can be duplicated!
       ftInsert(&tree->right, key, value);
-   // else key is already in the tree
-	
 }

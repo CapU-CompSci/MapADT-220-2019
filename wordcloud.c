@@ -63,11 +63,12 @@ int main (int argc, char* argv[])
 			count = 1;
 		}
 		removePunc(word);
+		printf("Inserting %s %d\n", word, count);
 		mapInsert(&wordmap, word, count);  
 	}
 	
 	//FOR DEBUGGING:
-	mapPrint(wordmap);
+	//mapPrint(wordmap);
 
 
 
@@ -138,9 +139,11 @@ Author: Reece Whitehead
 	keytype* words = mapKeySet(wordmap);
 	int i;
 	int n = mapSize(wordmap);
+	printf("Mapsize %d\n", n);
 	for (i=0; i<n; i++) {
 		ftInsert(&frequencies, mapGet(wordmap, words[i]), words[i]);
 	}
+	printf("Freq size %d\n", ftSize(frequencies));
 	
 	printf("WordCloud Frequencies \n");
 	ftPrint(frequencies, WORDCLOUD_SIZE);
@@ -152,7 +155,7 @@ Author: Reece Whitehead
 	
 	fclose(f);
 	printf("\nIn order Finished...");
-//	free(keylist);
+	free(words);
 }
 
 //removes all punction from input string
