@@ -162,7 +162,7 @@ Author: Reece Whitehead
 void removePunc(char* word){
  	int i;
  	for(i=0; i<strlen(word); i++){
- 		if ( ispunct(word[i])) 
+ 		if ( !isalpha(word[i])) 
  			shiftLeft(word, i);
  	}
 }
