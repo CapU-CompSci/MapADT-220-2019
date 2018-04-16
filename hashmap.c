@@ -1,8 +1,9 @@
-/* This will be the .c file corresponding with the hashmap.h file 
+/*
+ * Comp220 - hash map.c
+ *    Hash Table implementation of a Map ADT
  *
  *   Authors: Reece Whitehead, Artur Shadnik, Greagorey Markerian, Joseph Fall 
  *   Date: April 5, 2018
- *
  */
 
 #include <stdio.h>
@@ -131,11 +132,6 @@ map_t mapCreate()
     return map;
 }
     
-    
-    
-    
-    
-    
 /*
  * Author:Reece Whitehead
  * Edit:
@@ -148,21 +144,11 @@ int mapGet(map_t map, keytype key)
     return entry->value;
 }
 
-
-
-
-
-
-
-
-
 /*
  * Author: Artur Shadnik
  * Edited by: Reece Whitehead
  * Last Changed: 2018/04/05
- * Needs to be reviewed and tested
  */
- 
 void mapRemove(map_t* mapref, keytype key)
 {
     map_t map = *mapref;
@@ -186,14 +172,9 @@ void htShiftLeft(map_t* mapref, int row, int col)
     htClearBin( htBin(map, row, COL_SIZE-1) ); // ensure last bin (at least) is now empt
 }
 
-
-
-
-
 /*
  * Author: Greagorey Markerian
  * Last Changed: 2018/04/05
- * Needs to be reviewed and tested
  */
 bool mapHasKey(map_t map, keytype key)
 {
@@ -205,7 +186,6 @@ bool mapHasKey(map_t map, keytype key)
  * Author: Artur Shadnik
  * Edited by: Reece Whitehead
  * Last Changed: 2018/04/05
- * Needs to be reviewed and tested
  */
 void mapClear(map_t* mapref)
 {
@@ -222,7 +202,6 @@ void mapClear(map_t* mapref)
 /*
  * Author: Braeden Norman
  * Last Changed: 2018/04/06
- * Needs to be reviewed and tested
  */
 int mapSize(map_t map)
 {
@@ -235,32 +214,25 @@ int mapSize(map_t map)
     return size;
 }
 
-
-
-
-  /*
-  *Author: Reece Whitehead + Greagorey+ Joseph Fall
-  *
-  *Last edited: 4/10/2018
-  */
+/*
+ * Author: Reece Whitehead + Greagorey+ Joseph Fall
+ *
+ * Last edited: 4/10/2018
+ */
 keytype keyDeepCopy(keytype key){
     keytype newKey = calloc(strlen(key), sizeof(char));
     strcpy(newKey, key);
     return newKey;
-    
-    
 }
 
-  /*
-  *Author: Reece Whitehead + Greagorey+ Joseph Fall
-  *
-  *Last edited: 4/10/2018
-  */
-
+/*
+ * Author: Reece Whitehead + Greagorey+ Joseph Fall
+ *
+ * Last edited: 4/10/2018
+ */
 bool keysEqual(keytype key1,keytype key2){
     return (strcmp(key1, key2)==0);
 }
-
 
 /*
  * Author: Ricky Cheung
