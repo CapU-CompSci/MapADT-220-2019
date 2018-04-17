@@ -97,6 +97,7 @@ void mapRemove(map_t* mapref, keytype key){ //differnt type names between keytyp
 		return;
 	}
 	if(keyCompare(map->entry.key,key)==0 && map->left == NULL && map->right == NULL){		//if the only node that exist is the root			
+        // #126 -- potential memory leak -- free dynamic data in node->entry!
 		free(map);
 		*mapref = NULL;
 	}
@@ -167,6 +168,7 @@ void mapClear(map_t * map){
 	if(curr != NULL){
 		mapClear(&curr->left);
 		mapClear(&curr->right);
+        // #126 -- potential memory leak -- free dynamic data in node->entry!
 		free(curr);
 		*map = NULL;
 	}
@@ -372,7 +374,8 @@ int keyCompare(keytype insertkey, keytype mapkey){
  * Author: Reece Whitehead + Greagorey+ Joseph Fall
  */
 keytype keyDeepCopy(keytype key){
-    keytype newKey = calloc(strlen(key), sizeof(char));
+    // #126 -- potential memory leak -- no code ever frees this allocation!
+    keytype newKey = calloc(strlen(key)+1, sizeof(char));
     strcpy(newKey, key);
     return newKey;
 }

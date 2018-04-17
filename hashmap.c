@@ -157,6 +157,7 @@ void mapRemove(map_t* mapref, keytype key)
     if (col == -1 || htBinIsEmpty( htBin(map, row, col) ))
         return;  // no need to remove keys that are not in the map
     
+    // #126 -- potential memory leak: free key string before shifting over it?
     htShiftLeft(mapref, row, col);
 }
 
@@ -193,6 +194,7 @@ void mapClear(map_t* mapref)
     int r, c;
     for(r = 0; r < ARRAY_SIZE-1; r++) {
         for(c = 0; c < COL_SIZE-1; c++) {
+            // #126 -- potential memory leak -- free dynamic key before clearing bins
             htClearBin( htBin(map, r, c) );
         }
     }
@@ -220,7 +222,8 @@ int mapSize(map_t map)
  * Last edited: 4/10/2018
  */
 keytype keyDeepCopy(keytype key){
-    keytype newKey = calloc(strlen(key), sizeof(char));
+    // #126 -- potential memory leak -- no code ever frees this allocation!
+    keytype newKey = calloc(strlen(key)+1, sizeof(char));
     strcpy(newKey, key);
     return newKey;
 }
