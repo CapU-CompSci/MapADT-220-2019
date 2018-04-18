@@ -168,7 +168,7 @@ void mapClear(map_t * map){
 	if(curr != NULL){
 		mapClear(&curr->left);
 		mapClear(&curr->right);
-        // #126 -- potential memory leak -- free dynamic data in node->entry!
+        free(curr->entry);
 		free(curr);
 		*map = NULL;
 	}
