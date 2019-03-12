@@ -1,5 +1,5 @@
-# Map ADT Comp 220 2018
-Comp220 @ Capilano U - Map ADT class collaboration project (2018)
+# Map ADT Comp 220 2019
+Comp220 @ Capilano U - Map ADT class collaboration project (2019)
 
 ## Project Requirements
 This project has 4 "deliverable" C modules:
