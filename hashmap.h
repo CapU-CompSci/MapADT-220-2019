@@ -7,40 +7,41 @@
 
 /*
  * POST: Get(key) == value()
- * sets the value for key if HasKey(key), otherwise inserts a new value in Map
+ * Sets the value for key if HasKey(key), otherwise inserts a new value in Map
  */
  void Insert(char* key, int value);
  
 /*
  * POST: HasKey(key) == false
- * removes the (key, value) pair from the Map, no effect if !HasKey(key)
+ * Removes the (key, value) pair from the Map, no effect if !HasKey(key)
  */
 void Remove(char* key);
 
 /* 
  * PRE: HasKey(key)
- * returns the value associated with the given key
+ * Returns the value associated with the given key
  */
 int Get(char* key);
 
 /* 
- * returns true iff the Map contains the given key
+ * Returns true if the Map contains the given key
  */
 bool HasKey(char* key);
 
 /*
- * returns the number of (key, value) pairs in the Map
+ * Returns the number of (key, value) pairs in the Map
  */
 int Size(void);
 
 /*
  * POST: Size() == 0
- * removes all items from the Map (without creating memory leaks!)
+ * Removes all items from the Map
  */
 void Clear(void);
 
 /*
- * returns a dynamic array containing all the Map Keys (in any sequence)
- * it is the caller's responsibility to free the returned array.
+ * Returns a dynamic array containing all the Map Keys (in any sequence)
+ * Returned array must be freed by client
  */
 char** KeySet(void);
+
