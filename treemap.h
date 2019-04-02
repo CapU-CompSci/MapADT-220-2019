@@ -14,3 +14,9 @@
  *Sets the value for key if HasKey(key), otherwise inserts a new value in Map
  */
 void Insert(char* key,int value);
+
+/*
+ *PRE: HasKey(key)
+ *Returns the value associated with the given key
+ */
+int Get(char* key);
