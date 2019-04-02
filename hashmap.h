@@ -1,6 +1,6 @@
 /*
 * Hashmap ADT- public API for hashmap implementation
-* Author: Louis Chuang
+* Author: Cap Comp220 Spring 2019
 * Date: April 1st,2019
 *
 */
