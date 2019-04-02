@@ -21,3 +21,10 @@ void Insert(char* key,int value);
  *removes the (key, value) pair from the Map, no effect if !HasKey(key)
  */
 void Remove(char* key);
+
+
+/*
+ *PRE: HasKey(key)
+ *Returns the value associated with the given key
+ */
+int Get(char* key);
