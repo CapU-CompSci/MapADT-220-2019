@@ -16,3 +16,31 @@
  * removes the (key, value) pair from the Map, no effect if !HasKey(key)
  */
 void Remove(char* key);
+
+/* 
+ * PRE: HasKey(key)
+ * returns the value associated with the given key
+ */
+int Get(char* key);
+
+/* 
+ * returns true iff the Map contains the given key
+ */
+bool HasKey(char* key);
+
+/*
+ * returns the number of (key, value) pairs in the Map
+ */
+int Size(void);
+
+/*
+ * POST: Size() == 0
+ * removes all items from the Map (without creating memory leaks!)
+ */
+void Clear(void);
+
+/*
+ * returns a dynamic array containing all the Map Keys (in any sequence)
+ * it is the caller's responsibility to free the returned array.
+ */
+char** KeySet(void);
