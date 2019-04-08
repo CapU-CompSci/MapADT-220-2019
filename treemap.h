@@ -6,7 +6,14 @@
  *
  */
 
+struct btNode_s {
 
+    char* key;
+	int count;
+	struct btNode_s* right;
+	struct btNode_s* left;
+};
+typedef struct btNode_s btNode;
 
 
 /*
