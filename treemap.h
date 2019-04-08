@@ -16,7 +16,7 @@ struct btNode_s {
 typedef struct btNode_s btNode;
 
 struct bsTree_s {
-    btNode root;
+    btNode* root;
 };
 typedef struct bsTree_s bsTree;
 
