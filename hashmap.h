@@ -5,6 +5,25 @@
 *
 */
 
+struct node_s{
+	int data;
+	struct node_s* next;
+};
+typedef struct node_s Node_t;
+
+struct list_s{
+	Node_t* head;
+	Node_t* tail;
+};
+typedef struct list_s List_t;
+
+struct hastable_s
+{
+    int key;
+    List_t list;
+}
+typedef struct hastable_s Hashtable_t;
+
 /*
  * POST: Get(key) == value()
  * Sets the value for key if HasKey(key), otherwise inserts a new value in Map
@@ -44,4 +63,14 @@ void Clear(void);
  * Returned array must be freed by client
  */
 char** KeySet(void);
+
+/*
+ * Creates a hashtable and return it
+ */
+Hashtable_t hashContructor(int length);
+
+/*
+ * Destroys a hashtabe
+ */
+ void hashDestructor(hastable_t* hashtable_p);
 
