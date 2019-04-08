@@ -79,3 +79,13 @@ void Clear(void);
  * Returned array must be freed by client
  */
 char** KeySet(void);
+
+/* 
+ * Return pointer to a new root node.
+ */
+bsTree* Constructor(void);
+
+/*
+ * No Return
+ */
+void Destructor(bsTree* root);
