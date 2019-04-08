@@ -15,6 +15,10 @@ struct btNode_s {
 };
 typedef struct btNode_s btNode;
 
+struct bsTree_s {
+    btNode root;
+};
+typedef struct bsTree_s bsTree;
 
 /*
  *POST: Get(key) == value
