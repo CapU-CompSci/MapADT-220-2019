@@ -5,7 +5,7 @@
  * PRIVATE TYPE DECLARATION
  ********************/
 struct  Node {
-	char* hash_key;					//Hash Key	
+    char* hash_key;					//Hash Key	
     int value;					//Hash Value
     struct Node* next;			//pointer to the next node	
 };									
