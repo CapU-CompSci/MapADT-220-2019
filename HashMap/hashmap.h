@@ -6,7 +6,7 @@
 */
 
 struct hashmap_s{
-    Linkedlist* map;
+    linkedList* map;
     int capacity;
 };
 typedef struct hashmap_s Hashmap_t;
