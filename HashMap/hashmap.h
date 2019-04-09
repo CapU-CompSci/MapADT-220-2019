@@ -59,5 +59,5 @@ Hashtable_t hashContructor(int length);
 /*
  * Destroys a hashtabe
  */
- void hashDestructor(hastable_t* hashtable_p);
+ void hashDestructor(Hastable_t hashtable);
 
