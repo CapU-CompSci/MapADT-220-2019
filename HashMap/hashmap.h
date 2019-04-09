@@ -60,3 +60,14 @@ Hashmap_t hashContructor(int length);
  * Destroys a hashmap
  */
  void hashDestructor(Hastable_t hashtable);
+
+
+/*
+ * calculate hash for given key
+ */
+unsigned long Hash(char* key);
+
+/*
+ *  calculate index of element given it's hash
+ */
+int getIndex(unsigned long hash, int arraySize);
