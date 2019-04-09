@@ -55,5 +55,7 @@ void hashDestructor(Hashmap_t hashmap)
     hashmap.capacity == 0;
 }
 
-
-
+bool HasKey(Hashmap_t hashmap, char* key)
+{
+    findKey(hashmap.map[getIndex(key, hashmap.capacity)]);
+}
