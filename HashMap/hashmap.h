@@ -5,24 +5,13 @@
 *
 */
 
-struct node_s{
-	int data;
-	struct node_s* next;
-};
-typedef struct node_s Node_t;
-
-struct list_s{
-	Node_t* head;
-	Node_t* tail;
-};
-typedef struct list_s List_t;
-
 struct hastable_s
 {
-    int key;
-    List_t list;
-}
+    Linkedlist* map;
+    int capacity;
+};
 typedef struct hastable_s Hashtable_t;
+
 
 /*
  * POST: Get(key) == value()
