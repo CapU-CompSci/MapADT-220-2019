@@ -43,7 +43,8 @@ unsigned long Hash(char* key){                 //djb2 algorithm first created by
 /*
  *  calculate the index of an element given it's hash
  */
-int getIndex(unsigned long hash, int arraySize){
+int getIndex(char* key, int arraySize){
+    unsigned long hash = Hash(key);
     int index = hash % arraySize;
     return index;    
 }
