@@ -44,7 +44,7 @@ void bstInsert(bsTree* tree_p, char* key);
  * returns a pointer to the node if found else NULL
  */
  
-btNode* bstFindkey(bsTree tree, char* key);
+btNode* bstFindkey(btNode root, char* key);
 /*
  * create a new empty tree
  * POST: Return Empty Tree
