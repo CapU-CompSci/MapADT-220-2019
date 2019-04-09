@@ -57,6 +57,6 @@ char** KeySet(void);
 Hashmap_t hashContructor(int length);
 
 /*
- * Destroys a hashtabe
+ * Destroys a hashmap
  */
  void hashDestructor(Hastable_t hashtable);
