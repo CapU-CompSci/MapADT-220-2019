@@ -47,7 +47,7 @@ bool HasKey(char* key);
 /*
  * Returns the number of (key, value) pairs in the Map
  */
-int Size(void);
+int Size(bsTree* root);
 
 /*
  * POST: Size() == 0
