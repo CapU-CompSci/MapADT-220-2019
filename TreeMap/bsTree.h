@@ -35,16 +35,16 @@ void btNodeDestroy(btNode** node_p);
 
 /*
  * Inserts data into the tree
- * does nothing if key is already present
+ * PRE: Tree Must not contain Key
  */
 void bstInsert(bsTree* tree_p, char* key);
 
 /*
  * finds a node in the tree given the key
- * returns a pointer to the node if found else NULL
+ * returns a pointer to node if found, else return NULL
  */
- 
 btNode* bstFindkey(bTree tree, char* key);
+
 /*
  * create a new empty tree
  * POST: Return Empty Tree
@@ -56,6 +56,13 @@ bsTree bstCreate();
  *
 */
 void bstDestroy(bsTree* tree);
+
+
+/*
+ *finds if tree is empty or not
+ *POST: True if tree empty , False if Tree not empty
+*/
+bool bstIsEmpty( bsTree tree);
 
 
 
