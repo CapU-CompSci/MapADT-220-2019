@@ -56,13 +56,4 @@ void hashDestructor(Hashmap_t hashmap)
 }
 
 
-void Clear(Hashmap_t hashmap)
-{
-    int i;
-    for(i=0; i<hashmap.capacity; i++)
-    {
-        llDelete(hashmap.map[i]);
-    }
-}
-
 
