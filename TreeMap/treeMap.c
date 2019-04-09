@@ -56,7 +56,7 @@ int Size(bsTree* root){
  * POST: Size() == 0
  * Removes all items from the Map
  */
-void Clear(bsTree*){
+void Clear(bsTree* root){
                                          //NEED TO BE COMPLETED
 }
 

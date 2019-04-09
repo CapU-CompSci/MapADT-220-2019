@@ -28,4 +28,22 @@ void hashDestructor(Hashmap_t hashmap)
     hashmap.capacity == 0;
 }
 
+/*
+ * calculate hash for given key
+ */
+unsigned long Hash(char* key){                 //djb2 algorithm first created by Dan Bernstein
+    unsigned long hash = 5381;
+    int c;
+    while (c = *key++){
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
+    return hash;
+}
 
+/*
+ *  calculate the index of an element given it's hash
+ */
+int getIndex(unsigned long hash, int arraySize){
+    int index = hash % arraySize;
+    return index;    
+}
