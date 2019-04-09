@@ -37,13 +37,13 @@ bool HasKey(char* key);
 /*
  * Returns the number of (key, value) pairs in the Map
  */
-int Size(void);
+int Size(Hashmap_t hashmap);
 
 /*
  * POST: Size() == 0
  * Removes all items from the Map
  */
-void Clear(void);
+void Clear(Hashmap_t hashmap);
 
 /*
  * Returns a dynamic array containing all the Map Keys (in any sequence)
