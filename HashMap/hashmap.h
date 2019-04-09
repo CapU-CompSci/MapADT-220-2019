@@ -71,3 +71,4 @@ unsigned long Hash(char* key);
  *  calculate index of element given it's hash
  */
 int getIndex(char* key, int arraySize);
+
