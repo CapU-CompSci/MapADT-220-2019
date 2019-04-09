@@ -5,13 +5,11 @@
 *
 */
 
-struct hastable_s
-{
+struct hashmap_s{
     Linkedlist* map;
     int capacity;
 };
-typedef struct hastable_s Hashtable_t;
-
+typedef struct hashmap_s Hashmap_t;
 
 /*
  * POST: Get(key) == value()
