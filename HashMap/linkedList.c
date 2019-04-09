@@ -26,7 +26,7 @@ Node_t* nodeCreate(char* key, int value) {
   Node_t* node = malloc(sizeof(Node_t));
   node->hash_key = malloc(sizeof(strlen(key) + 1));
   strcpy(node->hash_key, key);
-  node->data = value;
+  node->value = value;
   node->next = NULL;
   return node;
 }
@@ -46,7 +46,7 @@ linkedList llCreate(){
  * Output a text representation of a node
  */
 void printNode(Node_t*node){
-	printf("[%c][%d]%s", node->hash_key, node->data, node->next ? "-->" : "--|"); //taken from your code in class
+	printf("[%s][%d]%s", node->hash_key, node->value, node->next ? "-->" : "--|"); //taken from your code in class
 }
 
 /*
@@ -79,7 +79,7 @@ bool isEmpty(const linkedList list){
  */
 void llAppend(linkedList* list, char* key, int data){
 
-	Node_t* newNode = nodeCreate(&key, data);
+	Node_t* newNode = nodeCreate(key, data);
 
 	if (isEmpty(*list)){
 		list->head = newNode;
@@ -106,4 +106,9 @@ void llDelete(linkedList* list){
 		list->head = cur;
 	}
 	list->tail = NULL;
+}
+
+
+int main(){
+	return 0;
 }
