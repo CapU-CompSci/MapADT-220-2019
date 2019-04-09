@@ -51,7 +51,7 @@ void Clear(Hashmap_t hashmap)
 void hashDestructor(Hashmap_t hashmap)
 {
     Clear(Hashmap_t hashmap)
-    
+    hashmap.map == NULL;
     hashmap.capacity == 0;
 }
 
