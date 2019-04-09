@@ -64,7 +64,7 @@ char** KeySet(bsTree* root);
 /* 
  * Return pointer to a new root node.
  */
-bsTree* Constructor(void);
+bsTree Constructor(void);
 
 /*
  * No Return, destroys map.
