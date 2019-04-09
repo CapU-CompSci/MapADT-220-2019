@@ -1,4 +1,9 @@
-
+/*
+ *  Hash LinkedList : Linked List
+ *
+ *  Author:  Keyann Al-Kheder
+ *  
+ */
 
 
 /*******************
