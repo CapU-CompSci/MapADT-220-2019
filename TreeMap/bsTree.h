@@ -19,3 +19,14 @@ struct bsTree_s {
 };
 typedef struct bsTree_s bsTree;
 
+/*
+ * Inserts data into the tree
+ * does nothing if key is already present
+ */
+void bstreeInsert(bsTree* tree_p, char* key);
+
+/*
+ * finds a node in the tree given the key
+ * returns a pointer to the node if found else NULL
+ */
+ btNode* btFind(bTree tree, char* key);
