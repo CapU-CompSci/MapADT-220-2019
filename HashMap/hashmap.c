@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "hashmap.h"
+#include "linkedList.h"
 
 Hashmap_t hashConstructor(int cap)
 {
@@ -16,3 +17,15 @@ Hashmap_t hashConstructor(int cap)
     new.capacity = cap;
     return new;
 }
+
+void hashDestructor(Hashmap_t hashmap)
+{
+    int i;
+    for(i=0; i<hashmap.capacity; i++)
+    {
+        llDelete(hashmap.map[i]);
+    }
+    hashmap.capacity == 0;
+}
+
+
