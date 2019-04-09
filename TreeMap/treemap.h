@@ -53,13 +53,13 @@ int Size(bsTree* root);
  * POST: Size() == 0
  * Removes all items from the Map
  */
-void Clear(bsTree* root);
+void Clear(bsTree*);
 
 /*
  * Returns a dynamic array containing all the Map Keys (in any sequence)
  * Returned array must be freed by client
  */
-char** KeySet(void);
+char** KeySet(bsTree* root);
 
 /* 
  * Return pointer to a new root node.
