@@ -54,10 +54,9 @@ char** KeySet(void);
 /*
  * Creates a hashtable and return it
  */
-Hashtable_t hashContructor(int length);
+Hashmap_t hashContructor(int length);
 
 /*
  * Destroys a hashtabe
  */
  void hashDestructor(Hastable_t hashtable);
-

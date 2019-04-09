@@ -67,6 +67,6 @@ char** KeySet(bsTree* root);
 bsTree* Constructor(void);
 
 /*
- * No Return
+ * No Return, destroys map.
  */
 void Destructor(bsTree* root);
