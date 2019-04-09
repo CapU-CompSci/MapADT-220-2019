@@ -18,16 +18,6 @@ Hashmap_t hashConstructor(int cap)
     return new;
 }
 
-void hashDestructor(Hashmap_t hashmap)
-{
-    int i;
-    for(i=0; i<hashmap.capacity; i++)
-    {
-        llDelete(hashmap.map[i]);
-    }
-    hashmap.capacity == 0;
-}
-
 /*
  * calculate hash for given key
  */
@@ -48,3 +38,31 @@ int getIndex(char* key, int arraySize){
     int index = hash % arraySize;
     return index;    
 }
+
+void Clear(Hashmap_t hashmap)
+{
+    int i;
+    for(i=0; i<hashmap.capacity; i++)
+    {
+        llDelete(hashmap.map[i]);
+    }
+}
+
+void hashDestructor(Hashmap_t hashmap)
+{
+    Clear(Hashmap_t hashmap)
+    
+    hashmap.capacity == 0;
+}
+
+
+void Clear(Hashmap_t hashmap)
+{
+    int i;
+    for(i=0; i<hashmap.capacity; i++)
+    {
+        llDelete(hashmap.map[i]);
+    }
+}
+
+
