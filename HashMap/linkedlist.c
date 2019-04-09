@@ -1,5 +1,5 @@
 /*
- *  Hash LinkedList : Linked List
+ *  HashMap Dependancy : Linked List
  *
  *  Author:  Keyann Al-Kheder
  *  
