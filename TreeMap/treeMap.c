@@ -16,7 +16,7 @@
  * Sets the value for key if HasKey(key), otherwise inserts a new value in Map
  */
  void Insert(char* key, int value){
-  
+                                          //NEED TO BE COMPLETED
  }
  
 /*
@@ -24,7 +24,7 @@
  * Removes the (key, value) pair from the Map, no effect if !HasKey(key)
  */
 void Remove(char* key){
- 
+                                         //NEED TO BE COMPLETED
 }
 
 /* 
@@ -32,21 +32,24 @@ void Remove(char* key){
  * Returns the value associated with the given key
  */
 int Get(char* key){
- 
+                                         //NEED TO BE COMPLETED
+ return NULL;
 }
 
 /* 
  * Returns true if the Map contains the given key
  */
 bool HasKey(char* key){
- 
+                                         //NEED TO BE COMPLETED
+ return NULL;
 }
 
 /*
  * Returns the number of (key, value) pairs in the Map
  */
 int Size(bsTree* root){
- 
+                                         //NEED TO BE COMPLETED
+ return NULL;
 }
 
 /*
@@ -54,7 +57,7 @@ int Size(bsTree* root){
  * Removes all items from the Map
  */
 void Clear(bsTree*){
- 
+                                         //NEED TO BE COMPLETED
 }
 
 /*
@@ -62,21 +65,23 @@ void Clear(bsTree*){
  * Returned array must be freed by client
  */
 char** KeySet(bsTree* root){
- 
+                                        //NEED TO BE COMPLETED
+ return NULL;
 }
 
 /* 
  * Return pointer to a new root node.
  */
 bsTree Constructor(void){
- 
+                                         //NEED TO BE COMPLETED
+ return NULL;
 }
 
 /*
  * No Return, destroys map.
  */
 void Destructor(bsTree* root){
- 
+                                         //NEED TO BE COMPLETED
 }
  
  
