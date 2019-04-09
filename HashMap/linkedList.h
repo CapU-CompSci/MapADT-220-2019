@@ -32,7 +32,7 @@ typedef struct list_s linkedList;
  * Constructor - return a node 
  * POST:  Node: [Value][NULL-]
  */
-Node_t* nodeCreate(int value);
+Node_t* nodeCreate(char* key, int value);
 
 
 /*
@@ -61,7 +61,7 @@ bool isEmpty(const linkedList list);
  * Append the given item to the list 
  * POST: Linked List list grows by 1 node, which the tail now points too.
  */
-void llAppend(linkedList* list, int data);
+void llAppend(linkedList* list, char* key, int data);
 
 
 
