@@ -19,6 +19,19 @@ struct bsTree_s {
 };
 typedef struct bsTree_s bsTree;
 
+/*
+ * Creates new node with given key
+ * POST: Count == 1 , btNode.key == key, btNodeRight/Left == NULL
+ */
+btNode* btNodecreate(char* key);
+
+/*
+ *Deletes given Node
+ *POST: node_p == NULL
+ */
+void btNodeDestroy(btNode** node_p);
+
+
 
 /*
  * Inserts data into the tree
@@ -31,7 +44,7 @@ void bstInsert(bsTree* tree_p, char* key);
  * returns a pointer to the node if found else NULL
  */
  
-btNode* bstFindkey(bTree tree, char* key);
+btNode* bstFindkey(bsTree tree, char* key);
 /*
  * create a new empty tree
  * POST: Return Empty Tree
