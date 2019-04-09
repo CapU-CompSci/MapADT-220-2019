@@ -1,6 +1,6 @@
-Map ADT
+Map ADT : HashMap
 
-Implementation: HashMap; A dynamic array of singly linked-lists
+Implementation: HashTable; A dynamic array of singly linked-lists
 
 
 
