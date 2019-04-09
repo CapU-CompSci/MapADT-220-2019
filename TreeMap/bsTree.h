@@ -38,7 +38,11 @@ btNode* bstFindkey(bTree tree, char* key);
 */
 bsTree bstCreate();
 
-
+/*
+ * destroy the whole tree
+ *
+*/
+void bstDestroy(bsTree* tree);
 
 
 
