@@ -39,7 +39,7 @@ int Size(bsTree* root);
  * POST: Size() == 0
  * Removes all items from the Map
  */
-void Clear(bsTree*);
+void Clear(bsTree* root);
 
 /*
  * Returns a dynamic array containing all the Map Keys (in any sequence)
