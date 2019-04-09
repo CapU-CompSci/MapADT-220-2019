@@ -9,6 +9,7 @@
  #include <stdbool.h>
  #include <assert.h>
  #include <string.h>
+ #include "bsTree.h"
  #include "treemap.h"
  
  /*
