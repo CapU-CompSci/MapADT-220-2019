@@ -53,9 +53,12 @@
 
 btNode* bstFindkey(btNode* root, char* key) {
     /*
-    *   If strcmp returns a negative number, it means the 
-    *   first string is bigger, ex: first string is aaa
-    *   and the second value is zzz
+    *   If strcmp(str1,str2) returns a negative number, it means the 
+    *   first string's ASCII is smaller and also is bigger if we consider
+    *   a to be the biggest and z be the smallest letter, ex: first string
+    *   is aaa and the second string is zzz (ASCII of a is less than z)
+    *   So if the we are looking for aaa and the node's string is ccc, we go 
+    *   to the right node.
     */
     
     if ( strcmp(root -> key, key) == 0 ){
