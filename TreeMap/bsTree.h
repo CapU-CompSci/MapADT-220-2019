@@ -5,10 +5,6 @@
  * Date: April 1, 2019
  *
  */
- 
-/***********************
- * Private Type Declaration
- ***********************/
 struct btNode_s {
 
     char* key;
@@ -51,7 +47,7 @@ void bstInsert(bsTree* tree_p, char* key);
  * finds a node in the tree given the key
  * returns a pointer to node if found, else return NULL
  */
-btNode* bstFindkey(bsTree tree, char* key);
+btNode* bstFindkey(btNode* root, char* key);
 
 /*
  * create a new empty tree
@@ -70,7 +66,15 @@ void bstDestroy(bsTree* tree);
  *finds if tree is empty or not
  *POST: True if tree empty , False if Tree not empty
 */
-bool bstIsEmpty( bsTree tree);
+<<<<<<<<< saved version
+*/
+void bstDestroy(bsTree* tree);
+
+
+/*
+=========
+bool bstIsEmpty(bsTree tree);
+>>>>>>>>> local version
 
 
 
