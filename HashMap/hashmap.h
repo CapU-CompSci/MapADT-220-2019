@@ -59,7 +59,7 @@ Hashmap_t hashContructor(int length);
 /*
  * Destroys a hashmap
  */
- void hashDestructor(Hastable_t hashtable);
+ void hashDestructor(Hashmap_t hashtable);
 
 
 /*
