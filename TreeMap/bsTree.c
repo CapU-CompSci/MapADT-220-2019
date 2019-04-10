@@ -29,41 +29,28 @@ btNode* btNodecreate(char* key)
 }
 
 
+/*
+ *Deletes given Node
+ *POST: node_p == NULL
+ */
+void btNodeDestroy(btNode** node_p){
+                                            //NEED TO COMPLETE
+}
 
 
 
+/*
+ * Inserts data into the tree
+ * PRE: Tree Must not contain Key
+ */
+void bstInsert(bsTree* tree_p, char* key){
+                                                //NEED TO COMPLETE
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+ * finds a node in the tree given the key
+ * returns a pointer to node if found, else return NULL
+ */
 btNode* bstFindkey(btNode* root, char* key) {
     /*
     *   If strcmp(str1,str2) returns a negative number, it means the 
@@ -89,3 +76,32 @@ btNode* bstFindkey(btNode* root, char* key) {
     else //Key does not exist
         return NULL;
 }
+
+/*
+ * create a new empty tree
+ * POST: Return Empty Tree
+*/
+bsTree bstCreate(){
+                                                //NEED TO COMPLETE
+}
+
+/*
+ * destroy the whole tree
+ *
+*/
+void bstDestroy(bsTree* tree){
+                                                //NEED TO COMPLETE
+}
+
+
+/*
+ *finds if tree is empty or not
+ *POST: True if tree empty , False if Tree not empty
+*/
+bool bstIsEmpty( bsTree tree){
+                                                //NEED TO COMPLETE
+    return NULL;
+}
+
+
+
