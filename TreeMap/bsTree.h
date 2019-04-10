@@ -5,6 +5,10 @@
  * Date: April 1, 2019
  *
  */
+ 
+/***********************
+ * Private Type Declaration
+ ***********************/
 struct btNode_s {
 
     char* key;
@@ -18,6 +22,10 @@ struct bsTree_s {
     btNode* root;
 };
 typedef struct bsTree_s bsTree;
+
+/**********************
+ * Public Interface
+ **********************/
 
 /*
  * Creates new node with given key
