@@ -7,8 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "hashmap.h"
 #include "linkedList.h"
+#include "hashmap.h"
+
 
 Hashmap_t hashConstructor(int cap)
 {
