@@ -17,9 +17,11 @@
  * Creates new node with given key
  * POST: Count == 1 , btNode.key == key, btNodeRight/Left == NULL
  */
-btNode* btNodecreate(char* key){
+btNode* btNodecreate(char* key)
+{
     btNode* newNode = malloc(sizeof(btNode));
-    newNode->key = key;
+    newNode->key = malloc(strlen(key)*sizeof(char)+1);
+    strcpy(newNode->key, key);
     newNode->count = 1;
     newNode->left = NULL;
     newNode->right = NULL;
