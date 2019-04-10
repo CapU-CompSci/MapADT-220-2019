@@ -108,6 +108,23 @@ void llDelete(linkedList* list){
 	list->tail = NULL;
 }
 
+/*
+ *Attempts to find key in given list
+ * POST: findKey == True if key is found, findKey == False if key is not in list
+ */
+bool findKey(linkedList* list, char* key){
+	Node_t* cur = list.head;
+	while(cur!=NULL){
+		if (cur->data == key){
+			return true;
+		}
+		else{
+			cur = cur->next;
+		}
+	}
+	return false;
+}
+
 
 int main(){
 	return 0;
