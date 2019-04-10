@@ -32,7 +32,7 @@ int Get(char* key);
 /* 
  * Returns true if the Map contains the given key
  */
-bool HasKey(char* key);
+bool HasKey(Hashmap_t hashmap, char* key);
 
 /*
  * Returns the number of (key, value) pairs in the Map
