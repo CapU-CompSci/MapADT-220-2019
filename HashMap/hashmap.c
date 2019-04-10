@@ -13,7 +13,7 @@
 Hashmap_t hashConstructor(int cap)
 {
     Hashmap_t new;
-    new.map = (linkedList*)calloc(cap, sizeof(linkedList)):
+    new.map = (linkedList*)calloc(cap, sizeof(linkedList));
     new.capacity = cap;
     return new;
 }
