@@ -66,15 +66,13 @@ void bstDestroy(bsTree* tree);
  *finds if tree is empty or not
  *POST: True if tree empty , False if Tree not empty
 */
-<<<<<<<<< saved version
+
 */
 void bstDestroy(bsTree* tree);
 
 
-/*
-=========
 bool bstIsEmpty(bsTree tree);
->>>>>>>>> local version
+
 
 
 
