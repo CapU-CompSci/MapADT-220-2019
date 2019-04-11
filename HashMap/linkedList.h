@@ -76,7 +76,7 @@ void llDelete(linkedList* list);
 /*
  * return true if key is in list at index, return true if key is not in list
  */
-bool findKey(linkedList* list, char* key);
+bool find(linkedList* list, char* key);
 
 
 /*
