@@ -22,11 +22,11 @@
  * Constructor - return a node 
  * POST:  Node: [Value][NULL-]
  */
-Node_t* nodeCreate(char* key, int value) {
+Node_t* nodeCreate(char* key) {
   Node_t* node = malloc(sizeof(Node_t));
   node->hash_key = malloc(sizeof(strlen(key) + 1));
   strcpy(node->hash_key, key);
-  node->value = value;
+  node->frequency = 1;
   node->next = NULL;
   return node;
 }
@@ -37,7 +37,7 @@ Node_t* nodeCreate(char* key, int value) {
  * POST:  isEmpty(list) == NULL
  */
 linkedList llCreate(){
-	linkedList llist = {NULL, NULL};    // taken from the stanford link on moodle, for linked lists.
+	linkedList llist = {NULL, NULL, 0};    // taken from the stanford link on moodle, for linked lists.
 	return llist;
 }
 
@@ -46,7 +46,7 @@ linkedList llCreate(){
  * Output a text representation of a node
  */
 void printNode(Node_t*node){
-	printf("[%s][%d]%s", node->hash_key, node->value, node->next ? "-->" : "--|"); //taken from your code in class
+	printf("[%s][%d]%s", node->hash_key, node->frequency, node->next ? "-->" : "--|"); //taken from your code in class
 }
 
 /*
@@ -77,17 +77,27 @@ bool isEmpty(const linkedList list){
  * Append the given item to the list 
  * POST: Linked List list grows by 1 node, which the tail now points too.
  */
-void llAppend(linkedList* list, char* key, int data){
+void llAppend(linkedList* list, char* key){
 
-	Node_t* newNode = nodeCreate(key, data);
+	Node_t* newNode = nodeCreate(key);
 
 	if (isEmpty(*list)){
 		list->head = newNode;
 	}
 	else{
-		list->tail->next = newNode;
+		//Search if node is Not in list:
+		if(!isDuplicate(list, newNode)){
+			list->tail->next = newNode;
+		}
+		else{
+			Node_t* existingNode = findKey(list, key);
+			existingNode->frequency += 1;
+			return;
+		}
 	}
+
 	list->tail = newNode;
+	list->capacity += 1;
 }
 
 
@@ -106,7 +116,9 @@ void llDelete(linkedList* list){
 		list->head = cur;
 	}
 	list->tail = NULL;
+	list->capacity = 0;
 }
+
 
 /*
  *Attempts to find key in given list
@@ -122,6 +134,22 @@ bool findKey(linkedList* list, char* key){
 			cur = cur->next;
 		}
 	}
+	return false;
+}
+
+
+/*
+ * Returns True if the node exists in list
+ */
+bool isDuplicate(linkedList* list, Node_t* node){
+	Node_t* cur = list->head;
+	while(cur != NULL){
+		if (cur == node){
+			return true;
+		}
+		cur = cur->next;
+	}
+
 	return false;
 }
 
