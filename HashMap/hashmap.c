@@ -51,9 +51,9 @@ void Clear(Hashmap_t hashmap)
 
 void hashDestructor(Hashmap_t hashmap)
 {
-    Clear(Hashmap_t hashmap)
-    hashmap.map == NULL;
-    hashmap.capacity == 0;
+    Clear(hashmap);
+    hashmap.map = NULL;
+    hashmap.capacity = 0;
 }
 
 bool HasKey(Hashmap_t hashmap, char* key)
