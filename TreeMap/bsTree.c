@@ -81,8 +81,9 @@ btNode* bstFindkey(btNode* root, char* key) {
  * create a new empty tree
  * POST: Return Empty Tree
 */
-bsTree bstCreate(){
-                                                //NEED TO COMPLETE
+bsTree bstCreate()
+{
+    return NULL;
 }
 
 /*
