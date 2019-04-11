@@ -122,20 +122,20 @@ void llDelete(linkedList* list){
 
 /*
  *Attempts to find key in given list
- * POST: findKey == True if key is found, findKey == False if key is not in list
+ * POST: pointer to node in the list containing the given key
  */
-bool findKey(linkedList* list, char* key){
-	Node_t* cur = list.head;
-	while(cur!=NULL){
-		if (cur->data == key){
-			return true;
+Node_t* find(linkedList* list, char* key){
+	Node_t* cur = list->head;
+	while(cur->hash_key != NULL){
+		if(cur->hash_key == key){
+			return cur;
 		}
 		else{
 			cur = cur->next;
 		}
 	}
-	return false;
 }
+
 
 
 /*
