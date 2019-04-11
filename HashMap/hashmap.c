@@ -58,5 +58,7 @@ void hashDestructor(Hashmap_t hashmap)
 
 bool HasKey(Hashmap_t hashmap, char* key)
 {
-   return findKey(hashmap.map[getIndex(key, hashmap.capacity)]);
+    int index = getIndex(key, hashmap.capacity);
+    linkedList list = hashmap.map[index]; 
+    return findKey(&list, key);
 }
