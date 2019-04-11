@@ -46,9 +46,7 @@ void btNodeDestroy(btNode** node_p){
 void bstInsert(bsTree* tree_p, char* key){
 
 	if(*tree_p == NULL)
-		{
-			*tree_p = btNodecreate(key);
-		}
+		*tree_p = btNodecreate(key);
 
 	if(strcmp((*tree_p)->key, key) < 0)
 		bstInsert(&(*tree_p)->left, key);

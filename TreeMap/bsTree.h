@@ -64,7 +64,7 @@ void bstDestroy(bsTree* tree);
  *POST: True if tree empty , False if Tree not empty
 */
 
-*/
+
 void bstDestroy(bsTree* tree);
 
 
