@@ -83,11 +83,7 @@ btNode* bstFindkey(btNode* root, char* key) {
 */
 bsTree bstCreate()
 {
-    bsTree new;
-    
-    new.root = NULL;
-    
-    return new;
+    return NULL;
 }
 
 /*
