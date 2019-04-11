@@ -1,7 +1,7 @@
 /*
  *  HashMap Dependancy : Linked List
  *
- *  Author:  Keyann Al-Kheder
+ *  Author:  Keyann Al-Kheder, Alex Verga
  *  
  */
 
