@@ -44,7 +44,18 @@ void btNodeDestroy(btNode** node_p){
  * PRE: Tree Must not contain Key
  */
 void bstInsert(bsTree* tree_p, char* key){
-                                                //NEED TO COMPLETE
+
+	if(*tree_p == NULL)
+		{
+			*tree_p = btNodecreate(key);
+		}
+
+	if(strcmp((*tree_p)->key, key) < 0)
+		bstInsert(&(*tree_p)->left, key);
+
+	if(strcmp((*tree_p)->key, key) > 0)
+		bstInsert(&(*tree_p)->right, key);
+
 }
 
 /*
