@@ -11,7 +11,7 @@
  ********************/
 struct  Node {
     char* hash_key;					//Hash Key	
-    int value;					//Hash Value
+    int frequency;					//Hash Value
     struct Node* next;			//pointer to the next node	
 };									
 typedef struct Node Node_t;	
@@ -23,6 +23,7 @@ typedef struct Node Node_t;
 struct list_s{
 	Node_t* head;				//pointer to the head node
 	Node_t*tail;				//pointer to the tail node
+	int capacity;				//list size
 };
 typedef struct list_s linkedList;
 
@@ -76,3 +77,9 @@ void llDelete(linkedList* list);
  * return true if key is in list at index, return true if key is not in list
  */
 bool findKey(linkedList* list, char* key);
+
+
+/*
+ * return true if key is in the list
+ */
+bool isDuplicate(linkedList* list, Node_t* node);
