@@ -109,8 +109,10 @@ void bstDestroy(bsTree* tree){
  *POST: True if tree empty , False if Tree not empty
 */
 bool bstIsEmpty( bsTree tree){
-                                                //NEED TO COMPLETE
-    return NULL;
+    if(tree==NULL){
+        return true;
+    }
+    return false;
 }
 
 
