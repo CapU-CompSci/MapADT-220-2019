@@ -143,7 +143,7 @@ Node_t* find(linkedList* list, char* key){
 bool findKey(linkedList* list, char* key){
 	Node_t* cur = list.head;
 	while(cur!=NULL){
-		if (cur->data == key){
+		if (cur->hash_key == key){
 			return true;
 		}
 		else{
