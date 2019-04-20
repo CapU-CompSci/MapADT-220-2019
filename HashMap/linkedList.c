@@ -90,7 +90,7 @@ void llAppend(linkedList* list, char* key){
 			list->tail->next = newNode;
 		}
 		else{
-			Node_t* existingNode = findKey(list, key);
+			Node_t* existingNode = find(list, key);
 			existingNode->frequency += 1;
 			return;
 		}
