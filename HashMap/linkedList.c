@@ -136,7 +136,22 @@ Node_t* find(linkedList* list, char* key){
 	}
 }
 
-
+/*
+ *Attempts to find key in given list
+ * POST: findKey == True if key is found, findKey == False if key is not in list
+ */
+bool findKey(linkedList* list, char* key){
+	Node_t* cur = list.head;
+	while(cur!=NULL){
+		if (cur->data == key){
+			return true;
+		}
+		else{
+			cur = cur->next;
+		}
+	}
+	return false;
+}
 
 /*
  * Returns True if the node exists in list
