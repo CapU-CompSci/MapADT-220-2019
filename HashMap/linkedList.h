@@ -83,3 +83,10 @@ Node_t* find(linkedList* list, char* key);
  * return true if key is in the list
  */
 bool isDuplicate(linkedList* list, Node_t* node);
+
+
+/*
+ *Attempts to find key in given list
+ * POST: findKey == True if key is found, findKey == False if key is not in list
+ */
+bool findKey(linkedList* list, char* key)
