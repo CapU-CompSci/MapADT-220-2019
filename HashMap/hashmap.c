@@ -69,3 +69,18 @@ int Get(char* key, Hashmap_t hashmap)
 	Node_t* node = find(&hashmap.map[index], key);
 	return node->frequency; 
 }
+
+int size(Hashmap_t hashmap)
+{
+	int count; 
+	int num = 0;
+
+	for( count = 0; count < hashmap.capacity; count++)
+	{
+		if(&hashmap.map[count] != 0)
+		{
+			num = num + hashmap.map[count].capacity;
+		}
+	}
+	return num;
+}	
