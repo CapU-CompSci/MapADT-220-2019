@@ -27,7 +27,7 @@ void Remove(char* key);
  * PRE: HasKey(key)
  * Returns the value associated with the given key
  */
-int Get(char* key);
+int Get(char* key, Hashmap_t hashmap);
 
 /* 
  * Returns true if the Map contains the given key
