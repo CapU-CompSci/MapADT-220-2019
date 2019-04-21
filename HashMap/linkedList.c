@@ -141,7 +141,7 @@ Node_t* find(linkedList* list, char* key){
  * POST: findKey == True if key is found, findKey == False if key is not in list
  */
 bool findKey(linkedList* list, char* key){
-	Node_t* cur = list.head;
+	Node_t* cur = list->head;
 	while(cur!=NULL){
 		if (cur->hash_key == key){
 			return true;
