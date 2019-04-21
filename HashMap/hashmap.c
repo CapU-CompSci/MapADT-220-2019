@@ -62,3 +62,10 @@ bool HasKey(Hashmap_t hashmap, char* key)
     linkedList list = hashmap.map[index]; 
     return findKey(&list, key);
 }
+
+int Get(char* key, Hashmap_t hashmap)
+{
+	int index = getIndex(key, hashmap.capacity); 
+	Node_t* node = find(&hashmap.map[index], key);
+	return node->frequency; 
+}
