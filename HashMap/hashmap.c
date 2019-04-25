@@ -84,3 +84,11 @@ int size(Hashmap_t hashmap)
 	}
 	return num;
 }	
+
+char* retrieveKey(char* inFile){
+    FILE *fp;
+    char* key;
+    fp = fopen(inFile, "r");
+    fscanf(fp, "%127s", &key);
+    return key;
+}
