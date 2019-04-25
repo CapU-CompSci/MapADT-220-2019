@@ -72,3 +72,7 @@ unsigned long Hash(char* key);
  */
 int getIndex(char* key, int arraySize);
 
+/*
+ * Scan input file to find key
+ */
+char* retrieveKey(char* inFile);
