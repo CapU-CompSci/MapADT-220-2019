@@ -47,19 +47,22 @@ void btNodeDestroy(btNode** node_p){
 
 /*
  * Inserts data into the tree
- * PRE: Tree Must not contain Key
  */
 void bstInsert(bsTree* tree_p, char* key){
-
-	if(*tree_p == NULL)
-		*tree_p = btNodecreate(key);
-
-	if(strcmp((*tree_p)->key, key) < 0)
-		bstInsert(&(*tree_p)->left, key);
-
-	if(strcmp((*tree_p)->key, key) > 0)
-		bstInsert(&(*tree_p)->right, key);
-
+    btNode* target = bstFindkey(tree_p,key);        //if exist in tree, increment count
+    if(target!=NULL){
+        target->count++;
+    }else{
+    	if(*tree_p == NULL){
+    		*tree_p = btNodecreate(key);
+    	}
+    	if(strcmp((*tree_p)->key, key) < 0){
+    		bstInsert(&(*tree_p)->left, key);
+    	}{
+    	if(strcmp((*tree_p)->key, key) > 0)
+    		bstInsert(&(*tree_p)->right, key);
+    	}
+    }
 }
 
 /*
@@ -75,21 +78,22 @@ btNode* bstFindkey(btNode* root, char* key) {
     *   So if the we are looking for aaa and the node's string is ccc, we go 
     *   to the right node.
     */
-    
-    if ( strcmp(root -> key, key) == 0 ){
-        return root;
-    }
-    
-    if (strcmp(root -> key, key) < 0) {
-        return bstFindkey(root -> left, key);
-    }
-    
-    if (strcmp(root -> key, key) > 0) {
-        return bstFindkey(root -> right, key);
-    }
-    
-    else //Key does not exist
+    if(root==NULL){             //empty tree
         return NULL;
+    }else{
+        if ( strcmp(root -> key, key) == 0 ){       //found
+            return root;
+        }
+        
+        if (strcmp(root -> key, key) < 0) {
+            return bstFindkey(root -> left, key);
+        }
+        
+        if (strcmp(root -> key, key) > 0) {
+            return bstFindkey(root -> right, key);
+        }
+    }
+    return NULL;                //key not found
 }
 
 /*
@@ -106,7 +110,7 @@ bsTree bstCreate()
  *
 */
 void bstDestroy(bsTree* tree){
-    btNodeDestroy(tree);                                            //NEED TO COMPLETE
+    btNodeDestroy(tree);
 }
 
 
