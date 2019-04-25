@@ -34,7 +34,13 @@ btNode* btNodecreate(char* key)
  *POST: node_p == NULL
  */
 void btNodeDestroy(btNode** node_p){
-                                            //NEED TO COMPLETE
+    btNode* node = *node_p;
+    if(node!=NULL){
+        btNodeDestroy(&node->left);
+        btNodeDestroy(&node->right);
+        free(node);
+        *node_p = NULL;
+    }
 }
 
 
@@ -100,7 +106,7 @@ bsTree bstCreate()
  *
 */
 void bstDestroy(bsTree* tree){
-                                                //NEED TO COMPLETE
+    btNodeDestroy(tree);                                            //NEED TO COMPLETE
 }
 
 
