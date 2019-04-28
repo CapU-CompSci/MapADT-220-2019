@@ -126,4 +126,51 @@ bool bstIsEmpty( bsTree tree){
 }
 
 
+/*
+* Checks every node for the max count,
+* in the end, the node has the max count
+*/
+void findMax(btNode* root, btNode* node){
+    if (root -> count > node -> count){
+        node = root;
+    }
+    
+    if (root -> left != NULL){
+        findMax (root -> left , node);
+    }
+    
+    if (root -> right != NULL){
+        findMax (root -> right, node);
+    }
+    
+}
 
+void printMax(btNode* root){
+    //A node that will be the address to the node with max Count
+    //Uses a dummy key ex: ___
+    btNode* node = btNodecreate("___"); 
+    node -> count = 0;
+    
+    //After the next function, the adress node is referring to is the
+    // node with the max count in all of the tree.
+    findMax(root, node);
+    
+    printf("%s \t %d \t \n", node -> key, node -> count);
+    
+    //Deletes the node 
+    //NOT SURE IF THIS WORKS WITH THE FUNCTION BELOW
+        //  AND REALLY DELETES THE NODE CORRECTLY
+    btNodeDestroy(**node);
+}
+
+
+void printTree(btNode* root){
+    
+    printf("Word \t Count \t \n");
+    
+    while (root != NULL){
+        printMax(root);
+    }
+    
+    printf("\nEnd of the tree.");
+}
