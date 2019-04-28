@@ -71,7 +71,27 @@ void bstDestroy(bsTree* tree);
 bool bstIsEmpty(bsTree tree);
 
 
+/* 
+* Given the root of the tree and a node,
+* the function will set the node to the node
+* in the tree which has the max count.
+* This is a helper function of the findMax.
+*/
+
+void findMax(btNode* root, btNode* node);
 
 
+/*Finds the node with max count, 
+* prints the key and the count of the node,
+* then deletes the node itself.
+* This is a helper function of printTree.
+*/
+
+void printMax(btNode* root);
 
 
+/* Prints all the nodes of the tree in descending order of 
+* their counts and deletes the tree.
+*/
+
+void printTree(btNode* root);
